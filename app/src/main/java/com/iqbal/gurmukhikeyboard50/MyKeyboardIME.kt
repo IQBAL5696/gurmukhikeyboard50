@@ -185,7 +185,7 @@ class MyKeyboardIME : InputMethodService(), SharedPreferences.OnSharedPreference
         kv?.setOnKeyboardActionListener(keyboardActionListener)
 
         customizeTopRowButtons(themedContext)
-        nanakshahiCalendarPanel = NanakshahiCalendarPanel(themedContext) { switchPanel(ImeConstants.PANEL_KEYBOARD) }
+        nanakshahiCalendarPanel = NanakshahiCalendarPanel(themedContext, { switchPanel(ImeConstants.PANEL_KEYBOARD) })
         (nanakshahiCalendarPanelContainer as? FrameLayout)?.addView(nanakshahiCalendarPanel?.view)
 
         setupTranslationPanel(themedContext); setupEmojiPanel(themedContext); setupClipboardPanel(themedContext); setupExpandedTopRow(themedContext)
@@ -536,8 +536,17 @@ class MyKeyboardIME : InputMethodService(), SharedPreferences.OnSharedPreference
     }
 
     override fun onTextRecognized(text: String, isFinal: Boolean) {
-        if (currentPanel == ImeConstants.PANEL_TRANSLATION) { if (isFinal) translationPanelContainer?.findViewById<EditText>(R.id.translation_input_text)?.setText(text) }
-        else { if (isFinal) currentInputConnection.commitText(text, 1) }
+        val ic = currentInputConnection ?: return
+        if (currentPanel == ImeConstants.PANEL_TRANSLATION) {
+            if (isFinal) translationPanelContainer?.findViewById<EditText>(R.id.translation_input_text)?.setText(text)
+        } else {
+            if (isFinal) {
+                ic.finishComposingText()
+                ic.commitText(text + " ", 1)
+            } else {
+                ic.setComposingText(text, 1)
+            }
+        }
     }
 
     override fun onListeningError(errorMessage: String) { if (errorMessage.contains("Missing RECORD_AUDIO permission")) launchAppSettings() else Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show(); voiceInputPopupContainer?.visibility = View.GONE }
