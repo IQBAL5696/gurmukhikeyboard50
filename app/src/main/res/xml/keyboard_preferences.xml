@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Keyboard Preferences (ਕੀਬੋਰਡ ਸੈਟਿੰਗਜ਼)">
+
+        <SwitchPreferenceCompat
+            app:key="vibrate_on_keypress"
+            app:title="Vibration (ਵਾਇਬਰੇਸ਼ਨ)"
+            app:summary="ਕੀਅ ਦਬਾਉਣ 'ਤੇ ਵਾਇਬਰੇਸ਼ਨ ਹੋਵੇਗੀ"
+            app:defaultValue="true" />
+
+        <SwitchPreferenceCompat
+            app:key="sound_on_keypress"
+            app:title="Sound (ਆਵਾਜ਼)"
+            app:summary="ਕੀਅ ਦਬਾਉਣ 'ਤੇ ਆਵਾਜ਼ ਆਵੇਗੀ"
+            app:defaultValue="true" />
+
+        <SwitchPreferenceCompat
+            app:key="popup_on_keypress"
+            app:title="Popup (ਪੋਪ-ਅੱਪ)"
+            app:summary="ਕੀਅ ਦਬਾਉਣ 'ਤੇ ਵੱਡਾ ਅੱਖਰ ਦਿਖਾਈ ਦੇਵੇਗਾ"
+            app:defaultValue="true" />
+
+        <ListPreference
+            app:key="pref_one_handed_mode"
+            app:title="One-Handed Mode (ਇੱਕ ਹੱਥ ਮੋਡ)"
+            app:summary="ਕੀਬੋਰਡ ਨੂੰ ਖੱਬੇ ਜਾਂ ਸੱਜੇ ਪਾਸੇ ਸੈੱਟ ਕਰੋ"
+            app:entries="@array/one_handed_entries"
+            app:entryValues="@array/one_handed_values"
+            app:defaultValue="off"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Appearance (ਦਿੱਖ)">
+
+        <ListPreference
+            app:key="pref_keyboard_theme"
+            app:title="Keyboard Theme"
+            app:summary="ਕੀਬੋਰਡ ਦਾ ਰੰਗ ਬਦਲੋ"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_values"
+            app:defaultValue="light" 
+            app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
+            app:key="pref_keyboard_font"
+            app:title="Keyboard Font"
+            app:summary="ਕੀਬੋਰਡ ਦੇ ਅੱਖਰਾਂ ਦਾ ਫੌਂਟ ਬਦਲੋ"
+            app:entries="@array/font_entries"
+            app:entryValues="@array/font_values"
+            app:defaultValue="default"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Dictionary (ਡਿਕਸ਼ਨਰੀ)">
+        <Preference
+            app:key="pref_dictionary_management"
+            app:title="📚 Dictionary Management"
+            app:summary="ਸਿੱਖੇ ਹੋਏ ਸ਼ਬਦਾਂ ਨੂੰ ਦੇਖੋ ਅਤੇ ਡਿਲੀਟ ਕਰੋ">
+            <intent
+                android:targetPackage="com.iqbal.gurmukhikeyboard50"
+                android:targetClass="com.iqbal.gurmukhikeyboard50.DictionaryManagementActivity" />
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="ਕੀਬੋਰਡ ਫੰਕਸ਼ਨ ਗਾਈਡ (Features Guide)">
+        <Preference
+            app:key="guide_calendar"
+            app:title="📅 ਨਾਨਕਸ਼ਾਹੀ ਕੈਲੰਡਰ"
+            app:summary="ਕੀਬੋਰਡ ਦੀ ਉੱਪਰਲੀ ਲਾਈਨ ਵਿੱਚ ਕੈਲੰਡਰ ਆਈਕਨ ਦਬਾਓ। ਸੂਰਜ ਚੜ੍ਹਨ/ਡੁੱਬਣ ਦਾ ਸਮਾਂ, ਸੰਗਰਾਂਦ ਆਦਿ ਦੇਖੋ।" />
+        <Preference
+            app:key="guide_search"
+            app:title="🔍 ਗੁਰਬਾਣੀ ਸਰਚ"
+            app:summary="ਕੋਈ ਵੀ ਸ਼ਬਦ ਲਿਖ ਕੇ ਸਰਚ ਆਈਕਨ ਦਬਾਓ, ਉਹ GurbaniNow 'ਤੇ ਸਰਚ ਹੋ ਜਾਵੇਗਾ।" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ਗੁਰਮੁਖੀ ਕੀਬੋਰਡ"
+            android:textColor="#E65100"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Setup Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/setupCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ਸੈੱਟਅੱਪ ਸਟੈਪਸ (Setup Steps)"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEnableKeyboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1. ਕੀਬੋਰਡ ਇਨੇਬਲ ਕਰੋ"
+                    app:backgroundTint="#EF6C00" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSelectKeyboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2. ਕੀਬੋਰਡ ਸਿਲੈਕਟ ਕਰੋ"
+                    app:backgroundTint="#EF6C00" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGrantMicPermission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3. ਮਾਈਕ੍ਰੋਫੋਨ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ"
+                    app:backgroundTint="#EF6C00" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Quick Settings Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/settingsCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/setupCard">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ਤੁਰੰਤ ਸੈਟਿੰਗਜ਼ (Quick Settings)"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_vibrate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ਕੀ-ਪ੍ਰੈੱਸ ਵਾਈਬ੍ਰੇਸ਼ਨ (Vibrate)"
+                    android:checked="true" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_sound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ਕੀ-ਪ੍ਰੈੱਸ ਆਵਾਜ਼ (Sound)"
+                    android:checked="true" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_popup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ਕੀ-ਪ੍ਰੈੱਸ ਪੌਪ-ਅੱਪ (Popup)"
+                    android:checked="true" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Features Guide Section -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/featuresCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/settingsCard">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ਕੀਬੋਰਡ ਫੰਕਸ਼ਨ ਗਾਈਡ"
+                    android:textColor="#E65100"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="4dp"
+                    android:text="📅 ਨਾਨਕਸ਼ਾਹੀ ਕੈਲੰਡਰ: ਕੀਬੋਰਡ ਦੀ ਉੱਪਰਲੀ ਲਾਈਨ ਵਿੱਚ ਕੈਲੰਡਰ ਆਈਕਨ ਦਬਾਓ। ਇੱਥੇ ਤੁਸੀਂ ਸੂਰਜ ਚੜ੍ਹਨ/ਡੁੱਬਣ ਦਾ ਸਮਾਂ, ਸੰਗਰਾਂਦ, ਮੱਸਿਆ ਅਤੇ ਪੁੰਨਿਆ ਦੇਖ ਸਕਦੇ ਹੋ। ਕਿਸੇ ਗੁਰਪੁਰਬ ਵਾਲੀ ਤਾਰੀਖ 'ਤੇ ਕਲਿੱਕ ਕਰਨ 'ਤੇ ਉਸਦਾ ਇਤਿਹਾਸ ਦਿਖਾਈ ਦੇਵੇਗਾ।\n\n📜 ਹੁਕਮਨਾਮਾ: ਕੈਲੰਡਰ ਦੇ ਅੰਦਰ 'ਹੁਕਮਨਾਮਾ' ਬਟਨ ਦਬਾਉਣ 'ਤੇ ਸਿੱਧਾ ਦਰਬਾਰ ਸਾਹਿਬ ਦੀ ਵੈੱਬਸਾਈਟ ਖੁੱਲ੍ਹ ਜਾਵੇਗੀ।\n\n🔍 ਗੁਰਬਾਣੀ ਸਰਚ: ਗੂਗਲ ਜਾਂ ਕਿਸੇ ਵੀ ਐਪ ਵਿੱਚ ਅੱਖਰ ਲਿਖ ਕੇ ਸਰਚ ਆਈਕਨ ਦਬਾਓ, ਉਹ ਅੱਖਰ ਆਪਣੇ ਆਪ GurbaniNow ਵੈੱਬਸਾਈਟ 'ਤੇ ਸਰਚ ਹੋ ਜਾਣਗੇ।\n\n🔤 ਪੰਜਾਬੀ ਫੌਂਟ: ਸੈਟਿੰਗਜ਼ ਵਿੱਚ ਜਾ ਕੇ ਤੁਸੀਂ ਕੀਬੋਰਡ ਦੇ ਅੱਖਰਾਂ ਲਈ ਅਨਮੋਲ ਲਿਪੀ, ਅਮਰ ਲਿਪੀ ਜਾਂ ਰਾਵੀ ਫੌਂਟ ਚੁਣ ਸਕਦੇ ਹੋ।\n\n🛠️ ਸਮਾਰਟ ਟੂਲਬਾਰ: ਸੈਟਿੰਗਜ਼ ਵਿੱਚ 'Top Row Settings' ਰਾਹੀਂ ਤੁਸੀਂ ਆਪਣੀ ਪਸੰਦ ਦੇ ਬਟਨ (Emoji, Mic, Translate) ਉੱਪਰਲੀ ਲਾਈਨ ਵਿੱਚ ਰੱਖ ਸਕਦੇ ਹੋ।\n\n📚 ਡਿਕਸ਼ਨਰੀ: ਕੀਬੋਰਡ ਤੁਹਾਡੇ ਲਿਖੇ ਨਵੇਂ ਸ਼ਬਦ ਆਪਣੇ ਆਪ ਸਿੱਖ ਲੈਂਦਾ ਹੈ। ਤੁਸੀਂ ਸੈਟਿੰਗਜ਼ ਵਿੱਚੋਂ ਸ਼ਬਦ ਡਿਲੀਟ ਵੀ ਕਰ ਸਕਦੇ ਹੋ।"
+                    android:textSize="14sp"
+                    android:textColor="#333333" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnShareApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Share App"
+            app:icon="@android:drawable/ic_menu_share"
+            app:layout_constraintTop_toBottomOf="@id/featuresCard" />
+
+        <Button
+            android:id="@+id/btnPrivacyPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Privacy Policy"
+            android:backgroundTint="#757575"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/btnShareApp"/>
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Status: Loading..."
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintTop_toBottomOf="@id/btnPrivacyPolicy"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingBottom="24dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

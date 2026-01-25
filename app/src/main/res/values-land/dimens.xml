@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Remove bottom space entirely in landscape as the navigation bar is typically on the side -->
+    <dimen name="bottom_spacer_height">0dp</dimen>
+</resources>

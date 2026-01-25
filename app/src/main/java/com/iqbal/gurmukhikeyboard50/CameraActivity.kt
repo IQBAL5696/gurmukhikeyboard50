@@ -1,0 +1,1 @@
+// File deleted as part of camera removal request

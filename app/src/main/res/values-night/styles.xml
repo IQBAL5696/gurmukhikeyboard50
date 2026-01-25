@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="KeyboardTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="keyboardKeyBackground">@drawable/key_background_dark</item>
+        <item name="keyboardKeyTextColor">@color/key_text_dark</item>
+        <item name="functionalKeyBackground">@drawable/functional_key_background_dark</item>
+    </style>
+
+</resources>

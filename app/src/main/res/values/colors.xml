@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Basic Colors -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="charcoal_grey">#36454F</color>
+    <color name="keyBackgroundPressed">#44FFFFFF</color>
+
+    <!-- Essential Key State Colors -->
+    <color name="keyboard_key_background_pressed_light">#BDBDBD</color>
+    <color name="keyboard_key_background_pressed_dark">#222222</color>
+
+    <!-- Light Theme -->
+    <color name="keyboard_background_light">#F5F5F5</color>
+    <color name="keyboard_key_background_normal_light">#FFFFFF</color>
+    <color name="functional_key_background_light">#E0E0E0</color>
+    <color name="key_text_light">#000000</color>
+
+    <!-- Professional Dark Theme -->
+    <color name="keyboard_background_dark">#1A1A1A</color>
+    <color name="keyboard_key_background_normal_dark">#333333</color>
+    <color name="functional_key_background_dark">#252525</color>
+    <color name="key_text_dark">#E0E0E0</color>
+
+    <!-- Royal Red Theme -->
+    <color name="keyboard_background_red">#B71C1C</color>
+    <color name="key_background_red">#D32F2F</color>
+    <color name="functional_key_background_red">#880E4F</color>
+    <color name="key_text_red_white">#FFFFFF</color>
+
+    <!-- Beautiful Blue Theme -->
+    <color name="keyboard_background_blue">#0D47A1</color>
+    <color name="key_background_blue">#1976D2</color>
+    <color name="functional_key_background_blue">#1565C0</color>
+    <color name="key_text_blue_white">#FFFFFF</color>
+
+    <!-- Nature Green Theme -->
+    <color name="keyboard_background_green">#1B5E20</color>
+    <color name="key_background_green">#2E7D32</color>
+    <color name="functional_key_background_green">#388E3C</color>
+    <color name="key_text_green_white">#FFFFFF</color>
+
+    <!-- Lovely Pink Theme -->
+    <color name="keyboard_background_pink">#880E4F</color>
+    <color name="key_background_pink">#AD1457</color>
+    <color name="functional_key_background_pink">#C2185B</color>
+    <color name="key_text_pink_white">#FFFFFF</color>
+
+    <!-- Royal Purple Theme -->
+    <color name="keyboard_background_purple">#4A148C</color>
+    <color name="key_background_purple">#6A1B9A</color>
+    <color name="functional_key_background_purple">#7B1FA2</color>
+    <color name="key_text_purple_white">#FFFFFF</color>
+
+    <!-- Bright Orange Theme -->
+    <color name="keyboard_background_orange">#E65100</color>
+    <color name="key_background_orange">#EF6C00</color>
+    <color name="functional_key_background_orange">#F57C00</color>
+    <color name="key_text_orange_white">#FFFFFF</color>
+
+    <!-- Golden Luxury Theme -->
+    <color name="keyboard_background_gold">#FF8F00</color>
+    <color name="key_background_gold">#FFA000</color>
+    <color name="functional_key_background_gold">#FFB300</color>
+    <color name="key_text_gold_black">#3E2723</color>
+
+    <!-- Teal Ocean Theme -->
+    <color name="keyboard_background_teal">#004D40</color>
+    <color name="key_background_teal">#00695C</color>
+    <color name="functional_key_background_teal">#00796B</color>
+    <color name="key_text_teal_white">#FFFFFF</color>
+
+    <!-- Indigo Night Theme -->
+    <color name="keyboard_background_indigo">#1A237E</color>
+    <color name="key_background_indigo">#283593</color>
+    <color name="functional_key_background_indigo">#303F9F</color>
+    <color name="key_text_indigo_white">#FFFFFF</color>
+
+    <!-- Silver Metallic Theme -->
+    <color name="keyboard_background_silver">#757575</color>
+    <color name="key_background_silver">#9E9E9E</color>
+    <color name="functional_key_background_silver">#616161</color>
+    <color name="key_text_silver_white">#FFFFFF</color>
+
+    <!-- Coffee Brown Theme -->
+    <color name="keyboard_background_coffee">#3E2723</color>
+    <color name="key_background_coffee">#4E342E</color>
+    <color name="functional_key_background_coffee">#5D4037</color>
+    <color name="key_text_coffee_white">#FFFFFF</color>
+
+    <!-- Midnight OLED -->
+    <color name="keyboard_background_midnight">#000000</color>
+    <color name="key_background_midnight">#121212</color>
+    <color name="functional_key_background_midnight">#1F1F1F</color>
+    <color name="key_text_midnight_blue">#00BCD4</color>
+
+    <!-- Lavender Dream -->
+    <color name="keyboard_background_lavender">#E1BEE7</color>
+    <color name="key_background_lavender">#F3E5F5</color>
+    <color name="functional_key_background_lavender">#CE93D8</color>
+    <color name="key_text_lavender_purple">#4A148C</color>
+
+    <!-- Forest Moss -->
+    <color name="keyboard_background_moss">#33691E</color>
+    <color name="key_background_moss">#558B2F</color>
+    <color name="functional_key_background_moss">#2E7D32</color>
+    <color name="key_text_moss_cream">#DCEDC8</color>
+
+    <!-- Sunset Glow -->
+    <color name="keyboard_background_sunset">#BF360C</color>
+    <color name="key_background_sunset">#E64A19</color>
+    <color name="functional_key_background_sunset">#D84315</color>
+    <color name="key_text_sunset_yellow">#FFF9C4</color>
+
+    <!-- Deep Space Grey -->
+    <color name="keyboard_background_space">#263238</color>
+    <color name="key_background_space">#37474F</color>
+    <color name="functional_key_background_space">#455A64</color>
+    <color name="key_text_space_cyan">#80DEEA</color>
+
+    <!-- Nature Themes -->
+    <!-- Ocean Breeze -->
+    <color name="keyboard_background_ocean">#006064</color>
+    <color name="key_background_ocean">#00838F</color>
+    <color name="functional_key_background_ocean">#004D40</color>
+    <color name="key_text_ocean">#E0F7FA</color>
+
+    <!-- Autumn Leaf -->
+    <color name="keyboard_background_autumn">#5D4037</color>
+    <color name="key_background_autumn">#8D6E63</color>
+    <color name="functional_key_background_autumn">#4E342E</color>
+    <color name="key_text_autumn">#FFECB3</color>
+
+    <!-- Spring Blossom -->
+    <color name="keyboard_background_blossom">#FCE4EC</color>
+    <color name="key_background_blossom">#FFFFFF</color>
+    <color name="functional_key_background_blossom">#F8BBD0</color>
+    <color name="key_text_blossom">#880E4F</color>
+
+    <!-- Desert Sand -->
+    <color name="keyboard_background_sand">#D7CCC8</color>
+    <color name="key_background_sand">#EFEBE9</color>
+    <color name="functional_key_background_sand">#BCAAA4</color>
+    <color name="key_text_sand">#3E2723</color>
+
+    <!-- Night Sky -->
+    <color name="keyboard_background_night_sky">#0D47A1</color>
+    <color name="key_background_night_sky">#1565C0</color>
+    <color name="functional_key_background_night_sky">#002171</color>
+    <color name="key_text_night_sky">#80DEEA</color>
+
+    <!-- 5 New Beautiful Light Themes -->
+    <!-- 1. Cotton Candy -->
+    <color name="keyboard_background_cotton">#F3E5F5</color>
+    <color name="key_background_cotton">#E1F5FE</color>
+    <color name="functional_key_background_cotton">#FCE4EC</color>
+    <color name="key_text_cotton">#AB47BC</color>
+
+    <!-- 2. Sunny Morning -->
+    <color name="keyboard_background_sunny">#FFFDE7</color>
+    <color name="key_background_sunny">#FFFFFF</color>
+    <color name="functional_key_background_sunny">#FFF9C4</color>
+    <color name="key_text_sunny">#F57F17</color>
+
+    <!-- 3. Fresh Mint -->
+    <color name="keyboard_background_mint">#E0F2F1</color>
+    <color name="key_background_mint">#FFFFFF</color>
+    <color name="functional_key_background_mint">#B2DFDB</color>
+    <color name="key_text_mint">#00695C</color>
+
+    <!-- 4. Royal Ivory -->
+    <color name="keyboard_background_ivory">#FFF9F0</color>
+    <color name="key_background_ivory">#FFFFFF</color>
+    <color name="functional_key_background_ivory">#F5E6D3</color>
+    <color name="key_text_ivory">#856404</color>
+
+    <!-- 5. Sky Blue Bliss -->
+    <color name="keyboard_background_sky_bliss">#E3F2FD</color>
+    <color name="key_background_sky_bliss">#FFFFFF</color>
+    <color name="functional_key_background_sky_bliss">#BBDEFB</color>
+    <color name="key_text_sky_bliss">#0D47A1</color>
+
+</resources>

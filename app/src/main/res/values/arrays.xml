@@ -1,0 +1,126 @@
+<resources>
+    <string-array name="top_row_button_entries">
+        <item>Translate</item>
+        <item>AI</item>
+        <item>Emoji</item>
+        <item>Mic</item>
+        <item>Gurmukhi Search</item>
+        <item>Gurbani</item>
+        <item>Settings</item>
+        <item>Image to Text</item>
+    </string-array>
+
+    <string-array name="top_row_button_values">
+        <item>translate</item>
+        <item>ai</item>
+        <item>emoji</item>
+        <item>mic</item>
+        <item>gurmukhi_search</item>
+        <item>gurbani</item>
+        <item>settings</item>
+        <item>image_to_text</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>Beautiful Blue</item>
+        <item>Nature Green</item>
+        <item>Royal Red</item>
+        <item>Lovely Pink</item>
+        <item>Royal Purple</item>
+        <item>Bright Orange</item>
+        <item>Golden Luxury</item>
+        <item>Teal Ocean</item>
+        <item>Indigo Night</item>
+        <item>Silver Metallic</item>
+        <item>Coffee Brown</item>
+        <item>Midnight OLED</item>
+        <item>Lavender Dream</item>
+        <item>Forest Moss</item>
+        <item>Sunset Glow</item>
+        <item>Deep Space Grey</item>
+        <item>Ocean Breeze</item>
+        <item>Autumn Leaf</item>
+        <item>Spring Blossom</item>
+        <item>Desert Sand</item>
+        <item>Night Sky</item>
+        <item>Cotton Candy</item>
+        <item>Sunny Morning</item>
+        <item>Fresh Mint</item>
+        <item>Royal Ivory</item>
+        <item>Sky Blue Bliss</item>
+        <item>Custom Photo</item>
+    </string-array>
+
+    <string-array name="theme_values">
+        <item>light</item>
+        <item>dark</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>red</item>
+        <item>pink</item>
+        <item>purple</item>
+        <item>orange</item>
+        <item>gold</item>
+        <item>teal</item>
+        <item>indigo</item>
+        <item>silver</item>
+        <item>coffee</item>
+        <item>midnight</item>
+        <item>lavender</item>
+        <item>moss</item>
+        <item>sunset</item>
+        <item>space</item>
+        <item>ocean</item>
+        <item>autumn</item>
+        <item>blossom</item>
+        <item>sand</item>
+        <item>night_sky</item>
+        <item>cotton</item>
+        <item>sunny</item>
+        <item>mint</item>
+        <item>ivory</item>
+        <item>sky_bliss</item>
+        <item>custom</item>
+    </string-array>
+
+    <string-array name="default_keyboard_entries">
+        <item>Gurmukhi</item>
+        <item>English (QWERTY)</item>
+    </string-array>
+
+    <string-array name="default_keyboard_values">
+        <item>gurmukhi</item>
+        <item>english</item>
+    </string-array>
+
+    <string-array name="font_entries">
+        <item>Default (Bold)</item>
+        <item>Anmol Lipi</item>
+        <item>Amar Lipi</item>
+        <item>Raavi</item>
+    </string-array>
+
+    <string-array name="font_values">
+        <item>default</item>
+        <item>anmol</item>
+        <item>amar</item>
+        <item>raavi</item>
+    </string-array>
+
+    <!-- One-Handed & Split Mode Arrays -->
+    <string-array name="one_handed_entries">
+        <item>Off (ਬੰਦ)</item>
+        <item>Left (ਖੱਬੇ)</item>
+        <item>Right (ਸੱਜੇ)</item>
+        <item>Split (ਦੋਹਾਂ ਪਾਸੇ/Tablet)</item>
+    </string-array>
+
+    <string-array name="one_handed_values">
+        <item>off</item>
+        <item>left</item>
+        <item>right</item>
+        <item>split</item>
+    </string-array>
+</resources>

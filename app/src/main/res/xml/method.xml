@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<input-method xmlns:android="http://schemas.android.com/apk/res/android">
+    <subtype
+        android:label="@string/subtype_gurmukhi_label"
+        android:imeSubtypeLocale="pa_IN"
+        android:imeSubtypeMode="keyboard"
+        android:icon="@mipmap/ic_launcher" />
+    <subtype
+        android:label="@string/subtype_english_us_label"
+        android:imeSubtypeLocale="en_US"
+        android:imeSubtypeMode="keyboard"
+        android:icon="@mipmap/ic_launcher" />
+    <subtype
+        android:label="@string/subtype_gurmukhi_voice_label"
+        android:imeSubtypeLocale="pa_IN"
+        android:imeSubtypeMode="voice"
+        android:icon="@drawable/ic_mic" />
+</input-method>

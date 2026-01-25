@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/aiAnswerPanel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?attr/colorSurface"
+    android:padding="8dp"
+    android:visibility="gone">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/ai_answer_back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_close"
+            android:background="?attr/colorSurface"
+            android:contentDescription="Close" />
+
+        <TextView
+            android:id="@+id/ai_answer_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="AI Assistant"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <ImageButton
+            android:id="@+id/ai_answer_search_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_search"
+            android:background="?attr/colorSurface"
+            android:contentDescription="Search AI" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/ai_input_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ask AI..."
+        android:textColor="?attr/colorOnSurface"
+        android:backgroundTint="?attr/colorControlNormal"
+        android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <ImageButton
+            android:id="@+id/ai_correct_word_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_check"
+            android:background="?attr/colorSurface"
+            android:contentDescription="Correct Word" />
+
+        <ImageButton
+            android:id="@+id/ai_continue_writing_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_continue_writing"
+            android:background="?attr/colorSurface"
+            android:contentDescription="Continue Writing" />
+
+        <ImageButton
+            android:id="@+id/ai_answer_copy_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_clipboard"
+            android:background="?attr/colorSurface"
+            android:contentDescription="Copy" />
+
+        <ImageButton
+            android:id="@+id/ai_answer_insert_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_return_arrow"
+            android:background="?attr/colorSurface"
+            android:contentDescription="Insert" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/ai_answer_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:textIsSelectable="true" />
+
+    </ScrollView>
+
+</LinearLayout>

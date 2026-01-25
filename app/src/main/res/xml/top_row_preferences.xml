@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <MultiSelectListPreference
+        app:key="pref_expanded_top_row_buttons"
+        app:title="Expanded Top Row Buttons"
+        app:summary="Select the buttons to display in the expanded top row"
+        app:entries="@array/top_row_button_entries"
+        app:entryValues="@array/top_row_button_values"
+        app:dialogTitle="Select Buttons"
+        app:defaultValue="@array/top_row_button_values" />
+
+</PreferenceScreen>

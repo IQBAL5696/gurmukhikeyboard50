@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/keyboardViewBackground"
+    android:padding="8dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/calendarHeaderText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/close_calendar_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Close"
+            android:src="@drawable/ic_close" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/date_selection_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spinnerDay"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown" />
+
+        <Spinner
+            android:id="@+id/spinnerMonth"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown" />
+
+        <Spinner
+            android:id="@+id/spinnerYear"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:spinnerMode="dropdown" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/weekday_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <TextView style="@style/WeekDayText" android:text="ਐਤਵਾਰ"/>
+        <TextView style="@style/WeekDayText" android:text="ਸੋਮਵਾਰ"/>
+        <TextView style="@style/WeekDayText" android:text="ਮੰਗਲਵਾਰ"/>
+        <TextView style="@style/WeekDayText" android:text="ਬੁੱਧਵਾਰ"/>
+        <TextView style="@style/WeekDayText" android:text="ਵੀਰਵਾਰ"/>
+        <TextView style="@style/WeekDayText" android:text="ਸ਼ੁੱਕਰਵਾਰ"/>
+        <TextView style="@style/WeekDayText" android:text="ਸ਼ਨੀਵਾਰ"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendarRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/calculateDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate Difference" />
+
+</LinearLayout>

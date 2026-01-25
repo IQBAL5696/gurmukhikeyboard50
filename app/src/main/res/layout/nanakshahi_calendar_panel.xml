@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF3E0"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:id="@+id/main_calendar_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_controls"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="#FFE0B2"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="2dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ਨਾਨਕਸ਼ਾਹੀ ਕੈਲੰਡਰ"
+                android:textColor="#E65100"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ਅਸਲੀ/ਸੋਧਿਆ"
+                android:textSize="10sp"
+                android:textColor="#E65100"
+                android:layout_marginEnd="4dp"/>
+
+            <Switch
+                android:id="@+id/mode_toggle_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumbTint="#EF6C00"
+                android:trackTint="#FFF3E0" />
+
+            <ImageButton
+                android:id="@+id/close_calendar_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Close"
+                app:tint="#E65100"
+                android:src="@android:drawable/ic_menu_close_clear_cancel" />
+        </LinearLayout>
+
+        <!-- Location & Sun Times Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingBottom="4dp">
+            
+            <TextView
+                android:id="@+id/location_display_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#BF360C"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:text="📍 ਲੋਕੇਸ਼ਨ: ਅੰਮ੍ਰਿਤਸਰ (ਸਟੈਂਡਰਡ)" />
+
+            <TextView
+                android:id="@+id/sun_times_display_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#E65100"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:paddingTop="2dp"
+                android:text="☀️ --:-- | 🌙 --:--" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/monthly_highlights_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="2dp"
+            android:textSize="12sp"
+            android:textColor="#D84315"
+            android:textStyle="bold" />
+
+        <!-- Navigation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/prev_month_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_media_previous"
+                app:tint="#E65100" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <Spinner android:id="@+id/month_spinner_top" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                <Spinner android:id="@+id/year_spinner" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/next_month_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_media_next"
+                app:tint="#E65100" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/weekday_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#FFE0B2">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="ਐਤ" android:textColor="#BF360C" android:textStyle="bold"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="ਸੋਮ" android:textColor="#BF360C" android:textStyle="bold"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="ਮੰਗਲ" android:textColor="#BF360C" android:textStyle="bold"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="ਬੁੱਧ" android:textColor="#BF360C" android:textStyle="bold"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="ਵੀਰ" android:textColor="#BF360C" android:textStyle="bold"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="ਸ਼ੁੱਕਰ" android:textColor="#BF360C" android:textStyle="bold"/>
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="ਸ਼ਨੀ" android:textColor="#BF360C" android:textStyle="bold"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calendarRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#FFF8E1" />
+
+        <!-- Hidden spinners -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:visibility="gone">
+            <Spinner android:id="@+id/spinnerDay" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <Spinner android:id="@+id/spinnerMonth" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <Spinner android:id="@+id/spinnerYear" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:paddingTop="4dp"
+        android:background="#FFE0B2">
+
+        <TextView
+            android:id="@+id/nanakshahi_calendar_output_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFCC80"
+            android:gravity="center"
+            android:padding="4dp"
+            android:textSize="14sp"
+            android:textColor="#5D4037"
+            android:textStyle="italic" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp">
+            <Button android:id="@+id/btn_today" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:backgroundTint="#EF6C00" android:text="ਅੱਜ" android:textSize="11sp" android:padding="0dp" />
+            <Button android:id="@+id/btn_hukamnama" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.2" android:backgroundTint="#EF6C00" android:text="ਹੁਕਮਨਾਮਾ" android:textSize="11sp" android:padding="0dp" />
+            <Button android:id="@+id/btn_events" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.2" android:backgroundTint="#EF6C00" android:text="ਗੁਰਪੁਰਬ" android:textSize="11sp" android:padding="0dp" />
+            <Button android:id="@+id/findDateButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:backgroundTint="#EF6C00" android:text="ਖੋਜ" android:textSize="11sp" android:padding="0dp" />
+            <Button android:id="@+id/calculateDateButton" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:backgroundTint="#EF6C00" android:text="ਅੰਤਰ" android:textSize="11sp" android:padding="0dp" />
+        </LinearLayout>
+
+        <!-- Navigation Bar Spacer (Dynamic based on orientation) -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_spacer_height"
+            android:background="@android:color/transparent" />
+    </LinearLayout>
+</RelativeLayout>

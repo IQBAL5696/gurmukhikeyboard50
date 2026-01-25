@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#000000"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <!-- Preview of Captured Photo -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="#111" />
+
+    <!-- Buttons Row -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:background="#000">
+
+        <Button
+            android:id="@+id/cropButton"
+            android:text="✂️ Crop"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF0000"
+            android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:elevation="6dp"
+            android:radius="100dp" />
+
+        <Button
+            android:id="@+id/shareButton"
+            android:text="📤 Share"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF0000"
+            android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            android:elevation="6dp"
+            android:radius="100dp" />
+    </LinearLayout>
+</LinearLayout>

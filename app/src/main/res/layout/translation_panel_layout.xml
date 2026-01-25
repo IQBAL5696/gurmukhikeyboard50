@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?attr/keyboardViewBackground"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:id="@+id/translation_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/close_translation_panel_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_close"
+                app:tint="?attr/iconColor"
+                android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+            <Spinner
+                android:id="@+id/source_language_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/swap_languages_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_swap_horiz"
+                app:tint="?attr/iconColor"
+                android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+            <Spinner
+                android:id="@+id/target_language_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/translation_input_text"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Enter text"
+            android:textColor="?attr/keyboardKeyTextColor"
+            android:background="@drawable/prediction_item_background"
+            android:padding="8dp"
+            android:layout_marginTop="4dp"
+            android:inputType="textMultiLine" />
+
+        <TextView
+            android:id="@+id/translation_output_text"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textColor="?attr/keyboardKeyTextColor"
+            android:background="@drawable/prediction_item_background"
+            android:padding="8dp"
+            android:layout_marginTop="4dp"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Speed: "
+                android:textColor="?attr/keyboardKeyTextColor" />
+
+            <SeekBar
+                android:id="@+id/voice_speed_seekbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="200"
+                android:progress="100" />
+
+            <ImageButton
+                android:id="@+id/speak_translation_button"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@android:drawable/ic_media_play"
+                app:tint="?attr/iconColor"
+                android:background="?android:attr/selectableItemBackgroundBorderless" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/voice_translate_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_btn_speak_now"
+            android:background="?attr/functionalKeyBackground"
+            app:tint="?attr/iconColor"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+</LinearLayout>

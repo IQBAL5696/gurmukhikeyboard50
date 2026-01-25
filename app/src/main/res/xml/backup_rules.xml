@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- TODO: Remove the following exclude if you want to backup device-specific media files -->
+    <exclude domain="external" />
+</full-backup-content>

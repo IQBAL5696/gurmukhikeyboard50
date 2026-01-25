@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:keyWidth="6.5%p"
+    android:keyHeight="45dp"
+    android:horizontalGap="4.7px"
+    android:verticalGap="4.7dp">
+
+    <!-- Row 1: Numbers with Shifted Characters -->
+    <Row>
+        <Key android:codes="49" app:shiftedCode="2676" android:keyLabel="1" android:keyEdgeFlags="left" />
+        <Key android:codes="50" app:shiftedCode="2404" android:keyLabel="2" />
+        <Key android:codes="51" app:shiftedCode="2585" android:keyLabel="3" />
+        <Key android:codes="52" app:shiftedCode="2590" android:keyLabel="4" />
+        <Key android:codes="53" app:shiftedCode="-2005" android:keyLabel="5" />
+        <Key android:keyWidth="20%p" android:codes="0" android:keyLabel=" " />
+        <Key android:codes="54" app:shiftedCode="2649" android:keyLabel="6" />
+        <Key android:codes="55" app:shiftedCode="2654" android:keyLabel="7" />
+        <Key android:codes="56" app:shiftedCode="2611" android:keyLabel="8" />
+        <Key android:codes="57" app:shiftedCode="-2006" android:keyLabel="9" />
+        <Key android:codes="48" app:shiftedCode="2637" android:keyLabel="0" android:keyEdgeFlags="right" />
+    </Row>
+
+    <!-- Row 2 -->
+    <Row>
+        <Key android:codes="2596" app:shiftedCode="2597" android:keyLabel="ਤ" android:keyEdgeFlags="left" />
+        <Key android:codes="2622" app:shiftedCode="-2002" android:keyLabel="ਾ" />
+        <Key android:codes="2674" app:shiftedCode="2579" android:keyLabel="ੲ" />
+        <Key android:codes="2608" app:shiftedCode="-2003" android:keyLabel="ਰ" />
+        <Key android:codes="2591" app:shiftedCode="2592" android:keyLabel="ਟ" />
+        <Key android:keyWidth="20%p" android:codes="0" android:keyLabel=" " />
+        <Key android:codes="2631" app:shiftedCode="2632" android:keyLabel="ੇ" />
+        <Key android:codes="2623" app:shiftedCode="2624" android:keyLabel="ਿ" />
+        <Key android:codes="2625" app:shiftedCode="2626" android:keyLabel="ੁ" />
+        <Key android:codes="2635" app:shiftedCode="2636" android:keyLabel="ੋ" />
+        <Key android:codes="2602" app:shiftedCode="2603" android:keyLabel="ਪ" android:keyEdgeFlags="right" />
+    </Row>
+
+    <!-- Row 3 -->
+    <Row>
+        <Key android:codes="2565" app:shiftedCode="2675" android:keyLabel="ਅ" android:keyEdgeFlags="left" />
+        <Key android:codes="2616" app:shiftedCode="2614" android:keyLabel="ਸ" />
+        <Key android:codes="2598" app:shiftedCode="2599" android:keyLabel="ਦ" />
+        <Key android:codes="2593" app:shiftedCode="2594" android:keyLabel="ਡ" />
+        <Key android:keyWidth="30%p" android:codes="0" android:keyLabel=" " />
+        <Key android:codes="2583" app:shiftedCode="2584" android:keyLabel="ਗ" />
+        <Key android:codes="2617" app:shiftedCode="-2004" android:keyLabel="ਹ" />
+        <Key android:codes="2588" app:shiftedCode="2589" android:keyLabel="ਜ" />
+        <Key android:codes="2581" app:shiftedCode="2582" android:keyLabel="ਕ" />
+        <Key android:codes="2610" app:shiftedCode="2673" android:keyLabel="ਲ" android:keyEdgeFlags="right" />
+    </Row>
+
+    <!-- Row 4 -->
+    <Row>
+        <Key android:codes="-1" android:keyIcon="@drawable/ic_shift_off" android:keyWidth="12%p" android:isModifier="true" android:keyEdgeFlags="left" />
+        <Key android:codes="2651" app:shiftedCode="2650" android:keyLabel="ਜ਼" />
+        <Key android:codes="2595" app:shiftedCode="2607" android:keyLabel="ਣ" />
+        <Key android:codes="2586" app:shiftedCode="2587" android:keyLabel="ਚ" />
+        <Key android:keyWidth="20%p" android:codes="0" android:keyLabel=" " />
+        <Key android:codes="2613" app:shiftedCode="2652" android:keyLabel="ਵ" />
+        <Key android:codes="2604" app:shiftedCode="2605" android:keyLabel="ਬ" />
+        <Key android:codes="2600" app:shiftedCode="2562" android:keyLabel="ਨ" />
+        <Key android:codes="2606" app:shiftedCode="2672" android:keyLabel="ਮ" />
+        <Key android:codes="-5" android:keyIcon="@drawable/ic_backspace" android:keyWidth="12%p" android:keyEdgeFlags="right" />
+    </Row>
+
+    <Row android:rowEdgeFlags="bottom">
+        <Key android:codes="-101" android:keyLabel="abc" android:keyWidth="15%p" android:keyEdgeFlags="left" />
+        <Key android:codes="-2" android:keyLabel="\?123" android:keyWidth="10%p" />
+        <Key android:keyWidth="50%p" android:codes="0" android:keyLabel=" " />
+        <Key android:codes="32" android:keyIcon="@drawable/ic_space_bar" android:keyWidth="10%p" />
+        <Key android:codes="-4" android:keyIcon="@drawable/ic_return_arrow" android:keyWidth="15%p" android:keyEdgeFlags="right" />
+    </Row>
+
+</Keyboard>

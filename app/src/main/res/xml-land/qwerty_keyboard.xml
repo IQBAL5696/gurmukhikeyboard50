@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:keyWidth="8%p"
+    android:keyHeight="35dp"
+    android:horizontalGap="6.7dp"
+    android:verticalGap="6.7dp">
+
+
+    <Row>
+        <Key android:codes="49" app:shiftedCode="33" android:keyLabel="1" android:keyEdgeFlags="left"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/><!-- 1 / ੴ -->
+        <Key android:codes="50" app:shiftedCode="64" android:keyLabel="2"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/><!-- 2 / । -->
+        <Key android:codes="51" app:shiftedCode="35" android:keyLabel="3"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/><!-- 3 / ਙ -->
+        <Key android:codes="52" app:shiftedCode="36" android:keyLabel="4"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/><!-- 4 / ਞ -->
+        <Key android:codes="53" app:shiftedCode="37" android:keyLabel="5"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/><!-- 5 / ੍ਵ (Halant+Vava) -->
+        <Key android:codes="54" app:shiftedCode="94" android:keyLabel="6"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/><!-- 6 / ਖ਼ -->
+        <Key android:codes="55" app:shiftedCode="38" android:keyLabel="7"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/><!-- 7 / ਫ਼ -->
+        <Key android:codes="56" app:shiftedCode="42" android:keyLabel="8"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/><!-- 8 / ਲ਼ -->
+        <Key android:codes="57" app:shiftedCode="40" android:keyLabel="9"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- 9 / ੍ਯ (Halant+Yayya) -->
+        <Key android:codes="48" app:shiftedCode="41" android:keyLabel="0" android:keyEdgeFlags="right"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- 0 / ੍ (Halant) -->
+    </Row>
+    <Row>
+        <Key android:codes="113" app:shiftedCode="81" android:keyLabel="q" android:popupCharacters="ੁੂੇੈ" android:keyEdgeFlags="left"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਤ / ਥ -->
+        <Key android:codes="119" app:shiftedCode="87" android:keyLabel="w" android:popupCharacters="ਿੀਾ"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਸ / ਸ਼ -->
+        <Key android:codes="101" app:shiftedCode="69" android:keyLabel="e" android:popupCharacters="ਧ"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਦ / ਧ -->
+        <Key android:codes="114" app:shiftedCode="82" android:keyLabel="r"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਡ / ਢ -->
+        <Key android:codes="116" app:shiftedCode="84" android:keyLabel="t"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਗ / ਘ -->
+        <Key android:codes="121" app:shiftedCode="89" android:keyLabel="y"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਹ -->
+        <Key android:codes="117" app:shiftedCode="85" android:keyLabel="u"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਜ / ਝ -->
+        <Key android:codes="105" app:shiftedCode="73" android:keyLabel="i"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਕ / ਖ -->
+        <Key android:codes="111" app:shiftedCode="79" android:keyLabel="o"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਲ / ੱ -->
+        <Key android:codes="112" app:shiftedCode="80" android:keyLabel="p" android:keyEdgeFlags="right"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਲ / ੱ -->
+    </Row>
+
+    <Row android:horizontalGap="1.0%p">
+        <Key android:codes="97" app:shiftedCode="65" android:keyLabel="a" android:keyEdgeFlags="left" android:horizontalGap="6.6%p"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyWidth="8%p" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਤ / ਥ -->
+        <Key android:codes="115" app:shiftedCode="83" android:keyLabel="s"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyWidth="8%p" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="100" app:shiftedCode="68" android:keyLabel="d"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyWidth="8%p" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="102" app:shiftedCode="70" android:keyLabel="f"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyWidth="8%p" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="103" app:shiftedCode="71" android:keyLabel="g"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyWidth="8%p" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="104" app:shiftedCode="72" android:keyLabel="h"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyWidth="8%p" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="106" app:shiftedCode="74" android:keyLabel="j"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyWidth="8%p" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="107" app:shiftedCode="75" android:keyLabel="k"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyWidth="8%p" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="108" app:shiftedCode="76" android:keyLabel="l" android:keyEdgeFlags="right"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyWidth="8%p" android:keyPreviewLayout="@layout/no_preview_layout"/>
+    </Row>
+
+
+    <Row>
+        <Key android:codes="-1" android:keyIcon="@drawable/ic_shift_off"
+            android:keyWidth="13%p" android:isModifier="true"
+            android:isSticky="false" android:keyEdgeFlags="left" android:keyBackground="?attr/functionalKeyBackground" android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="122" app:shiftedCode="90" android:keyLabel="z"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਤ / ਥ -->
+        <Key android:codes="120" app:shiftedCode="88" android:keyLabel="x"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਸ / ਸ਼ -->
+        <Key android:codes="99" app:shiftedCode="67" android:keyLabel="c"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਦ / ਧ -->
+        <Key android:codes="118" app:shiftedCode="86" android:keyLabel="v"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਡ / ਢ -->
+        <Key android:codes="98" app:shiftedCode="66" android:keyLabel="b"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਗ / ਘ -->
+        <Key android:codes="110" app:shiftedCode="78" android:keyLabel="n"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਹ -->
+        <Key android:codes="109" app:shiftedCode="77" android:keyLabel="m"
+            android:keyBackground="?attr/keyboardKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ਜ / ਝ -->
+        <Key android:codes="-5" android:keyIcon="@drawable/ic_backspace"
+            android:keyBackground="?attr/functionalKeyBackground"
+            android:keyTextColor="?attr/keyboardKeyTextColor" android:keyWidth="13%p"
+            android:isRepeatable="true" android:keyPreviewLayout="@layout/no_preview_layout"/>
+
+    </Row>
+
+    <Row android:rowEdgeFlags="bottom">
+        <Key android:codes="-100" android:keyLabel="ੳਅੲ" android:keyTextSize="15sp" android:keyWidth="15%p" android:keyBackground="?attr/functionalKeyBackground" android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="44" android:keyLabel="," android:keyBackground="?attr/functionalKeyBackground" android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="-2" android:keyLabel="@string/symbols_label" android:keyTextSize="15sp" android:keyBackground="?attr/functionalKeyBackground" android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="32" android:keyIcon="@drawable/ic_space_bar" android:keyWidth="34%p" android:isRepeatable="true" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="46" android:keyLabel="." android:keyBackground="?attr/functionalKeyBackground" android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="-4" android:keyIcon="@drawable/ic_return_arrow" app:forPackage="com.whatsapp" android:keyWidth="15%p" android:keyEdgeFlags="right" android:keyBackground="?attr/functionalKeyBackground" android:keyTextColor="?attr/keyboardKeyTextColor" android:keyPreviewLayout="@layout/no_preview_layout"/>
+    </Row>
+
+</Keyboard>

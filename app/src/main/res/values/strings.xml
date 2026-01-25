@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name" translatable="false">Gurmukhi Keyboard 5.0</string>
+    <string name="title_activity_keyboard_settings" translatable="false">Keyboard Settings</string>
+
+    <string name="settings_voice_input_summary" translatable="false">Set voice recognition options</string>
+    <string name="pref_category_dictionary" translatable="false">Dictionary</string>
+    <string name="pref_clear_dictionary_title" translatable="false">Clear Learned Words</string>
+    <string name="pref_clear_dictionary_summary" translatable="false">Remove all custom learned words from dictionary</string>
+    <string name="dictionary_cleared" translatable="false">Dictionary cleared successfully</string>
+
+    <!-- Content Descriptions for Accessibility -->
+    <string name="desc_backspace" translatable="false">Backspace</string>
+    <string name="desc_shift" translatable="false">Shift</string>
+    <string name="desc_enter" translatable="false">Enter</string>
+    <string name="desc_space" translatable="false">Space</string>
+    <string name="desc_switch_keyboard" translatable="false">Switch Keyboard</string>
+    <string name="desc_emoji" translatable="false">Emoji</string>
+    <string name="desc_mic" translatable="false">Voice Input</string>
+    <string name="desc_settings" translatable="false">Settings</string>
+    <string name="desc_gurbani_player" translatable="false">Gurbani Player</string>
+    <string name="desc_translate" translatable="false">Translate</string>
+    <string name="desc_calendar" translatable="false">Calendar</string>
+
+    <!-- Missing strings identified in error -->
+    <string name="keyboard_name" translatable="false">Gurmukhi Keyboard</string>
+    <string name="ime_name" translatable="false">Gurmukhi IME</string>
+    <string name="translating" translatable="false">Translating...</string>
+    <string name="translation_failed" translatable="false">Translation failed: %1$s</string>
+    <string name="model_download_failed" translatable="false">Model download failed: %1$s</string>
+    <string name="downloading_model" translatable="false">Downloading model...</string>
+    <string name="hint_enter_text" translatable="false">Enter text</string>
+    <string name="label_translation" translatable="false">Translation</string>
+    <string name="hint_enter_language_text" translatable="false">Enter %1$s text</string>
+
+    <string name="image_to_text_select_image_button_text" translatable="false">Select Image</string>
+    <string name="image_to_text_image_view_description" translatable="false">Image for OCR</string>
+    <string name="image_to_text_edit_text_hint" translatable="false">Extracted text will appear here</string>
+    <string name="privacy_policy_button_text" translatable="false">Privacy Policy</string>
+    <string name="app_version_label_text" translatable="false">Version</string>
+
+    <string name="day_sunday" translatable="false">S</string>
+    <string name="day_monday" translatable="false">M</string>
+    <string name="day_tuesday" translatable="false">T</string>
+    <string name="day_wednesday" translatable="false">W</string>
+    <string name="day_thursday" translatable="false">T</string>
+    <string name="day_friday" translatable="false">F</string>
+    <string name="day_saturday" translatable="false">S</string>
+
+    <string name="symbols_label" translatable="false">\?123</string>
+    <string name="subtype_gurmukhi_label" translatable="false">Gurmukhi</string>
+    <string name="subtype_english_us_label" translatable="false">English (US)</string>
+    <string name="subtype_gurmukhi_voice_label" translatable="false">Gurmukhi Voice</string>
+
+    <!-- Nanakshahi Calendar Strings -->
+    <string name="nanakshahi_sudi" translatable="false">ਸੁਦੀ</string>
+    <string name="nanakshahi_vadi" translatable="false">ਵਦੀ</string>
+    <string name="nanakshahi_adhik" translatable="false">ਅਧਿਕ</string>
+    <string name="nanakshahi_cheth" translatable="false">ਚੇਤ</string>
+    <string name="nanakshahi_vesakh" translatable="false">ਵੈਸਾਖ</string>
+    <string name="nanakshahi_jeth" translatable="false">ਜੇਠ</string>
+    <string name="nanakshahi_harh" translatable="false">ਹਾੜ</string>
+    <string name="nanakshahi_savan" translatable="false">ਸਾਵਣ</string>
+    <string name="nanakshahi_bhadon" translatable="false">ਭਾਦੋਂ</string>
+    <string name="nanakshahi_assu" translatable="false">ਅੱਸੂ</string>
+    <string name="nanakshahi_kattak" translatable="false">ਕੱਤਕ</string>
+    <string name="nanakshahi_magghar" translatable="false">ਮੱਘਰ</string>
+    <string name="nanakshahi_poh" translatable="false">ਪੋਹ</string>
+    <string name="nanakshahi_magh" translatable="false">ਮਾਘ</string>
+    <string name="nanakshahi_phagan" translatable="false">ਫੱਗਣ</string>
+    <string name="error_month_name" translatable="false">ਅਗਿਆਤ</string>
+
+</resources>

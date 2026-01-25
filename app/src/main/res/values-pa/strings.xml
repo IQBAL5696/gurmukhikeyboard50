@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Gurmukhi.Punjabi keyboard</string>
+    <string name="keyboard_name">ਗੁਰਮੁਖੀ ਕੀਬੋਰਡ</string>
+    <string name="ime_name">ਗੁਰਮੁਖੀ IME</string>
+    <string name="translating">⏳ ਅਨੁਵਾਦ ਹੋ ਰਿਹਾ ਹੈ...</string>
+    <string name="translation_failed">⚠️ ਅਨੁਵਾਦ ਫੇਲ ਹੋਇਆ: %1$s</string>
+    <string name="model_download_failed">⚠️ ਮਾਡਲ ਡਾਊਨਲੋਡ ਫੇਲ ਹੋਇਆ: %1$s</string>
+    <string name="downloading_model">ਮਾਡਲ ਡਾਊਨਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...</string>
+
+    <string name="hint_enter_text">ਟੈਕਸਟ ਦਾਖਲ ਕਰੋ</string>
+    <string name="label_translation">ਅਨੁਵਾਦ</string>
+    <string name="hint_enter_language_text">%1$s ਟੈਕਸਟ ਦਾਖਲ ਕਰੋ</string>
+</resources>
