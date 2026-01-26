@@ -15,6 +15,7 @@ import android.view.MotionEvent
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.preference.PreferenceManager
+import kotlin.math.abs
 
 class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(context, attrs) {
 
@@ -29,6 +30,11 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
     private lateinit var gestureDetector: GestureDetector
     private var service: MyKeyboardIME? = null
 
+    private var spacebarStartX = 0f
+    private var isSpacebarDragging = false
+    private val moveThreshold = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10f, context.resources.displayMetrics)
+    private var lastMoveX = 0f
+
     init {
         isProximityCorrectionEnabled = false
         textPaint.isAntiAlias = true
@@ -38,20 +44,19 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
 
         gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
             override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-                if (e1 == null) return false
+                if (e1 == null || isSpacebarDragging) return false
                 val dx = e2.x - e1.x
                 val dy = e2.y - e1.y
-                val swipeThreshold = 100
-                val swipeVelocityThreshold = 100
+                val swipeThreshold = 50 // ਸੰਵੇਦਨਸ਼ੀਲਤਾ ਵਧਾਈ ਗਈ ਹੈ
+                val swipeVelocityThreshold = 50
 
-                if (Math.abs(dx) > Math.abs(dy)) {
-                    if (Math.abs(dx) > swipeThreshold && Math.abs(velocityX) > swipeVelocityThreshold) {
-                        if (dx > 0) onKeyboardActionListener?.swipeRight() else onKeyboardActionListener?.swipeLeft()
-                        return true
-                    }
-                } else {
-                    if (Math.abs(dy) > swipeThreshold && Math.abs(velocityY) > swipeVelocityThreshold) {
-                        if (dy > 0) onKeyboardActionListener?.swipeDown() else onKeyboardActionListener?.swipeUp()
+                if (abs(dx) > abs(dy)) {
+                    if (abs(dx) > swipeThreshold && abs(velocityX) > swipeVelocityThreshold) {
+                        if (dx > 0) {
+                            onKeyboardActionListener?.swipeRight()
+                        } else {
+                            onKeyboardActionListener?.swipeLeft()
+                        }
                         return true
                     }
                 }
@@ -136,31 +141,72 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
         setPopupOffset(0, 0)
     }
 
-    override fun onLongPress(key: Keyboard.Key?): Boolean {
-        // Essential for immediate swipe activation on long press
-        return super.onLongPress(key)
-    }
-
     override fun onTouchEvent(me: MotionEvent): Boolean {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         val popupEnabled = sharedPrefs.getBoolean("popup_on_keypress", true)
 
-        if (me.action == MotionEvent.ACTION_DOWN || me.action == MotionEvent.ACTION_MOVE) {
-            val x = me.x.toInt() - paddingLeft
-            val y = me.y.toInt() - paddingTop
-            val keys = keyboard?.keys
-            if (keys != null) {
-                for (key in keys) {
-                    if (key.isInside(x, y)) {
-                        isPreviewEnabled = popupEnabled && !isFunctional(key)
-                        break
+        val x = me.x.toInt() - paddingLeft
+        val y = me.y.toInt() - paddingTop
+        
+        when (me.action) {
+            MotionEvent.ACTION_DOWN -> {
+                val key = findKeyAt(x, y)
+                if (key != null && key.codes.contains(32)) {
+                    spacebarStartX = me.x
+                    lastMoveX = me.x
+                    isSpacebarDragging = false
+                } else {
+                    spacebarStartX = -1f
+                }
+                if (key != null) {
+                    isPreviewEnabled = popupEnabled && !isFunctional(key)
+                }
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (spacebarStartX != -1f) {
+                    val totalDx = me.x - spacebarStartX
+                    if (isSpacebarDragging || abs(totalDx) > moveThreshold * 1.2f) {
+                        isSpacebarDragging = true
+                        val dxSinceLast = me.x - lastMoveX
+                        if (abs(dxSinceLast) > moveThreshold) {
+                            val listener = onKeyboardActionListener as? MyKeyboardActionListener
+                            if (dxSinceLast > 0) listener?.moveCursor(1) else listener?.moveCursor(-1)
+                            lastMoveX = me.x
+                        }
+                        isPreviewEnabled = false
+                        return true
                     }
                 }
+                val key = findKeyAt(x, y)
+                if (key != null) {
+                    isPreviewEnabled = popupEnabled && !isFunctional(key)
+                }
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                if (isSpacebarDragging) {
+                    isSpacebarDragging = false
+                    spacebarStartX = -1f
+                    // Cancel current key press to avoid typing a space
+                    val cancelEvent = MotionEvent.obtain(me)
+                    cancelEvent.action = MotionEvent.ACTION_CANCEL
+                    super.onTouchEvent(cancelEvent)
+                    cancelEvent.recycle()
+                    return true
+                }
+                spacebarStartX = -1f
             }
         }
         
         gestureDetector.onTouchEvent(me)
         return super.onTouchEvent(me)
+    }
+
+    private fun findKeyAt(x: Int, y: Int): Keyboard.Key? {
+        val keys = keyboard?.keys ?: return null
+        for (key in keys) {
+            if (key.isInside(x, y)) return key
+        }
+        return null
     }
 
     override fun onDraw(canvas: Canvas) {

@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 class KeyboardSettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE) // Hide ActionBar/Toolbar
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_keyboard_settings)
 
@@ -23,14 +23,17 @@ class KeyboardSettingsActivity : AppCompatActivity() {
                 .commit()
         }
 
-        val btnAdjustLayout: Button = findViewById(R.id.btn_adjust_layout)
-        btnAdjustLayout.setOnClickListener {
+        findViewById<Button>(R.id.btn_adjust_layout).setOnClickListener {
             val intent = Intent(this, AdjustKeyboardLayoutActivity::class.java)
             startActivity(intent)
         }
 
-        val btnPrivacyPolicy: Button = findViewById(R.id.btn_privacy_policy)
-        btnPrivacyPolicy.setOnClickListener {
+        findViewById<Button>(R.id.btn_manage_shortcuts).setOnClickListener {
+            val intent = Intent(this, ShortcutsActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.btn_privacy_policy).setOnClickListener {
             val intent = Intent(this, PrivacyPolicyActivity::class.java)
             startActivity(intent)
         }
@@ -40,7 +43,6 @@ class KeyboardSettingsActivity : AppCompatActivity() {
             val packageInfo = packageManager.getPackageInfo(packageName, 0)
             tvAppVersion.text = "App Version: ${packageInfo.versionName}"
         } catch (e: PackageManager.NameNotFoundException) {
-            Log.e("KeyboardSettings", "Error getting package info: ", e)
             tvAppVersion.text = "App Version: Not available"
         }
     }

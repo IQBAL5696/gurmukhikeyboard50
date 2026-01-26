@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ਫੋਟੋ ਤੋਂ ਲਿਖਤ (OCR)"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:textColor="@android:color/black"/>
+
+    <Button
+        android:id="@+id/btn_select_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ਗੈਲਰੀ ਵਿੱਚੋਂ ਫੋਟੋ ਚੁਣੋ"
+        android:layout_marginBottom="16dp"/>
+
+    <ImageView
+        android:id="@+id/iv_selected_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerInside"
+        android:layout_marginBottom="8dp"
+        android:background="#EEEEEE"
+        android:visibility="gone"/>
+
+    <!-- ਨਵਾਂ ਬਟਨ: ਲਕੀਰ ਲਗਾਉਣ ਲਈ -->
+    <CheckBox
+        android:id="@+id/cb_table_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ਲਕੀਰਾਂ ਲਗਾਓ (Table Mode)"
+        android:layout_gravity="end"
+        android:layout_marginBottom="8dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <EditText
+            android:id="@+id/et_recognized_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ਪਛਾਣਿਆ ਗਿਆ ਟੈਕਸਟ ਇੱਥੇ ਦਿਖਾਈ ਦੇਵੇਗਾ..."
+            android:gravity="top"
+            android:padding="8dp"
+            android:background="#F9F9F9"
+            android:typeface="monospace"
+            android:textColor="@android:color/black"/>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ਰੱਦ ਕਰੋ"
+            style="?android:attr/borderlessButtonStyle"/>
+        <Button
+            android:id="@+id/btn_insert"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ਟਾਈਪ ਕਰੋ"/>
+    </LinearLayout>
+</LinearLayout>

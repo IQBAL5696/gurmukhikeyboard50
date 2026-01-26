@@ -6,14 +6,12 @@
     android:layout_height="match_parent"
     android:background="?attr/keyboardViewBackground">
 
-    <!-- Container for Keyboard + Bottom Navigation Spacer -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="vertical">
 
-        <!-- This horizontal container handles the split and one-handed logic -->
         <LinearLayout
             android:id="@+id/one_handed_container"
             android:layout_width="match_parent"
@@ -21,7 +19,6 @@
             android:orientation="horizontal"
             android:weightSum="100">
 
-            <!-- Left Control Panel -->
             <LinearLayout
                 android:id="@+id/one_handed_spacer_left"
                 android:layout_width="0dp"
@@ -30,7 +27,6 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone">
-
                 <ImageButton
                     android:id="@+id/btn_move_to_left"
                     android:layout_width="wrap_content"
@@ -39,7 +35,6 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/outline_arrows_output_24"
                     app:tint="?attr/iconColor" />
-
                 <ImageButton
                     android:id="@+id/btn_expand_left"
                     android:layout_width="wrap_content"
@@ -51,7 +46,6 @@
                     app:tint="?attr/iconColor" />
             </LinearLayout>
 
-            <!-- Main Keyboard Area -->
             <LinearLayout
                 android:id="@+id/mainKeyboardLayout"
                 android:layout_width="0dp"
@@ -66,6 +60,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone" />
+
+                <!-- AI Assistant Panel Container -->
+                <FrameLayout
+                    android:id="@+id/ai_assistant_panel_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+                    <include layout="@layout/ai_answer_panel" />
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -108,7 +111,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:background="@android:color/transparent">
-
                     <com.iqbal.gurmukhikeyboard50.MyKeyboardView
                         android:id="@+id/keyboardView"
                         android:layout_width="match_parent"
@@ -120,7 +122,6 @@
                 </FrameLayout>
             </LinearLayout>
 
-            <!-- Right Control Panel -->
             <LinearLayout
                 android:id="@+id/one_handed_spacer_right"
                 android:layout_width="0dp"
@@ -129,7 +130,6 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone">
-
                 <ImageButton
                     android:id="@+id/btn_move_to_right"
                     android:layout_width="wrap_content"
@@ -139,7 +139,6 @@
                     android:src="@drawable/outline_arrows_output_24"
                     android:rotation="180"
                     app:tint="?attr/iconColor" />
-
                 <ImageButton
                     android:id="@+id/btn_expand_right"
                     android:layout_width="wrap_content"
@@ -150,19 +149,15 @@
                     android:src="@drawable/ic_keyboard"
                     app:tint="?attr/iconColor" />
             </LinearLayout>
-
         </LinearLayout>
 
-        <!-- Dynamic Spacer based on Orientation -->
         <View
             android:id="@+id/navigation_bar_spacer"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_spacer_height"
             android:background="@android:color/transparent" />
-
     </LinearLayout>
 
-    <!-- Overlays -->
     <include
         android:id="@+id/suggestion_panel"
         layout="@layout/suggestion_panel"
@@ -170,14 +165,12 @@
         android:layout_height="match_parent"
         android:paddingBottom="10dp"
         android:visibility="gone" />
-
     <FrameLayout
         android:id="@+id/nanakshahi_calendar_panel_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="10dp"
         android:visibility="gone" />
-
     <include
         android:id="@+id/emoji_panel_container"
         layout="@layout/emoji_panel_container"
@@ -185,7 +178,6 @@
         android:layout_height="match_parent"
         android:paddingBottom="10dp"
         android:visibility="gone" />
-
     <include
         android:id="@+id/voice_input_popup_container"
         layout="@layout/voice_input_popup_container"
@@ -194,7 +186,6 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="50dp"
         android:visibility="gone" />
-
     <include
         android:id="@+id/clipboard_panel_layout"
         layout="@layout/clipboard_panel_layout"
@@ -202,5 +193,4 @@
         android:layout_height="match_parent"
         android:paddingBottom="10dp"
         android:visibility="gone" />
-
 </FrameLayout>

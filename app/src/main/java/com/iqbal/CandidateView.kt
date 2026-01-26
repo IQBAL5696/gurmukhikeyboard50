@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.text.StaticLayout
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -62,7 +61,15 @@ class CandidateView @JvmOverloads constructor(
 
     fun setSuggestions(newSuggestions: List<String>) {
         suggestions.clear()
-        suggestions.addAll(newSuggestions)
+        
+        // Add Undo/Redo at the beginning only if it's not already a special result like calculation
+        if (newSuggestions.isEmpty()) {
+            suggestions.add("↶ Undo")
+            suggestions.add("↷ Redo")
+        } else {
+            suggestions.addAll(newSuggestions)
+        }
+        
         requestLayout()
         invalidate()
     }
@@ -84,7 +91,7 @@ class CandidateView @JvmOverloads constructor(
             totalWidth -= suggestionSpacing.toInt()
         }
 
-        val resolvedWidth = resolveSize(totalWidth, widthMeasureSpec)
+        val resolvedWidth = resolveSize(maxOf(totalWidth, 1), widthMeasureSpec)
         val desiredHeight = (textPaint.fontSpacing + paddingTop + paddingBottom).toInt()
         val resolvedHeight = resolveSize(desiredHeight, heightMeasureSpec)
 
@@ -99,6 +106,20 @@ class CandidateView @JvmOverloads constructor(
         var currentX = paddingLeft.toFloat()
 
         for (suggestion in suggestions) {
+            // Draw special styling for Undo/Redo
+            if (suggestion == "↶ Undo" || suggestion == "↷ Redo") {
+                textPaint.isFakeBoldText = true
+                textPaint.color = Color.GRAY
+            } else {
+                textPaint.isFakeBoldText = false
+                val textColorValue = TypedValue()
+                if (context.theme.resolveAttribute(R.attr.candidatesTextColor, textColorValue, true)) {
+                    textPaint.color = textColorValue.data
+                } else {
+                    textPaint.color = Color.BLACK
+                }
+            }
+            
             canvas.drawText(suggestion, currentX, y, textPaint)
             currentX += textPaint.measureText(suggestion) + suggestionSpacing
         }
@@ -136,7 +157,7 @@ class CandidateView @JvmOverloads constructor(
             MotionEvent.ACTION_UP -> {
                 longPressHandler.removeCallbacks(longPressRunnable)
                 if (!isLongPressTriggered && touchedSuggestionIndex != -1 && touchedSuggestionIndex < suggestions.size) {
-                    onSuggestionClickListener?.invoke(suggestions[touchedSuggestionIndex].trim())
+                    onSuggestionClickListener?.invoke(suggestions[touchedSuggestionIndex])
                 }
                 touchedSuggestionIndex = -1
                 isLongPressTriggered = false

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AI Assistant ਸੈਟਿੰਗਾਂ"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Google Gemini API Key ਭਰੋ:"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/et_ai_api_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ਇੱਥੇ API Key ਪੇਸਟ ਕਰੋ..."
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="16dp"
+        android:inputType="textPassword"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ਤੁਸੀਂ ਆਪਣੀ ਮੁਫ਼ਤ API Key Google AI Studio ਤੋਂ ਲੈ ਸਕਦੇ ਹੋ।"
+        android:textSize="12sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btn_save_ai_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ਸੇਵ ਕਰੋ (Save)"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btn_ai_config_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ਬੰਦ ਕਰੋ"
+        style="?android:attr/borderlessButtonStyle"
+        android:onClick="finish"/>
+</LinearLayout>

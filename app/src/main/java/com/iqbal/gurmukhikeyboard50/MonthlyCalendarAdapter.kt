@@ -48,18 +48,23 @@ class MonthlyCalendarAdapter(
 
         // Default background color for cells
         background?.setColor(Color.parseColor("#FFFFFF"))
+        background?.setStroke(1, Color.LTGRAY)
 
         // Hide indicator by default
         indicator?.visibility = View.GONE
         
+        // 🌟 TODAY STYLING: Full colorful background
         if (day.isToday) {
-            background?.setColor(Color.parseColor("#E3F2FD")) // Light blue for today
-            background?.setStroke(4, Color.parseColor("#2196F3")) // Thicker blue border for today
-            textView.setTextColor(Color.parseColor("#1976D2"))
+            background?.setColor(Color.parseColor("#EF6C00")) // Solid Orange background
+            background?.setStroke(0, Color.TRANSPARENT)
+            textView.setTextColor(Color.WHITE) // White text for readability
             textView.typeface = Typeface.DEFAULT_BOLD
+            
+            holder.dayCell.setOnClickListener { onDayClick(day) }
+            return // Skip further styling if it's today
         }
 
-        // Apply colors and styling based on importance (indicators removed)
+        // Apply colors and styling based on importance (for other days)
         when {
             day.gurpurabName != null -> {
                 val color = day.gurpurabColor ?: Color.parseColor("#E65100")

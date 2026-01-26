@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.iqbal.gurmukhikeyboard50">
 
-    <!-- 🔐 Permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -13,23 +12,10 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
-    
-    <!-- 📍 Location Permissions Added -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <!-- 🗂️ Storage (Legacy Support for Android 9–12) -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-
-    <supports-screens
-        android:anyDensity="true"
-        android:smallScreens="true"
-        android:normalScreens="true"
-        android:largeScreens="true"
-        android:xlargeScreens="true" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
 
     <application
         android:allowBackup="true"
@@ -43,33 +29,19 @@
         android:theme="@style/Theme.GurmukhiKeyboard50"
         tools:replace="android:label">
 
-        <!-- 🔤 ML Kit Dependency -->
-        <meta-data
-            android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="translate" />
-
-        <!-- 🧠 Keyboard IME -->
         <service
             android:name=".MyKeyboardIME"
             android:exported="true"
             android:permission="android.permission.BIND_INPUT_METHOD"
             android:label="@string/app_name">
-            <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/method" />
+            <meta-data android:name="android.view.im" android:resource="@xml/method" />
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
         </service>
 
-        <!-- 🎵 Gurbani Player Foreground Service -->
-        <service
-            android:name=".GurbaniPlayerService"
-            android:enabled="true"
-            android:exported="false"
-            android:foregroundServiceType="mediaPlayback" />
+        <service android:name=".GurbaniPlayerService" android:enabled="true" android:exported="false" android:foregroundServiceType="mediaPlayback" />
 
-        <!-- 🔤 Spell Checker -->
         <service
             android:name=".MySpellCheckerService"
             android:exported="true"
@@ -78,12 +50,9 @@
             <intent-filter>
                 <action android:name="android.service.textservice.SpellCheckerService" />
             </intent-filter>
-            <meta-data
-                android:name="android.view.textservice.scs"
-                android:resource="@xml/spellchecker" />
+            <meta-data android:name="android.view.textservice.scs" android:resource="@xml/spellchecker" />
         </service>
 
-        <!-- 🏠 Main Launcher Activity -->
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -91,20 +60,25 @@
             </intent-filter>
         </activity>
 
-        <!-- ⚙️ Settings & Utility Activities -->
-        <activity
-            android:name=".KeyboardSettingsActivity"
-            android:exported="true"
-            android:label="@string/title_activity_keyboard_settings" />
+        <activity android:name=".KeyboardSettingsActivity" android:exported="true" />
         <activity android:name=".AdjustKeyboardLayoutActivity" android:exported="true" />
         <activity android:name=".PrivacyPolicyActivity" android:exported="true" />
         <activity android:name=".SearchResultsActivity" android:exported="false" />
         <activity android:name=".TopRowSettingsActivity" android:exported="true" />
         <activity android:name=".DictionaryManagementActivity" android:exported="true" />
-
+        <activity android:name=".OCRActivity" android:exported="true" />
+        <activity android:name=".ShortcutsActivity" android:exported="true" android:label="Manage Shortcuts" />
         <activity android:name=".ImageToTextActivity" android:exported="true" />
-        <meta-data
-            android:name="com.google.mlkit.translate.DEPENDENCIES"
-            android:value="translate" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 </manifest>

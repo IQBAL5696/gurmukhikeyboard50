@@ -4,9 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/colorSurface"
-    android:padding="8dp"
-    android:visibility="gone">
+    android:background="?attr/keyboardViewBackground"
+    android:padding="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +18,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_close"
-            android:background="?attr/colorSurface"
-            android:contentDescription="Close" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Close"
+            android:tint="?attr/iconColor" />
 
         <TextView
             android:id="@+id/ai_answer_title"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="AI Assistant"
-            android:textColor="?attr/colorOnSurface"
+            android:textColor="?attr/keyboardKeyTextColor"
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center" />
@@ -38,8 +38,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_search"
-            android:background="?attr/colorSurface"
-            android:contentDescription="Search AI" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Search AI"
+            android:tint="?attr/iconColor" />
 
     </LinearLayout>
 
@@ -48,8 +49,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Ask AI..."
-        android:textColor="?attr/colorOnSurface"
-        android:backgroundTint="?attr/colorControlNormal"
+        android:textColor="?attr/keyboardKeyTextColor"
+        android:textColorHint="?attr/keyboardKeyTextColor"
+        android:backgroundTint="?attr/iconColor"
         android:layout_marginTop="8dp"/>
 
     <LinearLayout
@@ -64,8 +66,9 @@
             android:layout_weight="1"
             android:layout_height="48dp"
             android:src="@drawable/ic_check"
-            android:background="?attr/colorSurface"
-            android:contentDescription="Correct Word" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Correct Word"
+            android:tint="?attr/iconColor" />
 
         <ImageButton
             android:id="@+id/ai_continue_writing_button"
@@ -73,8 +76,9 @@
             android:layout_weight="1"
             android:layout_height="48dp"
             android:src="@drawable/ic_continue_writing"
-            android:background="?attr/colorSurface"
-            android:contentDescription="Continue Writing" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Continue Writing"
+            android:tint="?attr/iconColor" />
 
         <ImageButton
             android:id="@+id/ai_answer_copy_button"
@@ -82,8 +86,9 @@
             android:layout_weight="1"
             android:layout_height="48dp"
             android:src="@drawable/ic_clipboard"
-            android:background="?attr/colorSurface"
-            android:contentDescription="Copy" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Copy"
+            android:tint="?attr/iconColor" />
 
         <ImageButton
             android:id="@+id/ai_answer_insert_button"
@@ -91,21 +96,23 @@
             android:layout_weight="1"
             android:layout_height="48dp"
             android:src="@drawable/ic_return_arrow"
-            android:background="?attr/colorSurface"
-            android:contentDescription="Insert" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Insert"
+            android:tint="?attr/iconColor" />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="8dp">
+        android:layout_height="120dp"
+        android:layout_marginTop="8dp"
+        android:background="#11000000">
 
         <TextView
             android:id="@+id/ai_answer_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:textColor="?attr/colorOnSurface"
+            android:textColor="?attr/keyboardKeyTextColor"
             android:textSize="16sp"
             android:textIsSelectable="true" />
 

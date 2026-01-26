@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="?attr/keyboardViewBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="AI ਲਿਖਾਰੀ (Assistant)"
+            android:textStyle="bold"
+            android:textColor="?attr/keyboardKeyTextColor"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/btn_close_ai"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:contentDescription="Close"
+            android:tint="?attr/iconColor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/et_ai_prompt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="ਕੁਝ ਵੀ ਲਿਖਣ ਲਈ ਕਹੋ..."
+            android:textColor="?attr/keyboardKeyTextColor"
+            android:background="@android:drawable/edit_text"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:maxLines="3" />
+
+        <Button
+            android:id="@+id/btn_ask_ai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ਲਿਖੋ"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_ai_loading"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_ai_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="?attr/keyboardKeyTextColor"
+        android:layout_marginTop="4dp"
+        android:visibility="gone" />
+
+</LinearLayout>
