@@ -69,6 +69,7 @@
         <activity android:name=".OCRActivity" android:exported="true" />
         <activity android:name=".ShortcutsActivity" android:exported="true" android:label="Manage Shortcuts" />
         <activity android:name=".ImageToTextActivity" android:exported="true" />
+        <activity android:name=".LearnedWordsActivity" android:exported="true" android:label="ਸਿੱਖੇ ਹੋਏ ਸ਼ਬਦ" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

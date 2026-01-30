@@ -17,14 +17,10 @@ class MyKeyboard : Keyboard {
     private var mShiftKey: Key? = null
 
     private var isCapsLockOn: Boolean = false
-
     private var mRecalculatedHeight: Int = 0
 
     override fun getHeight(): Int {
-        if (mRecalculatedHeight > 0) {
-            return mRecalculatedHeight
-        }
-        return super.getHeight()
+        return if (mRecalculatedHeight > 0) mRecalculatedHeight else super.getHeight()
     }
 
     private fun init() {
@@ -32,24 +28,60 @@ class MyKeyboard : Keyboard {
         mShiftIconOff = ContextCompat.getDrawable(mContext, R.drawable.ic_shift_off)
         mShiftIconCapsLock = ContextCompat.getDrawable(mContext, R.drawable.ic_caps_lock_on)
         initKeyboardProperties()
+        applyCustomLayout()
     }
 
-    fun applyCustomLayout(kv: MyKeyboardView) {
+    fun applyCustomLayout() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext)
-        val keyHeight = sharedPreferences.getInt("key_height_abs", -1)
-        val keyGap = sharedPreferences.getInt("key_gap_abs", -1)
+        val keyHeightPercent = sharedPreferences.getInt(ImeConstants.PREF_KEY_HEIGHT, 100)
+        val screenWidth = mContext.resources.displayMetrics.widthPixels
+        val scaleFactor = keyHeightPercent / 100f
+        
+        val rows = keys.groupBy { it.y }
+        val sortedY = rows.keys.sorted()
+        
+        var currentY = 0
+        var lastOriginalY = sortedY.firstOrNull() ?: 0
 
-        if (keyHeight != -1 || keyGap != -1) {
-            for (key in keys) {
-                if (keyHeight != -1) key.height = keyHeight
-                if (keyGap != -1) key.gap = keyGap
+        for ((index, y) in sortedY.withIndex()) {
+            val rowKeys = rows[y]?.sortedBy { it.x } ?: continue
+            
+            val rowSpacing = y - lastOriginalY
+            currentY += (rowSpacing * scaleFactor).toInt()
+            lastOriginalY = y
+
+            val firstKeyInRow = rowKeys[0]
+            val newHeight = (firstKeyInRow.height * scaleFactor).toInt()
+            
+            // Apply 5% gap ONLY to Row 3 (Index 2)
+            val isHomeRow = index == 2 && rowKeys.size == 9
+            
+            var currentX = 0
+            for (key in rowKeys) {
+                key.height = newHeight
+                key.y = currentY
+                
+                if (isHomeRow) {
+                    if (key == firstKeyInRow) {
+                        // Force 5% initial gap for the middle row
+                        currentX = (screenWidth * 0.05).toInt()
+                    }
+                    key.x = currentX + key.gap
+                    currentX = key.x + key.width
+                } else {
+                    // For all other rows (including the 4th row), 
+                    // we keep the XML-defined horizontal positioning.
+                }
             }
-
-            mRecalculatedHeight = keys.maxOfOrNull { it.y + it.height } ?: 0
         }
 
-        kv.invalidateAllKeys()
-        kv.requestLayout()
+        val lastRowY = sortedY.lastOrNull() ?: 0
+        val lastRowKeys = rows[lastRowY]
+        if (lastRowKeys != null && lastRowKeys.isNotEmpty()) {
+            mRecalculatedHeight = currentY + (lastRowKeys[0].height)
+        } else {
+            mRecalculatedHeight = currentY
+        }
     }
 
     fun hasShiftKey(): Boolean {
@@ -99,8 +131,6 @@ class MyKeyboard : Keyboard {
 
         for (key in keys) {
             val myKey = key as? MyKey ?: continue
-            
-            // ✅ Fix: Skip empty/spacer keys used in Split mode
             if (myKey.codes.isEmpty() || myKey.originalCode == 0) continue
 
             if (isShiftedNewState) {

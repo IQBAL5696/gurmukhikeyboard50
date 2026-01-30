@@ -8,9 +8,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 
@@ -28,9 +31,46 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val themePreference = findPreference<ListPreference>("pref_keyboard_theme")
         themePreference?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             if (newValue == "custom") {
-                pickImageLauncher.launch("image/*")
+                // When "Custom Photo" is selected, automatically launch picker if no image exists
+                val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                val imagePath = sharedPrefs.getString(ImeConstants.PREF_CUSTOM_BACKGROUND_IMAGE, null)
+                if (imagePath.isNullOrEmpty()) {
+                    pickImageLauncher.launch("image/*")
+                }
             }
             true
+        }
+
+        // New: Handle direct button click for selecting image
+        val selectImagePref = findPreference<Preference>("pref_select_custom_image")
+        selectImagePref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            pickImageLauncher.launch("image/*")
+            true
+        }
+
+        val manageWordsPref = findPreference<Preference>("pref_manage_learned_words")
+        manageWordsPref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val intent = Intent(requireContext(), LearnedWordsActivity::class.java)
+            startActivity(intent)
+            true
+        }
+
+        val clearDictionaryPref = findPreference<Preference>("pref_clear_dictionary")
+        clearDictionaryPref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            clearLearnedWords()
+            true
+        }
+    }
+
+    private fun clearLearnedWords() {
+        val databaseHelper = DatabaseHelper(requireContext())
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                databaseHelper.deleteAllLearnedWords()
+                Toast.makeText(requireContext(), "ਸਿੱਖੇ ਹੋਏ ਸ਼ਬਦ ਮਿਟਾ ਦਿੱਤੇ ਗਏ ਹਨ", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Error clearing dictionary", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -38,15 +78,32 @@ class SettingsFragment : PreferenceFragmentCompat() {
         try {
             val inputStream = requireContext().contentResolver.openInputStream(uri)
             val bitmap = BitmapFactory.decodeStream(inputStream)
+            inputStream?.close()
+            
+            if (bitmap == null) {
+                Toast.makeText(requireContext(), "ਫੋਟੋ ਲੋਡ ਨਹੀਂ ਹੋ ਸਕੀ", Toast.LENGTH_SHORT).show()
+                return
+            }
+
             val file = File(requireContext().filesDir, "custom_keyboard_bg.jpg")
             val outputStream = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
             outputStream.flush()
             outputStream.close()
-            Toast.makeText(requireContext(), "Photo saved! Please restart keyboard.", Toast.LENGTH_SHORT).show()
+            
+            // Save the absolute path
+            val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+            sharedPrefs.edit().putString(ImeConstants.PREF_CUSTOM_BACKGROUND_IMAGE, file.absolutePath).apply()
+            
+            Toast.makeText(requireContext(), "ਫੋਟੋ ਸੈੱਟ ਹੋ ਗਈ ਹੈ!", Toast.LENGTH_SHORT).show()
+            
+            // Force keyboard to refresh if it's currently showing
+            val intent = Intent(ImeConstants.ACTION_SETTINGS_CHANGED)
+            requireContext().sendBroadcast(intent)
+            
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(requireContext(), "Failed to save photo", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "ਫੋਟੋ ਸੇਵ ਕਰਨ ਵਿੱਚ ਗਲਤੀ ਆਈ", Toast.LENGTH_SHORT).show()
         }
     }
 }

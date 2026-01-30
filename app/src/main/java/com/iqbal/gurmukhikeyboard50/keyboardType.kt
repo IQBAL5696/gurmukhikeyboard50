@@ -4,6 +4,7 @@ enum class KeyboardType {
     GURMUKHI,
     ENGLISH,
     SYMBOLS,
+    SYMBOLS1,
     NUMPAD,
     EMOJI,
     TRANSLATION,

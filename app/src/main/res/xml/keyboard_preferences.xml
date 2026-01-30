@@ -2,79 +2,231 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="Keyboard Preferences (ਕੀਬੋਰਡ ਸੈਟਿੰਗਜ਼)">
+    <PreferenceCategory android:title="Keyboard Feedback (ਕੀਬੋਰਡ ਫੀਡਬੈਕ)">
 
         <SwitchPreferenceCompat
-            app:key="vibrate_on_keypress"
-            app:title="Vibration (ਵਾਇਬਰੇਸ਼ਨ)"
-            app:summary="ਕੀਅ ਦਬਾਉਣ 'ਤੇ ਵਾਇਬਰੇਸ਼ਨ ਹੋਵੇਗੀ"
-            app:defaultValue="true" />
+            android:key="vibrate_on_keypress"
+            android:title="Vibration (ਵਾਇਬਰੇਸ਼ਨ)"
+            android:summary="ਕੀਅ ਦਬਾਉਣ 'ਤੇ ਵਾਇਬਰੇਸ਼ਨ ਹੋਵੇਗੀ"
+            android:defaultValue="true" />
+
+        <SeekBarPreference
+            android:key="vibration_intensity"
+            android:title="Vibration Intensity (ਵਾਇਬਰੇਸ਼ਨ ਤੀਬਰਤਾ)"
+            android:max="100"
+            app:min="1"
+            android:defaultValue="30"
+            app:showSeekBarValue="true"
+            android:dependency="vibrate_on_keypress" />
 
         <SwitchPreferenceCompat
-            app:key="sound_on_keypress"
-            app:title="Sound (ਆਵਾਜ਼)"
-            app:summary="ਕੀਅ ਦਬਾਉਣ 'ਤੇ ਆਵਾਜ਼ ਆਵੇਗੀ"
-            app:defaultValue="true" />
+            android:key="sound_on_keypress"
+            android:title="Sound (ਆਵਾਜ਼)"
+            android:summary="ਕੀਅ ਦਬਾਉਣ 'ਤੇ ਆਵਾਜ਼ ਆਵੇਗੀ"
+            android:defaultValue="true" />
+
+        <SeekBarPreference
+            android:key="sound_volume"
+            android:title="Sound Volume (ਆਵਾਜ਼ ਦਾ ਪੱਧਰ)"
+            android:max="100"
+            app:min="1"
+            android:defaultValue="1"
+            app:showSeekBarValue="true"
+            android:dependency="sound_on_keypress" />
 
         <SwitchPreferenceCompat
-            app:key="popup_on_keypress"
-            app:title="Popup (ਪੋਪ-ਅੱਪ)"
-            app:summary="ਕੀਅ ਦਬਾਉਣ 'ਤੇ ਵੱਡਾ ਅੱਖਰ ਦਿਖਾਈ ਦੇਵੇਗਾ"
-            app:defaultValue="true" />
+            android:key="popup_on_keypress"
+            android:title="Popup (ਪੋਪ-ਅੱਪ)"
+            android:summary="ਕੀਅ ਦਬਾਉਣ 'ਤੇ ਵੱਡਾ ਅੱਖਰ ਦਿਖਾਈ ਦੇਵੇਗਾ"
+            android:defaultValue="true" />
 
-        <ListPreference
-            app:key="pref_one_handed_mode"
-            app:title="One-Handed Mode (ਇੱਕ ਹੱਥ ਮੋਡ)"
-            app:summary="ਕੀਬੋਰਡ ਨੂੰ ਖੱਬੇ ਜਾਂ ਸੱਜੇ ਪਾਸੇ ਸੈੱਟ ਕਰੋ"
-            app:entries="@array/one_handed_entries"
-            app:entryValues="@array/one_handed_values"
-            app:defaultValue="off"
-            app:useSimpleSummaryProvider="true" />
+        <SeekBarPreference
+            android:key="popup_size_scale"
+            android:title="Popup Size Density (ਪੋਪ-ਅੱਪ ਦਾ ਆਕਾਰ)"
+            android:max="150"
+            app:min="50"
+            android:defaultValue="100"
+            app:showSeekBarValue="true"
+            android:dependency="popup_on_keypress"
+            android:summary="ਪੋਪ-ਅੱਪ ਦੇ ਅੱਖਰਾਂ ਦੇ ਵੱਡਾਪਨ ਨੂੰ ਕੰਟਰੋਲ ਕਰੋ" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Appearance (ਦਿੱਖ)">
+    <PreferenceCategory android:title="Appearance (ਦਿੱਖ ਅਤੇ ਡਿਜ਼ਾਈਨ)">
 
         <ListPreference
-            app:key="pref_keyboard_theme"
-            app:title="Keyboard Theme"
-            app:summary="ਕੀਬੋਰਡ ਦਾ ਰੰਗ ਬਦਲੋ"
-            app:entries="@array/theme_entries"
-            app:entryValues="@array/theme_values"
-            app:defaultValue="light" 
+            android:key="pref_keyboard_theme"
+            android:title="Keyboard Theme"
+            android:summary="ਕੀਬੋਰਡ ਦਾ ਰੰਗ ਬਦਲੋ"
+            android:entries="@array/theme_entries"
+            android:entryValues="@array/theme_values"
+            android:defaultValue="light" 
             app:useSimpleSummaryProvider="true"/>
 
-        <ListPreference
-            app:key="pref_keyboard_font"
-            app:title="Keyboard Font"
-            app:summary="ਕੀਬੋਰਡ ਦੇ ਅੱਖਰਾਂ ਦਾ ਫੌਂਟ ਬਦਲੋ"
-            app:entries="@array/font_entries"
-            app:entryValues="@array/font_values"
-            app:defaultValue="default"
-            app:useSimpleSummaryProvider="true" />
+        <Preference
+            android:key="pref_select_custom_image"
+            android:title="Select Background Photo (ਫੋਟੋ ਚੁਣੋ)"
+            android:summary="ਆਪਣੀ ਮਨਪਸੰਦ ਫੋਟੋ ਨੂੰ ਕੀਬੋਰਡ ਦੇ ਪਿਛੋਕੜ ਵਿੱਚ ਲਗਾਓ"
+            android:dependency="pref_keyboard_theme" />
+
+        <SeekBarPreference
+            android:key="pref_background_dim_amount"
+            android:title="Background Dim (ਫੋਟੋ ਦੀ ਧੁੰਦਲਤਾ)"
+            android:summary="ਫੋਟੋ ਦੇ ਉੱਪਰ ਕਾਲੇ ਰੰਗ ਦੀ ਪਰਤ ਨੂੰ ਕੰਟਰੋਲ ਕਰੋ"
+            android:max="100"
+            app:min="0"
+            android:defaultValue="50"
+            app:showSeekBarValue="true"
+            android:dependency="pref_keyboard_theme" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_use_rounded_keys"
+            android:title="Rounded Keys (ਗੋਲ ਬਟਨ)"
+            android:summary="ਕੀਬੋਰਡ ਦੇ ਬਟਨਾਂ ਨੂੰ ਗੋਲ ਬਣਾਉਣ ਲਈ ਇਸਨੂੰ ਚਾਲੂ ਕਰੋ"
+            android:defaultValue="true" />
+
+        <SeekBarPreference
+            android:key="pref_key_roundness"
+            android:title="Key Roundness Intensity"
+            android:max="50"
+            app:min="0"
+            android:defaultValue="12"
+            app:showSeekBarValue="true"
+            android:dependency="pref_use_rounded_keys" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_use_key_transparency"
+            android:title="Key Transparency (ਬਟਨਾਂ ਦੀ ਪਾਰਦਰਸ਼ਤਾ)"
+            android:summary="ਬਟਨਾਂ ਨੂੰ ਅਰਧ-ਪਾਰਦਰਸ਼ੀ ਬਣਾਉਣ ਲਈ ਇਸਨੂੰ ਚਾਲੂ ਕਰੋ"
+            android:defaultValue="false" />
+
+        <SeekBarPreference
+            android:key="pref_key_opacity"
+            android:title="Transparency Level"
+            android:max="255"
+            app:min="50"
+            android:defaultValue="200"
+            app:showSeekBarValue="true"
+            android:dependency="pref_use_key_transparency" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Dictionary (ਡਿਕਸ਼ਨਰੀ)">
-        <Preference
-            app:key="pref_dictionary_management"
-            app:title="📚 Dictionary Management"
-            app:summary="ਸਿੱਖੇ ਹੋਏ ਸ਼ਬਦਾਂ ਨੂੰ ਦੇਖੋ ਅਤੇ ਡਿਲੀਟ ਕਰੋ">
-            <intent
-                android:targetPackage="com.iqbal.gurmukhikeyboard50"
-                android:targetClass="com.iqbal.gurmukhikeyboard50.DictionaryManagementActivity" />
-        </Preference>
+    <PreferenceCategory android:title="Toolbar Customization (ਟੂਲਬਾਰ ਸੈਟਿੰਗਜ਼)">
+
+        <MultiSelectListPreference
+            android:key="pref_toolbar_pinned_items"
+            android:title="Pinned Toolbar Icons (ਟੂਲਬਾਰ ਆਈਕਨ ਚੁਣੋ)"
+            android:summary="ਉਹ ਫੀਚਰ ਚੁਣੋ ਜੋ ਤੁਸੀਂ ਟੂਲਬਾਰ ਵਿੱਚ ਹਮੇਸ਼ਾ ਦੇਖਣਾ ਚਾਹੁੰਦੇ ਹੋ"
+            android:entries="@array/top_row_button_entries"
+            android:entryValues="@array/top_row_button_values"
+            android:defaultValue="@array/top_row_default_values" />
+
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="ਕੀਬੋਰਡ ਫੰਕਸ਼ਨ ਗਾਈਡ (Features Guide)">
+    <PreferenceCategory android:title="Gestures (ਜੈਸਚਰ ਸੈਟਿੰਗਜ਼)">
+
+        <SwitchPreferenceCompat
+            android:key="pref_gesture_typing"
+            android:title="Enable Gestures (ਜੈਸਚਰ ਚਾਲੂ ਕਰੋ)"
+            android:summary="ਸਵਾਈਪ ਕਰਕੇ ਲਿਖਣਾ ਅਤੇ ਸ਼ਬਦ ਮਿਟਾਉਣਾ"
+            android:defaultValue="true" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_swipe_delete"
+            android:title="Swipe to Delete (ਸਵਾਈਪ ਨਾਲ ਮਿਟਾਓ)"
+            android:summary="ਬੈਕਸਪੇਸ ਤੋਂ ਖੱਬੇ ਸਵਾਈਪ ਕਰਨ 'ਤੇ ਪੂਰਾ ਸ਼ਬਦ ਮਿਟਾਓ"
+            android:defaultValue="true"
+            android:dependency="pref_gesture_typing" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Typing Assistance (ਟਾਈਪਿੰਗ ਸਹਾਇਤਾ)">
+
+        <SwitchPreferenceCompat
+            android:key="pref_smart_punctuation"
+            android:title="Smart Punctuation (ਸਮਾਰਟ ਪੰਕਚੂਏਸ਼ਨ)"
+            android:summary="ਡਬਲ ਸਪੇਸ ਦਬਾਉਣ 'ਤੇ ਆਪਣੇ ਆਪ '।' ਜਾਂ '.' ਲਗਾਓ"
+            android:defaultValue="true" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_auto_capitalize"
+            android:title="Auto Capitalization (ਆਪਣੇ ਆਪ ਵੱਡਾ ਅੱਖਰ)"
+            android:summary="ਨਵੀਂ ਲਾਈਨ ਦੇ ਪਹਿਲੇ ਅੱਖਰ ਨੂੰ ਆਪਣੇ ਆਪ ਵੱਡਾ ਕਰੋ (English)"
+            android:defaultValue="true" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_show_suggestions"
+            android:title="Show Suggestions (ਸ਼ਬਦ ਸੁਝਾਅ)"
+            android:summary="ਟਾਈਪ ਕਰਦੇ ਸਮੇਂ ਉੱਪਰ ਸ਼ਬਦਾਂ ਦੇ ਸੁਝਾਅ ਦਿਖਾਓ"
+            android:defaultValue="true" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_next_word_prediction"
+            android:title="Next Word Prediction (ਅਗਲਾ ਸ਼ਬਦ ਸੁਝਾਅ)"
+            android:summary="ਤੁਹਾਡੇ ਲਿਖਣ ਦੇ ਅੰਦਾਜ਼ ਮੁਤਾਬਕ ਅਗਲੇ ਸ਼ਬਦ ਦਾ ਅੰਦਾਜ਼ਾ ਲਗਾਓ"
+            android:defaultValue="true"
+            android:dependency="pref_show_suggestions" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_clipboard_history"
+            android:title="Clipboard History (ਕਲਿੱਪਬੋਰਡ ਹਿਸਟਰੀ)"
+            android:summary="ਕਾਪੀ ਕੀਤੇ ਟੈਕਸਟ ਨੂੰ ਸੇਵ ਕਰੋ ਤਾਂ ਜੋ ਬਾਅਦ ਵਿੱਚ ਵਰਤਿਆ ਜਾ ਸਕੇ"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Layout Customization (ਲੇਆਉਟ ਕਸਟਮਾਈਜ਼ੇਸ਼ਨ)">
+
+        <SeekBarPreference
+            android:key="pref_key_height"
+            android:title="Key Height (ਕੀਅ ਦੀ ਉਚਾਈ)"
+            android:max="150"
+            app:min="50"
+            android:defaultValue="100"
+            app:showSeekBarValue="true"
+            android:summary="ਕੀਬੋਰਡ ਦੇ ਬਟਨਾਂ ਦੀ ਉਚਾਈ ਬਦਲੋ" />
+
+        <SeekBarPreference
+            android:key="pref_font_size"
+            android:title="Font Size (ਅੱਖਰਾਂ ਦਾ ਆਕਾਰ)"
+            android:max="30"
+            app:min="10"
+            android:defaultValue="18"
+            app:showSeekBarValue="true"
+            android:summary="ਕੀਅਜ਼ ਉੱਪਰ ਲਿਖੇ ਅੱਖਰਾਂ ਦਾ ਆਕਾਰ ਬਦਲੋ" />
+
+        <SeekBarPreference
+            android:key="pref_key_gap"
+            android:title="Key Gap (ਬਟਨਾਂ ਵਿਚਕਾਰ ਦੂਰੀ)"
+            android:max="20"
+            app:min="0"
+            android:defaultValue="4"
+            app:showSeekBarValue="true"
+            android:summary="ਬਟਨਾਂ ਦੇ ਆਪਸੀ ਫਾਸਲੇ ਨੂੰ ਘਟਾਓ ਜਾਂ ਵਧਾਓ" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Dictionary Management (ਸ਼ਬਦਕੋਸ਼ ਪ੍ਰਬੰਧਨ)">
         <Preference
-            app:key="guide_calendar"
-            app:title="📅 ਨਾਨਕਸ਼ਾਹੀ ਕੈਲੰਡਰ"
-            app:summary="ਕੀਬੋਰਡ ਦੀ ਉੱਪਰਲੀ ਲਾਈਨ ਵਿੱਚ ਕੈਲੰਡਰ ਆਈਕਨ ਦਬਾਓ। ਸੂਰਜ ਚੜ੍ਹਨ/ਡੁੱਬਣ ਦਾ ਸਮਾਂ, ਸੰਗਰਾਂਦ ਆਦਿ ਦੇਖੋ।" />
+            android:key="pref_manage_learned_words"
+            android:title="Manage Learned Words (ਸਿੱਖੇ ਹੋਏ ਸ਼ਬਦਾਂ ਦਾ ਪ੍ਰਬੰਧਨ)"
+            android:summary="ਕੀਬੋਰਡ ਦੁਆਰਾ ਸਿੱਖੇ ਗਏ ਸ਼ਬਦਾਂ ਨੂੰ ਦੇਖੋ ਅਤੇ ਮਿਟਾਓ" />
+            
         <Preference
-            app:key="guide_search"
-            app:title="🔍 ਗੁਰਬਾਣੀ ਸਰਚ"
-            app:summary="ਕੋਈ ਵੀ ਸ਼ਬਦ ਲਿਖ ਕੇ ਸਰਚ ਆਈਕਨ ਦਬਾਓ, ਉਹ GurbaniNow 'ਤੇ ਸਰਚ ਹੋ ਜਾਵੇਗਾ।" />
+            android:key="pref_clear_dictionary"
+            android:title="Clear All Learned Words (ਸਾਰੇ ਸ਼ਬਦ ਮਿਟਾਓ)"
+            android:summary="ਕੀਬੋਰਡ ਦੀ ਡਿਕਸ਼ਨਰੀ ਨੂੰ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸਾਫ਼ ਕਰੋ" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="ਕੀਬੋਰਡ ਫੰਕਸ਼ਨ ਗਾਈਡ (Features Guide)">
+        <Preference
+            android:key="guide_calendar"
+            android:title="📅 ਨਾਨਕਸ਼ਾਹੀ ਕੈਲੰਡਰ"
+            android:summary="ਕੀਬੋਰਡ ਦੀ ਉੱਪਰਲੀ ਲਾਈਨ ਵਿੱਚ ਕੈਲੰਡਰ ਆਈਕਨ ਦਬਾਓ। ਸੂਰਜ ਚੜ੍ਹਨ/ਡੁੱਬਣ ਦਾ ਸਮਾਂ, ਸੰਗਰਾਂਦ ਆਦਿ ਦੇਖੋ।" />
+        <Preference
+            android:key="guide_search"
+            android:title="🔍 ਗੁਰਬਾਣੀ ਸਰਚ"
+            android:summary="ਕੋਈ ਵੀ ਸ਼ਬਦ ਲਿਖ ਕੇ ਸਰਚ ਆਈਕਨ ਦਬਾਓ, ਉਹ GurbaniNow 'ਤੇ ਸਰਚ ਹੋ ਜਾਵੇਗਾ।" />
     </PreferenceCategory>
 
 </PreferenceScreen>

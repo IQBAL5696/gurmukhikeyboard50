@@ -23,11 +23,6 @@ class KeyboardSettingsActivity : AppCompatActivity() {
                 .commit()
         }
 
-        findViewById<Button>(R.id.btn_adjust_layout).setOnClickListener {
-            val intent = Intent(this, AdjustKeyboardLayoutActivity::class.java)
-            startActivity(intent)
-        }
-
         findViewById<Button>(R.id.btn_manage_shortcuts).setOnClickListener {
             val intent = Intent(this, ShortcutsActivity::class.java)
             startActivity(intent)

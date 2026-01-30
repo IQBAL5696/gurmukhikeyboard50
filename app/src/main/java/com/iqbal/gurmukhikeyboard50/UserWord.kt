@@ -31,25 +31,3 @@ interface UserWordDao {
     @Query("DELETE FROM user_words WHERE word = :word")
     fun deleteWord(word: String)
 }
-
-@Database(entities = [UserWord::class], version = 1)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun userWordDao(): UserWordDao
-
-    companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-
-        fun getDatabase(context: android.content.Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "gurmukhi_keyboard_db"
-                ).build()
-                INSTANCE = instance
-                instance
-            }
-        }
-    }
-}

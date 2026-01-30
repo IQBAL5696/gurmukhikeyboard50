@@ -8,6 +8,7 @@
         <item>Gurbani</item>
         <item>Settings</item>
         <item>Image to Text</item>
+        <item>Calendar</item>
     </string-array>
 
     <string-array name="top_row_button_values">
@@ -19,11 +20,21 @@
         <item>gurbani</item>
         <item>settings</item>
         <item>image_to_text</item>
+        <item>calendar</item>
+    </string-array>
+    
+    <string-array name="top_row_default_values">
+        <item>emoji</item>
+        <item>mic</item>
+        <item>translate</item>
+        <item>calendar</item>
     </string-array>
 
     <string-array name="theme_entries">
-        <item>Light</item>
-        <item>Dark</item>
+        <item>Light (ਚਿੱਟਾ)</item>
+        <item>Dark (ਕਾਲਾ)</item>
+        <item>Kesari (ਕੇਸਰੀ - Royal Saffron)</item>
+        <item>Royal Blue (ਸ਼ਾਹੀ ਨੀਲਾ)</item>
         <item>Beautiful Blue</item>
         <item>Nature Green</item>
         <item>Royal Red</item>
@@ -56,6 +67,8 @@
     <string-array name="theme_values">
         <item>light</item>
         <item>dark</item>
+        <item>kesari</item>
+        <item>royal_blue</item>
         <item>blue</item>
         <item>green</item>
         <item>red</item>
@@ -97,15 +110,15 @@
 
     <string-array name="font_entries">
         <item>Default (Bold)</item>
+        <item>Raavi</item>
         <item>Anmol Lipi</item>
-        <item>Amar Lipi</item>
         <item>Raavi</item>
     </string-array>
 
     <string-array name="font_values">
         <item>default</item>
+        <item>raavi</item>
         <item>anmol</item>
-        <item>amar</item>
         <item>raavi</item>
     </string-array>
 

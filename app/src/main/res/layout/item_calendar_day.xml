@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:padding="2dp">
+    android:layout_height="65dp">
 
     <TextView
         android:id="@+id/dayText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textSize="12sp"
+        android:textSize="11sp"
         android:lineSpacingMultiplier="0.8"
         android:padding="1dp"
         android:background="@drawable/bg_calendar_day"/>
 
     <View
         android:id="@+id/eventIndicator"
-        android:layout_width="6dp"
-        android:layout_height="6dp"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="2dp"
         android:background="#EF6C00"
         android:visibility="gone" />
 </FrameLayout>

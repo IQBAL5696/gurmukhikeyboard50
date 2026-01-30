@@ -19,15 +19,17 @@ object NanakshahiCalendar {
     enum class CalculationMode { ASTRONOMICAL, FIXED }
 
     data class NanakshahiDate(val day: Int, var month: String, val year: Int)
-    data class TithiResult(val tithi: Int, val paksha: String, val monthName: String, val isAdhik: Boolean)
+    data class TithiResult(val tithi: Int, val paksha: String, val monthName: String, val isAdhik: Boolean, val isPunia: Boolean = false, val isMasaya: Boolean = false)
     data class PaharInfo(val name: String, val startTime: Long, val endTime: Long)
     data class DualTithiResult(val isDual: Boolean, val firstMonth: String, val firstPaksha: String, val firstTithi: Int, val secondMonth: String, val secondPaksha: String, val secondTithi: Int)
     data class Gurpurab(val day: Int, val month: String, val name: String, val history: String? = null, val gurpurabColor: Int? = null, val gregDate: Calendar? = null)
-    data class MonthlyDayCell(val day: Int?, val displayText: String, val isToday: Boolean = false, val gurpurabName: String? = null, val gurpurabHistory: String? = null, val gurpurabColor: Int? = null, val isSangrand: Boolean = false, val isPunia: Boolean = false, val isMasaya: Boolean = false, val isEmpty: Boolean = false)
+    data class MonthlyDayCell(val day: Int?, val displayText: String, val isToday: Boolean = false, val gurpurabName: String? = null, val gurpurabHistory: String? = null, val gurpurabColor: Int? = null, val isSangrand: Boolean = false, val isPunia: Boolean = false, val isMasaya: Boolean = false, val isEmpty: Boolean = false, val gregCal: Calendar? = null, val isCurrentMonth: Boolean = true)
     data class DateDifference(val years: Int, val months: Int, val days: Int)
     data class LocationConfig(val lat: Double, val lon: Double) {
         companion object { val AMRITSAR = LocationConfig(31.62, 74.87) }
     }
+
+    val DESI_MONTHS = listOf("ਚੇਤ", "ਵੈਸਾਖ", "ਜੇਠ", "ਹਾੜ", "ਸਾਵਣ", "ਭਾਦੋਂ", "ਅੱਸੂ", "ਕੱਤਕ", "ਮੱਘਰ", "ਪੋਹ", "ਮਾਘ", "ਫੱਗਣ")
 
     private val tithiCache = mutableMapOf<Double, Int>()
     private val gurpurabCache = mutableMapOf<Int, List<Gurpurab>>()
@@ -51,28 +53,73 @@ object NanakshahiCalendar {
 
     fun getBikramiYear(d: Int, m: Int, y: Int): Int = if (m < 3 || (m == 3 && d < 14)) y + 56 else y + 57
 
-    fun generateMonthlyCalendar(context: Context, month: Int, year: Int, location: LocationConfig = LocationConfig.AMRITSAR): List<MonthlyDayCell> {
-        val cal = Calendar.getInstance(currentTimeZone).apply { set(year, month - 1, 1, 12, 0, 0); set(Calendar.MILLISECOND, 0) }
-        val maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
-        val cells = mutableListOf<MonthlyDayCell>()
-        val firstDayIndex = cal.get(Calendar.DAY_OF_WEEK) - 1
-        repeat(firstDayIndex) { cells.add(MonthlyDayCell(null, "", isEmpty = true)) }
-        val engMonthFormat = SimpleDateFormat("MMM", Locale.ENGLISH)
+    private fun createMonthlyDayCell(context: Context, cal: Calendar, isCurrentMonth: Boolean, isDesiMode: Boolean, currentMonthName: String?, location: LocationConfig): MonthlyDayCell {
+        val jd = julianDay(cal); val sunriseJd = calculateSunriseJD(jd, location.lat, location.lon)
+        val (sMonth, sDay) = getSolarBikramiDate(sunriseJd); val isPunia = isPuniaDay(sunriseJd); val isMasaya = isMasayaDay(sunriseJd)
+        val tithiDetail = getTithiResultFromJD(context, sunriseJd); val dualTithi = getDualTithiAtSunriseFromJD(context, sunriseJd)
+        
+        val tithiText = if (dualTithi.isDual) {
+            "${dualTithi.firstMonth} ${dualTithi.firstPaksha} ${toGurmukhiNumber(dualTithi.firstTithi)} / ${dualTithi.secondMonth} ${dualTithi.secondPaksha} ${toGurmukhiNumber(dualTithi.secondTithi)}"
+        } else {
+            "${tithiDetail.monthName} ${tithiDetail.paksha} ${toGurmukhiNumber(tithiDetail.tithi)}"
+        }
+        
+        val nsDate = getNanakshahiDate(context, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR))
+        val allGurpurabs = getSgpcGurpurabs(context, nsDate.year)
+        val gurpurabs = allGurpurabs.filter { it.day == nsDate.day && it.month == nsDate.month }
+        val statusLabel = when { isMasaya -> " (ਮੱਸਿਆ)"; isPunia -> " (ਪੁੰਨਿਆ)"; else -> "" }
+        
+        val display = if (!isDesiMode) {
+            val engMonthFormat = SimpleDateFormat("MMM", Locale.ENGLISH)
+            val engDateText = "${cal.get(Calendar.DAY_OF_MONTH)} ${engMonthFormat.format(cal.time)}"
+            var text = "$engDateText\n${toGurmukhiNumber(sDay)} $sMonth$statusLabel\n$tithiText"
+            if (gurpurabs.isNotEmpty()) text += "\n${gurpurabs.joinToString { it.name }}"
+            text
+        } else {
+            val engMonthFormat = SimpleDateFormat("d MMM", Locale.ENGLISH)
+            var text = "${toGurmukhiNumber(sDay)}\n${engMonthFormat.format(cal.time)}$statusLabel\n$tithiText"
+            if (gurpurabs.isNotEmpty()) text += "\n${gurpurabs.joinToString { it.name }}"
+            text
+        }
 
-        for (d in 1..maxDay) {
-            cal.set(Calendar.DAY_OF_MONTH, d); val jd = julianDay(cal); val sunriseJd = calculateSunriseJD(jd, location.lat, location.lon)
-            val (sMonth, sDay) = getSolarBikramiDate(sunriseJd); val isPunia = isPuniaDay(sunriseJd); val isMasaya = isMasayaDay(sunriseJd)
-            val tithiDetail = getTithiResultFromJD(context, sunriseJd); val dualTithi = getDualTithiAtSunriseFromJD(context, sunriseJd)
-            val tithiText = if (dualTithi.isDual) "${dualTithi.firstMonth} ${dualTithi.firstPaksha} ${toGurmukhiNumber(dualTithi.firstTithi)} / ${dualTithi.secondMonth} ${dualTithi.secondPaksha} ${toGurmukhiNumber(dualTithi.secondTithi)}" else "${tithiDetail.monthName} ${tithiDetail.paksha} ${toGurmukhiNumber(tithiDetail.tithi)}"
-            val nsDate = getNanakshahiDate(context, d, month, year); val allGurpurabs = getSgpcGurpurabs(context, nsDate.year)
-            val gurpurabs = allGurpurabs.filter { it.day == nsDate.day && it.month == nsDate.month }
-            val statusLabel = when { isMasaya -> " (ਮੱਸਿਆ)"; isPunia -> " (ਪੁੰਨਿਆ)"; else -> "" }
-            val engDateText = "$d ${engMonthFormat.format(cal.time)}"
-            var display = "$engDateText\n${toGurmukhiNumber(sDay)} $sMonth$statusLabel\n$tithiText"
-            if (gurpurabs.isNotEmpty()) display += "\n${gurpurabs.joinToString { it.name }}"
-            val today = Calendar.getInstance(currentTimeZone)
-            val isToday = cal.get(Calendar.YEAR) == today.get(Calendar.YEAR) && cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
-            cells.add(MonthlyDayCell(d, display, isToday, gurpurabs.firstOrNull()?.name, gurpurabs.firstOrNull()?.history, gurpurabs.firstOrNull()?.gurpurabColor, sDay == 1, isPunia, isMasaya))
+        val today = Calendar.getInstance(currentTimeZone)
+        val isToday = cal.get(Calendar.YEAR) == today.get(Calendar.YEAR) && cal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
+        
+        val cellDay = if (isDesiMode) sDay else cal.get(Calendar.DAY_OF_MONTH)
+        
+        return MonthlyDayCell(cellDay, display, isToday, gurpurabs.firstOrNull()?.name, gurpurabs.firstOrNull()?.history, gurpurabs.firstOrNull()?.gurpurabColor, sDay == 1, isPunia, isMasaya, gregCal = cal.clone() as Calendar, isCurrentMonth = isCurrentMonth)
+    }
+
+    fun generateMonthlyCalendar(context: Context, month: Int, year: Int, location: LocationConfig = LocationConfig.AMRITSAR): List<MonthlyDayCell> {
+        val cells = mutableListOf<MonthlyDayCell>()
+        val cal = Calendar.getInstance(currentTimeZone).apply { set(year, month - 1, 1, 12, 0, 0); set(Calendar.MILLISECOND, 0) }
+        val firstDayIndex = cal.get(Calendar.DAY_OF_WEEK) - 1
+
+        val workingCal = cal.clone() as Calendar
+        workingCal.add(Calendar.DAY_OF_MONTH, -firstDayIndex)
+        
+        for (i in 0 until 42) {
+            val isCurrent = workingCal.get(Calendar.MONTH) == month - 1 && workingCal.get(Calendar.YEAR) == year
+            cells.add(createMonthlyDayCell(context, workingCal, isCurrent, false, null, location))
+            workingCal.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        return cells
+    }
+
+    fun generateMonthlyCalendarDesi(context: Context, nsMonth: String, nsYear: Int, location: LocationConfig = LocationConfig.AMRITSAR): List<MonthlyDayCell> {
+        val startCal = findDesiMonthStart(nsYear, nsMonth, context) ?: return listOf()
+        val cells = mutableListOf<MonthlyDayCell>()
+        val firstDayIndex = startCal.get(Calendar.DAY_OF_WEEK) - 1
+        
+        val workingCal = startCal.clone() as Calendar
+        workingCal.add(Calendar.DAY_OF_MONTH, -firstDayIndex)
+
+        for (i in 0 until 42) {
+            val jd = julianDay(workingCal); val sunriseJd = calculateSunriseJD(jd, location.lat, location.lon)
+            val (sMonth, _) = getSolarBikramiDate(sunriseJd)
+            val isCurrent = sMonth == nsMonth
+            cells.add(createMonthlyDayCell(context, workingCal, isCurrent, true, nsMonth, location))
+            workingCal.add(Calendar.DAY_OF_MONTH, 1)
         }
         return cells
     }
@@ -94,10 +141,25 @@ object NanakshahiCalendar {
         val gurLine = if (gurpurabs.isNotEmpty()) "🎉 " + gurpurabs.joinToString { it.name } else ""; val countdown = getUpcomingEventCountdown(context, nsDate)
         val sangrandTime = if (sDay == 1) " (ਸੰਕਰਾਂਤ ਸਮਾਂ: ${timeFormat.format(java.util.Date(jdToMillis(findSangrandMoment(sunriseJd))))})" else ""
         val statusLabel = if (isPuniaDay(sunriseJd)) " (ਪੁੰਨਿਆ)" else if (isMasayaDay(sunriseJd)) " (ਮੱਸਿਆ)" else ""
-        return "$sunLine\n$moonLine\n$amritLine\n$lenLine\n\nਸੰਮਤ ${toGurmukhiYear(bikramiYear)} $sMonth ਰੁੱਤ $season$sangrandTime\n$moonPhase ${tithi.monthName} ${tithi.paksha} ${toGurmukhiNumber(tithi.tithi)}$statusLabel\n${toGurmukhiNumber(nsDate.day)} ${nsDate.month} ${toGurmukhiYear(nsDate.year)} ਨਾਨਕਸ਼ਾਹੀ\n$weekday\n" + (if (gurLine.isNotBlank()) "$gurLine\n" else "") + countdown
+        return "$sunLine\n$moonLine\n$amritVela\n$lenLine\n\nਸੰਮਤ ${toGurmukhiYear(bikramiYear)} $sMonth ਰੁੱਤ $season$sangrandTime\n$moonPhase ${tithi.monthName} ${tithi.paksha} ${toGurmukhiNumber(tithi.tithi)}$statusLabel\n${toGurmukhiNanakshahiYear(nsDate.year)} ਨਾਨਕਸ਼ਾਹੀ\n$weekday\n" + (if (gurLine.isNotBlank()) "$gurLine\n" else "") + countdown
     }
 
-    private fun getMoonPhaseIcon(tithi: Int, isSudi: Boolean): String = when { tithi == 15 && isSudi -> "🌕"; tithi == 15 && !isSudi -> "🌑"; isSudi -> if (tithi < 8) "🌒" else "🌓"; else -> if (tithi < 8) "🌘" else "🌗" }
+    fun getShortNanakshahiDate(context: Context, d: Int, m: Int, y: Int): String {
+        val ns = getNanakshahiDate(context, d, m, y)
+        val bikYear = getBikramiYear(d, m, y)
+        val cal = Calendar.getInstance(currentTimeZone).apply { set(y, m - 1, d, 12, 0, 0) }
+        val jd = julianDay(cal)
+        val sunriseJd = calculateSunriseJD(jd, LocationConfig.AMRITSAR.lat, LocationConfig.AMRITSAR.lon)
+        val tithiResult = getTithiResultFromJD(context, sunriseJd)
+        val statusLabel = if (tithiResult.isPunia) " (ਪੁੰਨਿਆ)" else if (tithiResult.isMasaya) " (ਮੱਸਿਆ)" else ""
+        
+        val engMonthFormat = SimpleDateFormat("d MMM yyyy", Locale.ENGLISH)
+        val engDate = engMonthFormat.format(cal.time)
+        
+        return "${toGurmukhiNumber(ns.day)} ${ns.month}, ਸੰਮਤ ${toGurmukhiNanakshahiYear(ns.year)} ਨਾਨਕਸ਼ਾਹੀ, ${tithiResult.monthName} ${tithiResult.paksha} ${toGurmukhiNumber(tithiResult.tithi)}$statusLabel, ਸੰਮਤ ${toGurmukhiNumber(bikYear)} ਬਿਕਰਮੀ ($engDate)"
+    }
+
+    private fun getMoonPhaseIcon(tithi: Int, isSudi: Boolean): String = when { tithi == 14 && isSudi -> "🌕"; tithi == 14 && !isSudi -> "🌑"; isSudi -> if (tithi < 8) "🌒" else "🌓"; else -> if (tithi < 8) "🌘" else "🌗" }
 
     private fun getUpcomingEventCountdown(context: Context, nsDate: NanakshahiDate): String {
         val allEvents = getSgpcGurpurabs(context, nsDate.year); val months = listOf("ਚੇਤ", "ਵੈਸਾਖ", "ਜੇਠ", "ਹਾੜ", "ਸਾਵਣ", "ਭਾਦੋਂ", "ਅੱਸੂ", "ਕੱਤਕ", "ਮੱਘਰ", "ਪੋਹ", "ਮਾਘ", "ਫੱਗਣ")
@@ -110,7 +172,7 @@ object NanakshahiCalendar {
         for (i in 0..15) {
             val lon = when (currentMode) { CalculationMode.ASTRONOMICAL -> getSunLongitudeSidereal(curr); CalculationMode.FIXED -> (sunLongitudeJD(curr) - 24.1 + 360.0) % 360.0 }
             var diff = lon - targetLon; while (diff > 180) diff -= 360; while (diff < -180) diff += 360
-            if (abs(diff) < 0.00001) break; curr -= diff / 0.9856 
+            if (abs(diff) < 0.0001) break; curr -= diff / 0.9856
         }
         return curr
     }
@@ -126,8 +188,8 @@ object NanakshahiCalendar {
         return pahars
     }
 
-    private fun isPuniaDay(sunriseJd: Double): Boolean { val purnimaMoment = findPurnimaMoment(sunriseJd); return purnimaMoment >= sunriseJd && purnimaMoment < sunriseJd + 1.0 }
-    private fun isMasayaDay(sunriseJd: Double): Boolean { val amavasyaMoment = findAmavasyaMoment(sunriseJd); return amavasyaMoment >= sunriseJd && amavasyaMoment < sunriseJd + 1.0 }
+    fun isPuniaDay(sunriseJd: Double): Boolean { val purnimaMoment = findPurnimaMoment(sunriseJd); return purnimaMoment >= sunriseJd && purnimaMoment < sunriseJd + 1.0 }
+    fun isMasayaDay(sunriseJd: Double): Boolean { val amavasyaMoment = findAmavasyaMoment(sunriseJd); return amavasyaMoment >= sunriseJd && amavasyaMoment < sunriseJd + 1.0 }
     private fun getAyanamsa(jd: Double): Double { val t = (jd - 2451545.0) / 36525.0; return 23.857083 + (5029.0966 * t + 1.1116 * t * t) / 3600.0 }
 
     private fun sunLongitudeJD(jd: Double): Double {
@@ -149,7 +211,7 @@ object NanakshahiCalendar {
     private fun getSunLongitudeSidereal(jd: Double): Double { val lon = sunLongitudeJD(jd); val ayan = getAyanamsa(jd); return (lon - ayan + 360.0) % 360.0 }
     private fun getSunRashiFromJD(jd: Double): Int { val lon = when (currentMode) { CalculationMode.ASTRONOMICAL -> getSunLongitudeSidereal(jd); CalculationMode.FIXED -> (sunLongitudeJD(jd) - 24.1 + 360.0) % 360.0 }; val safeLon = (lon % 360.0 + 360.0) % 360.0; return (floor(safeLon / 30.0).toInt() % 12) + 1 }
 
-    private fun getSolarBikramiDate(jd: Double): Pair<String, Int> {
+    fun getSolarBikramiDate(jd: Double): Pair<String, Int> {
         val sunriseToday = floor(jd + 0.5) - 0.5; val rashiToday = getSunRashiFromJD(sunriseToday); val rashiTomorrow = getSunRashiFromJD(sunriseToday + 1.0)
         if (rashiToday != rashiTomorrow) return rashiToBikramiMonth(rashiTomorrow) to 1
         var sangrandJd = sunriseToday; for (i in 1..35) { val d = sunriseToday - i; if (getSunRashiFromJD(d) != getSunRashiFromJD(d + 1.0)) { sangrandJd = d; break } }
@@ -157,9 +219,9 @@ object NanakshahiCalendar {
         return rashiToBikramiMonth(rashiToday) to day
     }
 
-    private fun getTithiNumberFromJD(jd: Double): Int { tithiCache[jd]?.let { return it }; var diff = moonLongitudeJD(jd) - sunLongitudeJD(jd); while (diff < 0) diff += 360; val result = (floor(diff / 12.0).toInt() % 30) + 1; if (tithiCache.size > 1000) tithiCache.clear(); tithiCache[jd] = result; return result }
-    private fun findAmavasyaMoment(jdAround: Double): Double { var curr = jdAround; for (i in 0..15) { var diff = moonLongitudeJD(curr) - sunLongitudeJD(curr); while (diff < 0) diff += 360; while (diff >= 360) diff -= 360; val delta = if (diff > 180) (diff - 360) else diff; if (abs(delta) < 0.0001) break; curr -= delta / 12.19 }; return curr }
-    private fun findPurnimaMoment(jdAround: Double): Double { var curr = jdAround; for (i in 0..20) { var diff = (moonLongitudeJD(curr) - sunLongitudeJD(curr) + 360.0) % 360.0; var dist = diff - 180.0; while (dist < -180) dist += 360; while (dist >= 180) dist -= 360; if (abs(dist) < 0.0001) break; curr -= dist / 12.19 }; return curr }
+    fun getTithiNumberFromJD(jd: Double): Int { tithiCache[jd]?.let { return it }; var diff = moonLongitudeJD(jd) - sunLongitudeJD(jd); while (diff < 0) diff += 360; val result = (floor(diff / 12.0).toInt() % 30) + 1; if (tithiCache.size > 1000) tithiCache.clear(); tithiCache[jd] = result; return result }
+    fun findAmavasyaMoment(jdAround: Double): Double { var curr = jdAround; for (i in 0..15) { var diff = moonLongitudeJD(curr) - sunLongitudeJD(curr); while (diff < 0) diff += 360; while (diff >= 360) diff -= 360; val delta = if (diff > 180) (diff - 360) else diff; if (abs(delta) < 0.0001) break; curr -= delta / 12.19 }; return curr }
+    fun findPurnimaMoment(jdAround: Double): Double { var curr = jdAround; for (i in 0..20) { var diff = (moonLongitudeJD(curr) - sunLongitudeJD(curr) + 360.0) % 360.0; var dist = diff - 180.0; while (dist < -180) dist += 360; while (dist >= 180) dist -= 360; if (abs(dist) < 0.0001) break; curr -= dist / 12.19 }; return curr }
 
     private fun resolveLunarMonthWithAdhik(context: Context, sunriseJd: Double, tithiRaw: Int): String {
         val definingAmavasyaJd = if (tithiRaw <= 15) findPreviousAmavasyaMoment(sunriseJd) else findNextAmavasyaMoment(sunriseJd)
@@ -181,16 +243,25 @@ object NanakshahiCalendar {
     fun calculateSunriseJD(jd: Double, lat: Double, lon: Double): Double = calculateSunTimeJD(jd, lat, lon, true)
     fun calculateSunsetJD(jd: Double, lat: Double, lon: Double): Double = calculateSunTimeJD(jd, lat, lon, false)
 
-    private fun getTithiResultFromJD(context: Context, jd: Double): TithiResult {
-        val raw = getTithiNumberFromJD(jd); val paksha = if (raw <= 15) SUDI else VADI; val tithi = if (raw <= 15) raw else raw - 15
-        val lunarMonthName = resolveLunarMonthWithAdhik(context, jd, raw); return TithiResult(tithi, paksha, lunarMonthName, lunarMonthName.contains(ADHIK))
+    fun getTithiResultFromJD(context: Context, jd: Double): TithiResult {
+        val raw = getTithiNumberFromJD(jd)
+        val isPunia = isPuniaDay(jd)
+        val isMasaya = isMasayaDay(jd)
+        val paksha = if (raw <= 15) SUDI else VADI
+        val displayTithi = when {
+            isPunia || isMasaya -> 14
+            raw <= 15 -> raw
+            else -> raw - 15
+        }
+        val lunarMonthName = resolveLunarMonthWithAdhik(context, jd, raw)
+        return TithiResult(displayTithi, paksha, lunarMonthName, lunarMonthName.contains(ADHIK), isPunia, isMasaya)
     }
 
     private fun getDualTithiAtSunriseFromJD(context: Context, sunriseJd: Double): DualTithiResult {
         val window = 0.5 / 24.0; val bRaw = getTithiNumberFromJD(sunriseJd - window); val aRaw = getTithiNumberFromJD(sunriseJd + window)
         val mB = resolveLunarMonthWithAdhik(context, sunriseJd - window, bRaw); val mA = resolveLunarMonthWithAdhik(context, sunriseJd + window, aRaw)
-        fun p(t: Int): String { return if (t <= 15) SUDI else VADI }
-        fun n(t: Int): Int { return if (t <= 15) t else t - 15 }
+        fun p(raw: Int): String = if (raw <= 15) SUDI else VADI
+        fun n(raw: Int): Int = when { raw == 15 || raw == 30 -> 14; raw <= 15 -> raw; else -> raw - 15 }
         if (bRaw != aRaw) return DualTithiResult(true, mB, p(bRaw), n(bRaw), mA, p(aRaw), n(aRaw))
         return DualTithiResult(false, mB, p(bRaw), n(bRaw), "", "", 0)
     }
@@ -200,46 +271,56 @@ object NanakshahiCalendar {
         gurpurabCache[nsYear]?.let { return it }
         val gurpurabs = mutableListOf<Gurpurab>()
         val events = listOf(
-            Triple("ਕੱਤਕ", SUDI, 15) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂ ਨਾਨਕ ਦੇਵ ਜੀ", "ਸਿੱਖ ਧਰਮ ਦੇ ਬਾਨੀ ਜਗਤ ਗੁਰੂ ਬਾਬਾ ਨਾਨਕ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
-            Triple("ਅੱਸੂ", VADI, 8) to Pair("ਜੋਤੀ ਜੋਤਿ ਗੁਰੂ ਨਾਨਕ ਦੇਵ ਜੀ", "ਗੁਰੂ ਨਾਨਕ ਦੇਵ ਜੀ ਦੇ ਕਰਤਾਰਪੁਰ ਸਾਹਿਬ ਵਿਖੇ ਜੋਤੀ-ਜੋਤਿ ਸਮਾਉਣ ਦਾ ਦਿਨ।"),
+            Triple("ਕੱਤਕ", SUDI, 14) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂ ਨਾਨਕ ਦੇਵ ਜੀ", "ਸਿੱਖ ਧਰਮ ਦੇ ਬਾਨੀ ਜਗਤ ਗੁਰੂ ਬਾਬਾ ਨਾਨਕ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
+            Triple("ਅੱਸੂ", VADI, 8) to Pair("ਜੋਤੀ ਜੋਤਿ ਗੁਰੂ ਨਾਨਕ ਦੇਵ ਜੀ", "ਗੁਰੂ ਨਾਨਕ ਦੇਵ ਜੀ ਦੇ ਕਰਤਾਰਪੁਰ ਸਾਹਿਕ ਵਿਖੇ ਜੋਤੀ-ਜੋਤਿ ਸਮਾਉਣ ਦਾ ਦਿਨ।"),
             Triple("ਵੈਸਾਖ", VADI, 1) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂ ਅੰਗਦ ਦੇਵ ਜੀ", "ਦੂਜੀ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂ ਅੰਗਦ ਦੇਵ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
             Triple("ਅੱਸੂ", SUDI, 10) to Pair("ਗੁਰਗੱਦੀ ਗੁਰੂ ਅੰਗਦ ਦੇਵ ਜੀ", "ਗੁਰੂ ਅੰਗਦ ਦੇਵ ਜੀ ਨੂੰ ਗੁਰਗੱਦੀ ਸੌਂਪਣ ਦਾ ਦਿਨ।"),
             Triple("ਚੇਤ", SUDI, 4) to Pair("ਜੋਤੀ ਜੋਤਿ ਗੁਰੂ ਅੰਗਦ ਦੇਵ ਜੀ", "ਗੁਰੂ ਅੰਗਦ ਦੇਵ ਜੀ ਦੇ ਜੋਤੀ-ਜੋਤਿ ਸਮਾਉਣ ਦਾ ਦਿਨ।"),
             Triple("ਵੈਸਾਖ", SUDI, 14) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂ ਅਮਰ ਦਾਸ ਜੀ", "ਤੀਜੀ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂ ਅਮਰ ਦਾਸ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
-            Triple("ਅੱਸੂ", SUDI, 15) to Pair("ਜੋਤੀ ਜੋਤਿ ਗੁਰੂ ਅਮਰ ਦਾਸ ਜੀ", "ਗੁਰੂ ਅਮਰ ਦਾਸ ਜੀ ਦੇ ਜੋਤੀ-ਜੋਤਿ ਸਮਾਉਣ ਦਾ ਦਿਨ।"),
+            Triple("ਅੱਸੂ", SUDI, 14) to Pair("ਜੋਤੀ ਜੋਤਿ ਗੁਰੂ ਅਮਰ ਦਾਸ ਜੀ", "ਗੁਰੂ ਅਮਰ ਦਾਸ ਜੀ ਦੇ ਜੋਤੀ-ਜੋਤਿ ਸਮਾਉਣ ਦਾ ਦਿਨ।"),
             Triple("ਅੱਸੂ", VADI, 2) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂ ਰਾਮ ਦਾਸ ਜੀ", "ਚੌਥੀ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂ ਰਾਮ ਦਾਸ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
-            Triple("ਅੱਸੂ", SUDI, 15) to Pair("ਗੁਰਗੱਦੀ ਗੁਰੂ ਰਾਮ ਦਾਸ ਜੀ", "ਗੁਰੂ ਰਾਮ ਦਾਸ ਜੀ ਨੂੰ ਗੁਰਗੱਦੀ ਸੌਂਪਣ ਦਾ ਦਿਨ।"),
+            Triple("ਅੱਸੂ", SUDI, 14) to Pair("ਗੁਰਗੱਦੀ ਗੁਰੂ ਰਾਮ ਦਾਸ ਜੀ", "ਗੁਰੂ ਰਾਮ ਦਾਸ ਜੀ ਨੂੰ ਗੁਰਗੱਦੀ ਸੌਂਪਣ ਦਾ ਦਿਨ।"),
             Triple("ਅੱਸੂ", SUDI, 3) to Pair("ਜੋਤੀ ਜੋਤਿ ਗੁਰੂ ਰਾਮ ਦਾਸ ਜੀ", "ਗੁਰੂ ਰਾਮ ਦਾਸ ਜੀ ਦੇ ਜੋਤੀ-ਜੋਤਿ ਸਮਾਉਣ ਦਾ ਦਿਨ।"),
             Triple("ਵੈਸਾਖ", VADI, 7) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂ ਅਰਜਨ ਦੇਵ ਜੀ", "ਪੰਜਵੀਂ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂ ਅਰਜਨ ਦੇਵ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
             Triple("ਹਾੜ", SUDI, 4) to Pair("ਸ਼ਹੀਦੀ ਗੁਰੂ ਅਰਜਨ ਦੇਵ ਜੀ", "ਗੁਰੂ ਅਰਜਨ ਦੇਵ ਜੀ ਦੀ ਲਾਸਾਨੀ ਸ਼ਹਾਦਤ ਦਾ ਦਿਨ।"),
             Triple("ਹਾੜ", VADI, 1) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂ ਹਰਗੋਬਿੰਦ ਜੀ", "ਛੇਵੀਂ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂ ਹਰਗੋਬਿੰਦ ਸਾਹਿਬ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
-            Triple("ਮਾਘ", SUDI, 13) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂਰ ਹਰਿ ਰਾਇ ਜੀ", "ਸੱਤਵੀਂ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂ ਹਰਿ ਰਾਇ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
-            Triple("ਸਾਵਣ", VADI, 9) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂ ਹਰਿ ਕ੍ਰਿਸ਼ਨ ਜੀ", "ਅੱਠਵੀਂ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂ ਹਰਿ ਕ੍ਰਿਸ਼ਨ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
+            Triple("ਮਾਘ", SUDI, 13) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂਰ ਹਰਿ ਰਾਇ ਜੀ", "ਸੱਤਵੀਂ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂਰ ਹਰਿ ਰਾਇ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
+            Triple("ਸਾਵਣ", VADI, 9) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂਰ ਹਰਿ ਕ੍ਰਿਸ਼ਨ ਜੀ", "ਅੱਠਵੀਂ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂਰ ਹਰਿ ਕ੍ਰਿਸ਼ਨ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
             Triple("ਵੈਸਾਖ", VADI, 5) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂ ਤੇਗ ਬਹਾਦਰ ਜੀ", "ਨੌਵੀਂ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂ ਤੇਗ ਬਹਾਦਰ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
             Triple("ਮੱਘਰ", SUDI, 5) to Pair("ਸ਼ਹੀਦੀ ਗੁਰੂ ਤੇਗ ਬਹਾਦਰ ਜੀ", "ਹਿੰਦ ਦੀ ਚਾਦਰ ਗੁਰੂ ਤੇਗ ਬਹਾਦਰ ਜੀ ਦੀ ਸ਼ਹਾਦਤ ਦਾ ਦਿਨ।"),
             Triple("ਪੋਹ", SUDI, 7) to Pair("ਪ੍ਰਕਾਸ਼ ਗੁਰੂ ਗੋਬਿੰਦ ਸਿੰਘ ਜੀ", "ਦਸਵੀਂ ਪਾਤਸ਼ਾਹੀ ਗੁਰੂ ਗੋਬਿੰਦ ਸਿੰਘ ਜੀ ਦਾ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ।"),
             Triple("ਕੱਤਕ", VADI, 5) to Pair("ਜੋਤੀ ਜੋਤਿ ਗੁਰੂ ਗੋਬਿੰਦ ਸਿੰਘ ਜੀ", "ਗੁਰੂ ਗੋਬਿੰਦ ਸਿੰਘ ਜੀ ਦੇ ਜੋਤੀ-ਜੋਤਿ ਸਮਾਉਣ ਦਾ ਦਿਨ।"),
             Triple("ਅੱਸੂ", SUDI, 2) to Pair("ਗੁਰਗੱਦੀ ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ", "ਗੁਰੂ ਗ੍ਰੰਥ ਸਾਹਿਬ ਜੀ ਨੂੰ ਗੁਰਗੱਦੀ ਸੌਂਪਣ ਦਾ ਇਤਿਹਾਸਕ ਦਿਹਾੜਾ।")
         )
-        events.forEach { (lunarInfo, eventData) -> 
+        events.forEach { (lunarInfo, eventData) ->
             findLunarDate(nsYear, lunarInfo.first, lunarInfo.second, lunarInfo.third, context)?.let { (nsDate, gregDate) ->
                 val name = eventData.first
                 val history = eventData.second
                 val color = when { name.contains("ਸ਼ਹੀਦੀ") -> Color.RED; name.contains("ਗੁਰਗੱਦੀ") -> Color.BLUE; else -> Color.parseColor("#FF5733") }
-                gurpurabs.add(Gurpurab(nsDate.day, nsDate.month, name, history, color, gregDate)) 
-            } 
+                gurpurabs.add(Gurpurab(nsDate.day, nsDate.month, name, history, color, gregDate))
+            }
         }
         gurpurabCache[nsYear] = gurpurabs; return gurpurabs
     }
 
-    private fun findLunarDate(nsYear: Int, nsM: String, paksha: String, tithi: Int, context: Context): Pair<NanakshahiDate, Calendar>? {
-        val cal = findChet1(nsYear); val targetRaw = if (paksha == SUDI) tithi else tithi + 15
-        for (i in 0..400) { 
+    fun findLunarDate(nsYear: Int, nsM: String, paksha: String, tithi: Int, context: Context): Pair<NanakshahiDate, Calendar>? {
+        val cal = findChet1(nsYear)
+        for (i in 0..400) {
             val check = cal.clone() as Calendar; check.add(Calendar.DAY_OF_YEAR, i)
             val sunriseJd = calculateSunriseJD(julianDay(check), LocationConfig.AMRITSAR.lat, LocationConfig.AMRITSAR.lon)
-            if (getTithiNumberFromJD(sunriseJd) != targetRaw) continue
+
             val tithiResult = getTithiResultFromJD(context, sunriseJd)
-            if (tithiResult.monthName.contains(nsM) && tithiResult.paksha == paksha && tithiResult.tithi == tithi) {
+            if (!tithiResult.monthName.contains(nsM)) continue
+
+            val matches = if (paksha == SUDI && tithi == 14) {
+                tithiResult.isPunia
+            } else if (paksha == VADI && tithi == 14) {
+                tithiResult.isMasaya
+            } else {
+                tithiResult.paksha == paksha && tithiResult.tithi == tithi
+            }
+
+            if (matches) {
                 val ns = getNanakshahiDate(context, check.get(Calendar.DAY_OF_MONTH), check.get(Calendar.MONTH) + 1, check.get(Calendar.YEAR))
                 return ns to check
             }
@@ -247,35 +328,55 @@ object NanakshahiCalendar {
         return null
     }
 
-    private fun findChet1(nsYear: Int): Calendar { val year = nsYear + 1468; val cal = Calendar.getInstance(currentTimeZone).apply { clear(); set(year, Calendar.MARCH, 5, 12, 0, 0) }; var prevLon = sunLongitudeJD(calculateSunriseJD(julianDay(cal), LocationConfig.AMRITSAR.lat, LocationConfig.AMRITSAR.lon)); for (i in 1..35) { val check = cal.clone() as Calendar; check.add(Calendar.DAY_OF_MONTH, i); val lon = sunLongitudeJD(calculateSunriseJD(julianDay(check), LocationConfig.AMRITSAR.lat, LocationConfig.AMRITSAR.lon)); if (prevLon > 330 && lon < 30) return check; prevLon = lon }; return Calendar.getInstance(currentTimeZone).apply { clear(); set(year, Calendar.MARCH, 14, 12, 0, 0) } }
-    private fun rashiToBikramiMonth(rashi: Int): String = when (rashi) { 1 -> "ਵੈਸਾਖ"; 2 -> "ਜੇਠ"; 3 -> "ਹਾੜ"; 4 -> "ਸਾਵਣ"; 5 -> "ਭਾਦੋਂ"; 6 -> "ਅੱਸੂ"; 7 -> "ਕੱਤਕ"; 8 -> "ਮੱਘਰ"; 9 -> "ਪੋਹ"; 10 -> "ਮਾਘ"; 11 -> "ਫੱਗਣ"; 12 -> "ਚੇਤ"; else -> "ਅਗਿਆਤ" }
+    fun findDesiMonthStart(nsYear: Int, nsMonth: String, context: Context): Calendar? {
+        val startCal = findChet1(nsYear)
+        for (i in 0..400) {
+            val check = startCal.clone() as Calendar; check.add(Calendar.DAY_OF_YEAR, i)
+            val sunriseJd = calculateSunriseJD(julianDay(check), LocationConfig.AMRITSAR.lat, LocationConfig.AMRITSAR.lon)
+            val (solarM, solarD) = getSolarBikramiDate(sunriseJd)
+            if (solarM == nsMonth && solarD == 1) return check
+        }
+        return null
+    }
+
+    private fun findChet1(nsYear: Int): Calendar = findChet1ForYear(nsYear + 1468)
+
+    private fun findChet1ForYear(y: Int): Calendar {
+        val cal = Calendar.getInstance(currentTimeZone).apply { clear(); set(y, Calendar.MARCH, 1, 12, 0, 0) }
+        for (i in 0..30) {
+            val check = cal.clone() as Calendar
+            check.add(Calendar.DAY_OF_MONTH, i)
+            val sunriseJd = calculateSunriseJD(julianDay(check), LocationConfig.AMRITSAR.lat, LocationConfig.AMRITSAR.lon)
+            val (m, d) = getSolarBikramiDate(sunriseJd)
+            if (m == "ਚੇਤ" && d == 1) return check
+        }
+        return Calendar.getInstance(currentTimeZone).apply { clear(); set(y, Calendar.MARCH, 14, 12, 0, 0) }
+    }
+
+    fun rashiToBikramiMonth(rashi: Int): String = when (rashi) { 1 -> "ਵੈਸਾਖ"; 2 -> "ਜੇਠ"; 3 -> "ਹਾੜ"; 4 -> "ਸਾਵਣ"; 5 -> "ਭਾਦੋਂ"; 6 -> "ਅੱਸੂ"; 7 -> "ਕੱਤਕ"; 8 -> "ਮੱਘਰ"; 9 -> "ਪੋਹ"; 10 -> "ਮਾਘ"; 11 -> "ਫੱਗਣ"; 12 -> "ਚੇਤ"; else -> "ਅਗਿਆਤ" }
     private fun detectGurpurabs(context: Context, nanak: NanakshahiDate): List<Gurpurab> = getSgpcGurpurabs(context, nanak.year).filter { it.day == nanak.day && it.month == nanak.month }
 
-    private fun getNanakshahiDate(context: Context, d: Int, m: Int, y: Int): NanakshahiDate {
-        val isLeap = (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0); val nsYear = if (m > 3 || (m == 3 && d >= 14)) y - 1468 else y - 1469
-        val (nd, nm) = when {
-            m == 3 && d >= 14 || m == 4 && d <= 13 -> (if (m == 3) d - 13 else d + 18) to "ਚੇਤ"
-            m == 4 && d >= 14 || m == 5 && d <= 14 -> (if (m == 4) d - 13 else d + 17) to "ਵੈਸਾਖ"
-            m == 5 && d >= 15 || m == 6 && d <= 14 -> (if (m == 5) d - 14 else d + 17) to "ਜੇਠ"
-            m == 6 && d >= 15 || m == 7 && d <= 15 -> (if (m == 6) d - 14 else d + 16) to "ਹਾੜ"
-            m == 7 && d >= 16 || m == 8 && d <= 15 -> (if (m == 7) d - 15 else d + 16) to "ਸਾਵਣ"
-            m == 8 && d >= 16 || m == 9 && d <= 14 -> (if (m == 8) d - 15 else d + 15) to "ਭਾਦੋਂ"
-            m == 9 && d >= 15 || m == 10 && d <= 14 -> (if (m == 9) d - 14 else d + 16) to "ਅੱਸੂ"
-            m == 10 && d >= 16 || m == 11 && d <= 14 -> (if (m == 10) d - 15 else d + 16) to "ਕੱਤਕ"
-            m == 11 && d >= 15 || m == 12 && d <= 14 -> (if (m == 11) d - 14 else d + 16) to "ਮੱਘਰ"
-            m == 12 && d >= 15 || m == 1 && d <= 13 -> (if (m == 12) d - 14 else d + 17) to "ਪੋਹ"
-            m == 1 && d >= 14 || m == 2 && d <= 12 -> (if (m == 1) d - 13 else d + 18) to "ਮਾਘ"
-            m == 2 && d >= 13 || m == 3 && d <= 13 -> (if (m == 2) d - 12 else d + (if (isLeap) 17 else 16)) to "ਫੱਗਣ"
-            else -> (0) to "ਅਗਿਆਤ"
+    fun getNanakshahiDate(context: Context, d: Int, m: Int, y: Int): NanakshahiDate {
+        val cal = Calendar.getInstance(currentTimeZone).apply {
+            set(y, m - 1, d, 12, 0, 0)
+            set(Calendar.MILLISECOND, 0)
         }
-        return NanakshahiDate(nd, nm, nsYear)
+        val jd = julianDay(cal)
+        val sunriseJd = calculateSunriseJD(jd, LocationConfig.AMRITSAR.lat, LocationConfig.AMRITSAR.lon)
+        val (solarM, solarD) = getSolarBikramiDate(sunriseJd)
+
+        val chet1 = findChet1ForYear(y)
+        val nsYear = if (cal.before(chet1)) y - 1469 else y - 1468
+
+        return NanakshahiDate(solarD, solarM, nsYear)
     }
 
     private fun jdToMillis(jd: Double): Long = ((jd - 2440587.5) * 86400000.0).roundToLong()
     private fun julianDay(cal: Calendar): Double { val utcCal = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply { timeInMillis = cal.timeInMillis }; val y = utcCal.get(Calendar.YEAR); val m = utcCal.get(Calendar.MONTH) + 1; val d = utcCal.get(Calendar.DAY_OF_MONTH) + (utcCal.get(Calendar.HOUR_OF_DAY) + utcCal.get(Calendar.MINUTE) / 60.0 + utcCal.get(Calendar.SECOND) / 3600.0) / 24.0; return julianDayFromFields(y, m, d) }
-    private fun julianDayFromFields(yIn: Int, mIn: Int, d: Double): Double { var y = yIn; var m = mIn; if (m <= 2) { y -= 1; m += 12 }; val isGregorian = (y > 1752) || (y == 1752 && m > 9) || (y == 1752 && m == 9 && d >= 14.0); return if (isGregorian) { val a = y / 100; val b = 2 - a + (a / 4); floor(365.25 * (y + 4716)) + floor(30.6001 * (m + 1)) + d + b - 1524.5 } else { floor(365.25 * (y + 4716)) + floor(30.6001 * (m + 1)) + d - 1524.5 } }
+    private fun julianDayFromFields(yIn: Int, mIn: Int, d: Double): Double { var y = yIn; var m = mIn; if (m <= 2) { y -= 1; m += 12 }; val isGregorian = (y > 1752) || (y == 1752 && m > 9) || (y == 1752 && m == 9 && d >= 14.0); return if (isGregorian) { val a = y / 100; val b = 2 - a + (a / 4); floor(365.25 * (y.toDouble() + 4716)) + floor(30.6001 * (m.toDouble() + 1)) + d + b - 1524.5 } else { floor(365.25 * (y.toDouble() + 4716)) + floor(30.6001 * (m.toDouble() + 1)) + d - 1524.5 } }
     fun toGurmukhiNumber(n: Int): String { val map = mapOf('0' to '੦', '1' to '੧', '2' to '੨', '3' to '੩', '4' to '੪', '5' to '੫', '6' to '੬', '7' to '੭', '8' to '੮', '9' to '੯'); return n.toString().map { map[it] ?: it }.joinToString("") }
     fun toGurmukhiYear(n: Int): String { val absN = if (n <= 0) abs(n) + 1 else n; val numStr = toGurmukhiNumber(absN); return if (n <= 0) "$numStr ਈ.ਪੂ." else numStr }
+    fun toGurmukhiNanakshahiYear(n: Int): String { val absN = if (n <= 0) abs(n) + 1 else n; val numStr = toGurmukhiNumber(absN); return if (n <= 0) "$numStr ਨਾ.ਪੂ." else numStr }
     fun weekdayNamePunjabi(index: Int): String = listOf("ਐਤਵਾਰ", "ਸੋਮਵਾਰ", "ਮੰਗਲਵਾਰ", "ਬੁਧਵਾਰ", "ਵੀਰਵਾਰ", "ਸ਼ੁਕਰਵਾਰ", "ਸ਼ਨੀਚਰਵਾਰ").getOrElse(index) { "" }
     private fun calculateDeltaT(year: Double): Double = when { year < 1600 -> 1574.2 - 556.01 * ((year - 1000) / 100); year < 2005 -> 64.69 + 0.293 * (year - 2005); else -> -20 + 32 * ((year - 1820) / 100).pow(2) }
     private fun jdToYear(jd: Double): Double = (jd - 2440587.5) / 365.25 + 1970.0

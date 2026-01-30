@@ -19,6 +19,10 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:background">@drawable/bg_weekday_cell</item>
+        <item name="android:textColor">#E65100</item>
     </style>
 
 </resources>

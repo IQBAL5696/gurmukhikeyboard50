@@ -12,6 +12,8 @@ import java.util.ArrayList
 import android.util.TypedValue
 import android.os.Handler
 import android.os.Looper
+import androidx.preference.PreferenceManager
+import com.iqbal.gurmukhikeyboard50.ImeConstants
 import com.iqbal.gurmukhikeyboard50.R
 
 class CandidateView @JvmOverloads constructor(
@@ -42,34 +44,44 @@ class CandidateView @JvmOverloads constructor(
     }
 
     init {
-        val textColorValue = TypedValue()
-        if (context.theme.resolveAttribute(R.attr.candidatesTextColor, textColorValue, true)) {
-            textPaint.color = textColorValue.data
+        updatePaintColors()
+    }
+
+    private fun updatePaintColors() {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val currentTheme = sharedPrefs.getString(ImeConstants.PREF_KEYBOARD_THEME, "light")
+        
+        if (currentTheme == "custom") {
+            textPaint.color = Color.WHITE
+            setBackgroundColor(Color.TRANSPARENT)
         } else {
-            textPaint.color = Color.BLACK
+            val textColorValue = TypedValue()
+            if (context.theme.resolveAttribute(R.attr.candidatesTextColor, textColorValue, true)) {
+                textPaint.color = textColorValue.data
+            } else {
+                textPaint.color = Color.BLACK
+            }
+            
+            val backgroundColorValue = TypedValue()
+            if (context.theme.resolveAttribute(R.attr.candidatesBackground, backgroundColorValue, true)) {
+                setBackgroundColor(backgroundColorValue.data)
+            } else {
+                setBackgroundColor(Color.WHITE)
+            }
         }
         textPaint.textSize = 45f
         textPaint.isAntiAlias = true
-
-        val backgroundColorValue = TypedValue()
-        if (context.theme.resolveAttribute(R.attr.candidatesBackground, backgroundColorValue, true)) {
-            setBackgroundColor(backgroundColorValue.data)
-        } else {
-            setBackgroundColor(Color.WHITE)
-        }
     }
 
     fun setSuggestions(newSuggestions: List<String>) {
         suggestions.clear()
-        
-        // Add Undo/Redo at the beginning only if it's not already a special result like calculation
         if (newSuggestions.isEmpty()) {
             suggestions.add("↶ Undo")
             suggestions.add("↷ Redo")
         } else {
             suggestions.addAll(newSuggestions)
         }
-        
+        updatePaintColors() // Ensure colors are updated if theme changed
         requestLayout()
         invalidate()
     }
@@ -105,18 +117,24 @@ class CandidateView @JvmOverloads constructor(
         val y = paddingTop + textPaint.fontSpacing / 2 + textPaint.descent() + (height - paddingTop - paddingBottom - textPaint.fontSpacing) / 2
         var currentX = paddingLeft.toFloat()
 
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val isCustomTheme = sharedPrefs.getString(ImeConstants.PREF_KEYBOARD_THEME, "light") == "custom"
+
         for (suggestion in suggestions) {
-            // Draw special styling for Undo/Redo
             if (suggestion == "↶ Undo" || suggestion == "↷ Redo") {
                 textPaint.isFakeBoldText = true
-                textPaint.color = Color.GRAY
+                textPaint.color = if (isCustomTheme) Color.WHITE else Color.GRAY
             } else {
                 textPaint.isFakeBoldText = false
-                val textColorValue = TypedValue()
-                if (context.theme.resolveAttribute(R.attr.candidatesTextColor, textColorValue, true)) {
-                    textPaint.color = textColorValue.data
+                if (isCustomTheme) {
+                    textPaint.color = Color.WHITE
                 } else {
-                    textPaint.color = Color.BLACK
+                    val textColorValue = TypedValue()
+                    if (context.theme.resolveAttribute(R.attr.candidatesTextColor, textColorValue, true)) {
+                        textPaint.color = textColorValue.data
+                    } else {
+                        textPaint.color = Color.BLACK
+                    }
                 }
             }
             

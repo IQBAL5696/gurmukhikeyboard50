@@ -21,24 +21,10 @@
         android:padding="16dp">
 
         <Button
-            android:id="@+id/btn_adjust_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Adjust Keyboard Layout" />
-
-        <Button
             android:id="@+id/btn_manage_shortcuts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="Manage Custom Shortcuts (ਸ਼ੌਰਟਕਟ)" />
-
-        <Button
-            android:id="@+id/btn_ai_settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="AI Assistant Settings (Gemini)" />
 
         <Button
             android:id="@+id/btn_privacy_policy"

@@ -34,9 +34,9 @@
         <Key android:codes="112" android:keyLabel="p" android:keyEdgeFlags="right" />
     </Row>
 
-    <!-- Row 3: Middle Letters (Centered) -->
+    <!-- Row 3: Middle Letters (Programmatically Centered) -->
     <Row>
-        <Key android:codes="97" android:keyLabel="a" android:horizontalGap="5%p" android:keyEdgeFlags="left" />
+        <Key android:codes="97" android:keyLabel="a" android:keyEdgeFlags="left" />
         <Key android:codes="115" android:keyLabel="s" />
         <Key android:codes="100" android:keyLabel="d" />
         <Key android:codes="102" android:keyLabel="f" />
@@ -64,10 +64,10 @@
     <Row android:rowEdgeFlags="bottom">
         <Key android:codes="-100" android:keyLabel="ੳਅੲ" android:keyWidth="15%p" android:keyEdgeFlags="left" />
         <Key android:codes="44" android:keyLabel="," android:keyWidth="8.5%p" />
-        <Key android:codes="-2" android:keyLabel="\?123" android:keyWidth="8.5%p" />
-        <Key android:codes="32" android:keyIcon="@drawable/ic_space_bar" android:keyWidth="34%p" />
+        <Key android:codes="-103" android:keyLabel="1234" android:keyWidth="8.5%p" />
+        <Key android:codes="32" android:keyIcon="@drawable/ic_space_bar" android:keyWidth="36%p" />
         <Key android:codes="46" android:keyLabel="." android:keyWidth="8.5%p"/>
-        <Key android:codes="-4" android:keyIcon="@drawable/ic_return_arrow" android:keyWidth="15%p" android:keyEdgeFlags="right" />
+        <Key android:codes="-4" android:keyIcon="@drawable/ic_search" android:keyWidth="15%p" android:keyEdgeFlags="right" />
     </Row>
 
 </Keyboard>

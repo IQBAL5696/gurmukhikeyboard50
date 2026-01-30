@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="8.5%p"
+    android:keyHeight="45dp"
+    android:horizontalGap="4.7dp"
+    android:verticalGap="4.7dp">
+
+    <!-- Row 1: Numbers (1-0) -->
+    <Row>
+        <Key android:codes="49" android:keyLabel="1" android:keyEdgeFlags="left" />
+        <Key android:codes="50" android:keyLabel="2" />
+        <Key android:codes="51" android:keyLabel="3" />
+        <Key android:codes="52" android:keyLabel="4" />
+        <Key android:codes="53" android:keyLabel="5" />
+        <Key android:codes="54" android:keyLabel="6" />
+        <Key android:codes="55" android:keyLabel="7" />
+        <Key android:codes="56" android:keyLabel="8" />
+        <Key android:codes="57" android:keyLabel="9" />
+        <Key android:codes="48" android:keyLabel="0" android:keyEdgeFlags="right" />
+    </Row>
+
+    <!-- Row 2: Punjabi Numbers (੦-੯) -->
+    <Row>
+        <Key android:codes="2662" android:keyLabel="੦" android:keyEdgeFlags="left" />
+        <Key android:codes="2663" android:keyLabel="੧" />
+        <Key android:codes="2664" android:keyLabel="੨" />
+        <Key android:codes="2665" android:keyLabel="੩" />
+        <Key android:codes="2666" android:keyLabel="੪" />
+        <Key android:codes="2667" android:keyLabel="੫" />
+        <Key android:codes="2668" android:keyLabel="੬" />
+        <Key android:codes="2669" android:keyLabel="੭" />
+        <Key android:codes="2670" android:keyLabel="੮" />
+        <Key android:codes="2671" android:keyLabel="੯" android:keyEdgeFlags="right" />
+    </Row>
+
+    <!-- Row 3: Gurmukhi Symbols & Math (ੴ, ☬, ...) -->
+    <Row>
+        <Key android:codes="2676" android:keyLabel="ੴ" android:keyEdgeFlags="left" />
+        <Key android:codes="9772" android:keyLabel="☬" />
+        <Key android:codes="8226" android:keyLabel="•" />
+        <Key android:codes="8730" android:keyLabel="√" />
+        <Key android:codes="960" android:keyLabel="π" />
+        <Key android:codes="247" android:keyLabel="÷" />
+        <Key android:codes="215" android:keyLabel="×" />
+        <Key android:codes="182" android:keyLabel="¶" />
+        <Key android:codes="916" android:keyLabel="Δ" />
+        <Key android:codes="8364" android:keyLabel="€" android:keyEdgeFlags="right" />
+    </Row>
+
+    <!-- Row 4: Currency & Misc -->
+    <Row>
+        <Key android:codes="163" android:keyLabel="£" android:keyEdgeFlags="left" />
+        <Key android:codes="165" android:keyLabel="¥" />
+        <Key android:codes="162" android:keyLabel="¢" />
+        <Key android:codes="169" android:keyLabel="©" />
+        <Key android:codes="174" android:keyLabel="®" />
+        <Key android:codes="8482" android:keyLabel="™" />
+        <Key android:codes="176" android:keyLabel="°" />
+        <Key android:codes="177" android:keyLabel="±" />
+        <Key android:codes="8800" android:keyLabel="≠" />
+        <Key android:codes="167" android:keyLabel="§" android:keyEdgeFlags="right" />
+    </Row>
+
+    <!-- Bottom Row (Standardized) -->
+    <Row android:rowEdgeFlags="bottom">
+        <Key android:codes="-101" android:keyLabel="abc" android:keyWidth="15%p" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="44" android:keyLabel="," android:keyWidth="8.5%p" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="-133" android:keyLabel="1/2" android:keyWidth="8.5%p" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="32" android:keyIcon="@drawable/ic_space_bar" android:isRepeatable="true" android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="46" android:keyLabel="." android:keyWidth="8.5%p" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="-5" android:keyIcon="@drawable/ic_backspace" android:keyWidth="8.5%p" android:isRepeatable="true" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout" />
+        <Key android:codes="-4" android:keyIcon="@drawable/ic_search" android:keyWidth="15%p" android:keyEdgeFlags="right"  android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+    </Row>
+
+</Keyboard>

@@ -13,6 +13,7 @@ class KeyboardManager(
     var gurmukhiKeyboard: MyKeyboard? = null
     var englishKeyboard: MyKeyboard? = null
     var symbolsKeyboard: MyKeyboard? = null
+    var symbols1Keyboard: MyKeyboard? = null
     var numPadKeyboard: MyKeyboard? = null
     
     // Split Keyboards
@@ -42,6 +43,8 @@ class KeyboardManager(
     fun getThemeResIdForValue(themeValue: String?): Int {
         return when (themeValue) {
             "dark" -> R.style.KeyboardTheme_Dark
+            "kesari" -> R.style.KeyboardTheme_Kesari
+            "royal_blue" -> R.style.KeyboardTheme_RoyalBlue
             "blue" -> R.style.KeyboardTheme_Blue
             "green" -> R.style.KeyboardTheme_Green
             "red" -> R.style.KeyboardTheme_Red
@@ -80,6 +83,7 @@ class KeyboardManager(
             gurmukhiKeyboard = MyKeyboard(contextForKeyboardCreation, R.xml.gurmukhi_keyboard, 0, targetWidth, 0)
             englishKeyboard = MyKeyboard(contextForKeyboardCreation, R.xml.qwerty_keyboard, 0, targetWidth, 0)
             symbolsKeyboard = MyKeyboard(contextForKeyboardCreation, R.xml.symbols_keyboard, 0, targetWidth, 0)
+            symbols1Keyboard = MyKeyboard(contextForKeyboardCreation, R.xml.symbols1_keyboard, 0, targetWidth, 0)
             numPadKeyboard = MyKeyboard(contextForKeyboardCreation, R.xml.number_pad_keyboard, 0, targetWidth, 0)
             
             // Load Split Layouts
@@ -100,6 +104,7 @@ class KeyboardManager(
             KeyboardType.GURMUKHI -> if (isSplit) splitGurmukhiKeyboard else gurmukhiKeyboard
             KeyboardType.ENGLISH, KeyboardType.PHONETIC -> if (isSplit) splitEnglishKeyboard else englishKeyboard
             KeyboardType.SYMBOLS -> symbolsKeyboard
+            KeyboardType.SYMBOLS1 -> symbols1Keyboard
             KeyboardType.NUMPAD -> numPadKeyboard
             else -> null
         }
@@ -117,6 +122,7 @@ class KeyboardManager(
         englishKeyboard?.apply { setShifted(false); setCapsLock(false) }
         splitEnglishKeyboard?.apply { setShifted(false); setCapsLock(false) }
         symbolsKeyboard?.setShifted(false)
+        symbols1Keyboard?.setShifted(false)
         numPadKeyboard?.setShifted(false)
         
         return getCurrentKeyboard()
@@ -137,6 +143,9 @@ class KeyboardManager(
             KeyboardType.SYMBOLS -> {
                 isSymbolsShifted = !isSymbolsShifted
                 symbolsKeyboard?.setShifted(isSymbolsShifted)
+            }
+            KeyboardType.SYMBOLS1 -> {
+                // Symbols1 usually doesn't have shifted state, but we follow the same pattern if needed
             }
             else -> {}
         }

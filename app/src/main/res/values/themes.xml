@@ -34,7 +34,31 @@
         <item name="android:textColorPrimary">@color/key_text_dark</item>
     </style>
 
-    <!-- 3. Royal Blue Theme -->
+    <!-- Kesari Theme (New) -->
+    <style name="KeyboardTheme.Kesari" parent="Theme.Material3.Light.NoActionBar">
+        <item name="keyboardViewBackground">#FFF5E1</item> <!-- Light Kesari background -->
+        <item name="keyboardKeyBackground">#FF9933</item> <!-- Deep Saffron key -->
+        <item name="functionalKeyBackground">#FFCC66</item> <!-- Light Saffron functional -->
+        <item name="keyboardKeyTextColor">#FFFFFF</item>
+        <item name="candidatesBackground">#FFF5E1</item>
+        <item name="candidatesTextColor">#FF9933</item>
+        <item name="iconColor">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FF9933</item>
+    </style>
+
+    <!-- Royal Blue Theme (New) -->
+    <style name="KeyboardTheme.RoyalBlue" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="keyboardViewBackground">#001F3F</item> <!-- Navy background -->
+        <item name="keyboardKeyBackground">#0074D9</item> <!-- Royal Blue key -->
+        <item name="functionalKeyBackground">#0056b3</item>
+        <item name="keyboardKeyTextColor">#FFFFFF</item>
+        <item name="candidatesBackground">#001F3F</item>
+        <item name="candidatesTextColor">#FFFFFF</item>
+        <item name="iconColor">#FFFFFF</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+    </style>
+
+    <!-- 3. Beautiful Blue Theme -->
     <style name="KeyboardTheme.Blue" parent="Theme.Material3.Dark.NoActionBar">
         <item name="keyboardViewBackground">@color/keyboard_background_blue</item>
         <item name="keyboardKeyBackground">@color/key_background_blue</item>

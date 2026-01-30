@@ -32,7 +32,7 @@ class MyKeyboardActionListener(
                 }
                 val targetLang = when (service.currentPanel) {
                     ImeConstants.PANEL_TRANSLATION -> service.translationManager.sourceLanguage.speechCode
-                    ImeConstants.PANEL_AI_ASSISTANT -> "en-US" // or pa-IN based on user prompt expectation
+                    ImeConstants.PANEL_AI_ASSISTANT -> "en-US" 
                     else -> langCode
                 }
                 service.voiceInputManager.startVoiceRecognition(targetLang)
@@ -45,6 +45,7 @@ class MyKeyboardActionListener(
             ImeConstants.KEYCODE_SWITCH_TO_NANAKSHAHI_CALENDAR_PANEL -> { service.switchPanel(ImeConstants.PANEL_NANAKSHAHI_CALENDAR); return }
             ImeConstants.KEYCODE_SETTINGS -> { service.launchSettings(); return }
             ImeConstants.KEYCODE_SWITCH_TO_SYMBOLS -> { resetBuffers(); service.handleKeyboardSwitch(KeyboardType.SYMBOLS); return }
+            ImeConstants.KEYCODE_SWITCH_TO_SYMBOLS1 -> { resetBuffers(); service.handleKeyboardSwitch(KeyboardType.SYMBOLS1); return }
             -1000 -> { sendCombinedKeyEvent(KeyEvent.KEYCODE_Z, KeyEvent.META_CTRL_ON); return }
             -1001 -> { sendCombinedKeyEvent(KeyEvent.KEYCODE_Y, KeyEvent.META_CTRL_ON); return }
         }
@@ -58,7 +59,7 @@ class MyKeyboardActionListener(
         if (primaryCode == Keyboard.KEYCODE_DONE) {
             when (service.currentPanel) {
                 ImeConstants.PANEL_TRANSLATION -> { service.translationManager.translate(service.translationInput?.text.toString(), null); return }
-                ImeConstants.PANEL_AI_ASSISTANT -> { /* Trigger AI search if needed on Enter */ return }
+                ImeConstants.PANEL_AI_ASSISTANT -> { return }
             }
         }
 
@@ -105,7 +106,7 @@ class MyKeyboardActionListener(
                 resetBuffers()
                 when (service.keyboardManager.currentKeyboardType) {
                     KeyboardType.GURMUKHI, KeyboardType.ENGLISH, KeyboardType.PHONETIC -> { service.lastAlphabeticKeyboard = service.keyboardManager.currentKeyboardType; service.handleKeyboardSwitch(KeyboardType.SYMBOLS) }
-                    KeyboardType.SYMBOLS, KeyboardType.NUMPAD -> service.handleKeyboardSwitch(service.lastAlphabeticKeyboard)
+                    KeyboardType.SYMBOLS, KeyboardType.SYMBOLS1, KeyboardType.NUMPAD -> service.handleKeyboardSwitch(service.lastAlphabeticKeyboard)
                     else -> {}
                 }
             }
@@ -131,13 +132,20 @@ class MyKeyboardActionListener(
             if (expanded != null) {
                 ic.beginBatchEdit(); ic.deleteSurroundingText(currentWord.length, 0); ic.commitText(expanded, 1); ic.endBatchEdit(); resetBuffers()
             }
-            if (currentTime - lastSpaceTime < 400) {
-                ic.deleteSurroundingText(1, 0); val danda = if (service.keyboardManager.currentKeyboardType == KeyboardType.GURMUKHI) "। " else ". "; ic.commitText(danda, 1); lastSpaceTime = 0
+            
+            val isSmartPunctuationOn = service.sharedPreferences.getBoolean(ImeConstants.PREF_SMART_PUNCTUATION, true)
+            
+            if (isSmartPunctuationOn && currentTime - lastSpaceTime < 400) {
+                ic.deleteSurroundingText(1, 0)
+                val danda = if (service.keyboardManager.currentKeyboardType == KeyboardType.GURMUKHI) "। " else ". "
+                ic.commitText(danda, 1)
+                lastSpaceTime = 0
             } else {
                 if (service.keyboardManager.currentKeyboardType == KeyboardType.PHONETIC) { ic.finishComposingText(); phoneticBuffer.clear() }
                 else if (service.keyboardManager.currentKeyboardType == KeyboardType.GURMUKHI) { val lastWord = service.gurmukhiInputHandler.getCurrentWord(); if (lastWord.isNotEmpty()) service.learnWord(lastWord); service.gurmukhiInputHandler.reset() }
                 else { val lastWord = englishWordBuffer.toString(); if (lastWord.isNotEmpty()) service.learnWord(lastWord); englishWordBuffer.clear() }
-                ic.commitText(" ", 1); lastSpaceTime = currentTime
+                ic.commitText(" ", 1)
+                lastSpaceTime = currentTime
             }
             characterHandled = true
         } else if (service.keyboardManager.currentKeyboardType == KeyboardType.GURMUKHI) {
@@ -145,8 +153,18 @@ class MyKeyboardActionListener(
         } else if (service.keyboardManager.currentKeyboardType == KeyboardType.PHONETIC && primaryCode > 0) {
             phoneticBuffer.append(primaryCode.toChar()); updatePhoneticComposition(ic); characterHandled = true
         } else if (primaryCode > 0) {
-            val char = primaryCode.toChar(); ic.commitText(char.toString(), 1)
-            if (service.keyboardManager.currentKeyboardType != KeyboardType.GURMUKHI && 
+            var finalCode = primaryCode
+            val isAutoCapOn = service.sharedPreferences.getBoolean(ImeConstants.PREF_AUTO_CAPITALIZE, true)
+            
+            if (isAutoCapOn && service.keyboardManager.currentKeyboardType == KeyboardType.ENGLISH) {
+                val textBefore = ic.getTextBeforeCursor(2, 0)
+                if (textBefore != null && (textBefore.endsWith(". ") || textBefore.endsWith("? ") || textBefore.isEmpty())) {
+                    finalCode = Character.toUpperCase(primaryCode).toInt()
+                }
+            }
+            
+            val char = finalCode.toChar(); ic.commitText(char.toString(), 1)
+            if (service.keyboardManager.currentKeyboardType != KeyboardType.GURMUKHI &&
                 service.keyboardManager.currentKeyboardType != KeyboardType.PHONETIC) {
                 englishWordBuffer.append(char)
             }
@@ -183,9 +201,26 @@ class MyKeyboardActionListener(
 
     override fun onPress(primaryCode: Int) {
         val vibrateOn = service.sharedPreferences.getBoolean("vibrate_on_keypress", true)
-        if (vibrateOn) { val vibrator = service.getSystemService(android.os.Vibrator::class.java); if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE)) }
+        if (vibrateOn) {
+            val intensity = service.sharedPreferences.getInt("vibration_intensity", 30)
+            val vibrator = service.getSystemService(android.os.Vibrator::class.java)
+            if (vibrator != null && vibrator.hasVibrator()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(intensity.toLong(), VibrationEffect.DEFAULT_AMPLITUDE))
+                } else {
+                    @Suppress("DEPRECATION")
+                    vibrator.vibrate(intensity.toLong())
+                }
+            }
+        }
+
         val soundOn = service.sharedPreferences.getBoolean("sound_on_keypress", true)
-        if (soundOn) { val audioManager = service.getSystemService(android.media.AudioManager::class.java); val sound = if (primaryCode in listOf(Keyboard.KEYCODE_DELETE, Keyboard.KEYCODE_SHIFT, Keyboard.KEYCODE_MODE_CHANGE, Keyboard.KEYCODE_DONE)) AudioManager.FX_KEY_CLICK else AudioManager.FX_KEYPRESS_STANDARD; audioManager.playSoundEffect(sound) }
+        if (soundOn) {
+            // Fix: Set default volume to 1 if not set in preferences
+            val volume = service.sharedPreferences.getInt("sound_volume", 1) / 100f
+            val audioManager = service.getSystemService(android.media.AudioManager::class.java)
+            audioManager.playSoundEffect(AudioManager.FX_KEYPRESS_STANDARD, volume)
+        }
     }
 
     override fun onRelease(primaryCode: Int) {}
@@ -202,12 +237,25 @@ class MyKeyboardActionListener(
             else { englishWordBuffer.append(text); service.updateSuggestions(englishWordBuffer.toString()) }
         }
     }
-    override fun swipeLeft() { val ic = service.currentInputConnection ?: return; ic.beginBatchEdit(); val textBefore = ic.getTextBeforeCursor(50, 0) ?: ""; val lastSpace = textBefore.trimEnd().lastIndexOf(' '); val charsToDelete = if (lastSpace != -1) textBefore.length - lastSpace - 1 else textBefore.length; ic.deleteSurroundingText(charsToDelete.toInt(), 0); ic.endBatchEdit(); resetBuffers() }
-    
+    override fun swipeLeft() { 
+        val ic = service.currentInputConnection ?: return
+        val isSwipeDeleteOn = service.sharedPreferences.getBoolean(ImeConstants.PREF_SWIPE_DELETE, true)
+        
+        if (isSwipeDeleteOn) {
+            ic.beginBatchEdit()
+            val textBefore = ic.getTextBeforeCursor(50, 0) ?: ""
+            val lastSpace = textBefore.trimEnd().lastIndexOf(' ')
+            val charsToDelete = if (lastSpace != -1) textBefore.length - lastSpace - 1 else textBefore.length
+            ic.deleteSurroundingText(charsToDelete.toInt(), 0)
+            ic.endBatchEdit()
+            resetBuffers()
+        }
+    }
+
     override fun swipeRight() {
         toggleLanguage()
     }
-    
+
     override fun swipeDown() {}
     override fun swipeUp() {}
 }

@@ -298,5 +298,3 @@ class DatabaseHelper(private val context: Context) :
         writableDatabase.execSQL("DELETE FROM $TABLE_CLIPBOARD WHERE _id IN (${ids.joinToString(",")}) AND $COLUMN_CLIP_PINNED = 0")
     }
 }
-
-data class ClipboardItem(val id: Long, val text: String, val timestamp: Long, val isPinned: Boolean)

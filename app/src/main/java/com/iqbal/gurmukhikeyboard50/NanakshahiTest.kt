@@ -12,22 +12,22 @@ object NanakshahiTest {
         val day = 30
         val month = 3
         val year = 1699
-        
+
         Log.d("NanakshahiTest", "--- Starting Vaisakhi 1699 Validation ---")
         Log.d("NanakshahiTest", "Input: $day/$month/$year (Julian)")
-        
+
         try {
             // 1. Convert information
             val result = NanakshahiCalendar.convert(context, day, month, year)
             Log.d("NanakshahiTest", "Detailed Result:\n$result")
-            
+
             // 2. Specific field checks (using internal methods)
             // Note: NanakshahiCalendar logic for Bikrami Year: y + 57 (if m >= 3)
             val bikYear = NanakshahiCalendar.getBikramiYear(day, month, year)
             Log.d("NanakshahiTest", "Calculated Bikrami Year: $bikYear (Expected: 1756)")
-            
+
             Log.d("NanakshahiTest", "--- Validation Complete ---")
-            
+
         } catch (e: Exception) {
             Log.e("NanakshahiTest", "Error during test: ${e.message}")
         }
