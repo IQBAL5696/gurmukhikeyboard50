@@ -5,4 +5,5 @@ interface VoiceRecognitionResultListener {
     fun onListeningError(errorMessage: String)
     fun onReadyForSpeech()
     fun onEndOfSpeech()
+    fun onRmsChanged(rmsdB: Float)
 }

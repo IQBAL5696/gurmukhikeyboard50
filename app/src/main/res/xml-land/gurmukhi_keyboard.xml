@@ -5,10 +5,8 @@
     android:keyHeight="35dp"
     android:horizontalGap="6.7dp"
     android:verticalGap="6.7dp">
-
-    <!-- Row 1: Numbers -->
     <Row>
-        <Key android:codes="49" app:shiftedCode="2676" android:keyLabel="1" android:keyEdgeFlags="left" />
+        <Key android:codes="49" app:shiftedCode="2405" android:keyLabel="1" android:keyEdgeFlags="left" />
         <Key android:codes="50" app:shiftedCode="2404" android:keyLabel="2" />
         <Key android:codes="51" app:shiftedCode="2585" android:keyLabel="3" />
         <Key android:codes="52" app:shiftedCode="2590" android:keyLabel="4" />
@@ -20,34 +18,38 @@
         <Key android:codes="48" app:shiftedCode="2637" android:keyLabel="0" android:keyEdgeFlags="right" />
     </Row>
 
-    <!-- Row 2: Top Letters -->
+
+
+    <!-- Row 2: Vowels and Matras -->
     <Row>
-        <Key android:codes="2596" app:shiftedCode="2597" android:keyLabel="ਤ" android:keyEdgeFlags="left" />
-        <Key android:codes="2622" app:shiftedCode="-2002" android:keyLabel="ਾ" />
-        <Key android:codes="2674" app:shiftedCode="2579" android:keyLabel="ੲ" />
-        <Key android:codes="2608" app:shiftedCode="-2003" android:keyLabel="ਰ" />
-        <Key android:codes="2591" app:shiftedCode="2592" android:keyLabel="ਟ" />
-        <Key android:codes="2631" app:shiftedCode="2632" android:keyLabel="ੇ" />
-        <Key android:codes="2623" app:shiftedCode="2624" android:keyLabel="ਿ" />
-        <Key android:codes="2625" app:shiftedCode="2626" android:keyLabel="ੁ" />
-        <Key android:codes="2635" app:shiftedCode="2636" android:keyLabel="ੋ" />
-        <Key android:codes="2602" app:shiftedCode="2603" android:keyLabel="ਪ" android:keyEdgeFlags="right" />
+        <Key android:codes="2596" app:shiftedCode="2597" android:keyLabel="ਤ" android:keyEdgeFlags="left" /> <!-- ਤ/ਥ -->
+        <Key android:codes="2622" app:shiftedCode="-2002" android:keyLabel="ਾ" /> <!-- ਾ/ਾਂ -->
+        <Key android:codes="2674" app:shiftedCode="2579" android:keyLabel="ੲ" /> <!-- ੲ/ਓ -->
+        <Key android:codes="2608" app:shiftedCode="-2003" android:keyLabel="ਰ" /> <!-- ਰ/੍ਰ -->
+        <Key android:codes="2591" app:shiftedCode="2592" android:keyLabel="ਟ" /> <!-- ਟ/ਠ -->
+        <Key android:codes="2631" app:shiftedCode="2632" android:keyLabel="ੇ" /> <!-- ੇ/ੈ -->
+        <Key android:codes="2623" app:shiftedCode="2624" android:keyLabel="ਿ" /> <!-- ਿ/ੀ -->
+        <Key android:codes="2625" app:shiftedCode="2626" android:keyLabel="ੁ" /> <!-- ੁ/ੂ -->
+        <Key android:codes="2635" app:shiftedCode="2636" android:keyLabel="ੋ" /> <!-- ੋ/ੌ -->
+        <Key android:codes="2602" app:shiftedCode="2603" android:keyLabel="ਪ" android:keyEdgeFlags="right" /> <!-- ਪ/ਫ -->
     </Row>
 
-    <!-- Row 3: Middle Letters (Centered) -->
+    <!-- Row 3: Main Consonants -->
     <Row>
-        <Key android:codes="2565" app:shiftedCode="2675" android:keyLabel="ਅ" android:keyEdgeFlags="left" />
-        <Key android:codes="2616" app:shiftedCode="2614" android:keyLabel="ਸ" />
-        <Key android:codes="2598" app:shiftedCode="2599" android:keyLabel="ਦ" />
-        <Key android:codes="2593" app:shiftedCode="2594" android:keyLabel="ਡ" />
-        <Key android:codes="2583" app:shiftedCode="2584" android:keyLabel="ਗ" />
-        <Key android:codes="2617" app:shiftedCode="-2004" android:keyLabel="ਹ" />
-        <Key android:codes="2588" app:shiftedCode="2589" android:keyLabel="ਜ" />
-        <Key android:codes="2581" app:shiftedCode="2582" android:keyLabel="ਕ" />
-        <Key android:codes="2610" app:shiftedCode="2673" android:keyLabel="ਲ" android:keyEdgeFlags="right" />
+        <Key android:codes="2565" app:shiftedCode="2675" android:keyLabel="ਅ" android:keyEdgeFlags="left" /> <!-- ਅ/ਆ -->
+        <Key android:codes="2616" app:shiftedCode="2614" android:keyLabel="ਸ" /> <!-- ਸ/ਸ਼ -->
+        <Key android:codes="2598" app:shiftedCode="2599" android:keyLabel="ਦ" /> <!-- ਦ/ਧ -->
+        <Key android:codes="2593" app:shiftedCode="2594" android:keyLabel="ਡ" /> <!-- ਡ/ਢ -->
+        <Key android:codes="2583" app:shiftedCode="2584" android:keyLabel="ਗ" /> <!-- ਗ/ਘ -->
+        <Key android:codes="2617" app:shiftedCode="-2004" android:keyLabel="ਹ" /> <!-- ਹ/੍ਹ -->
+        <Key android:codes="2588" app:shiftedCode="2589" android:keyLabel="ਜ" /> <!-- ਜ/ਝ -->
+        <Key android:codes="2581" app:shiftedCode="2582" android:keyLabel="ਕ" /> <!-- ਕ/ਖ -->
+        <Key android:codes="2610" app:shiftedCode="2673" android:keyLabel="ਲ" android:keyEdgeFlags="right" /> <!-- ਲ/ਲ਼ -->
     </Row>
 
-    <!-- Row 4: Bottom Letters -->
+    <!-- Row 4: Bottom row with Shift/Backspace -->
+
+
     <Row>
         <Key android:codes="-1" android:keyIcon="@drawable/ic_shift_off" android:keyWidth="12%p"  android:isModifier="true" android:keyEdgeFlags="left"/>
         <Key android:codes="2651" app:shiftedCode="2650" android:keyLabel="ਜ਼" android:keyWidth="8.0%p" />
@@ -59,15 +61,13 @@
         <Key android:codes="2606" app:shiftedCode="2672" android:keyLabel="ਮ"  android:keyWidth="8.0%p" />
         <Key android:codes="-5" android:keyIcon="@drawable/ic_backspace" android:keyWidth="12%p" android:isRepeatable="true" android:keyEdgeFlags="right" />
     </Row>
-
-    <!-- Bottom Row -->
-    <Row android:rowEdgeFlags="bottom">
+    <!-- Bottom Row: Switchers, Space, etc. -->
+    <Row android:rowEdgeFlags="bottom" android:keyHeight="45dp">
         <Key android:codes="-101" android:keyLabel="abc" android:keyWidth="15%p" android:keyEdgeFlags="left" />
-        <Key android:codes="44" android:keyLabel="," android:keyWidth="8.0%p" />
-        <Key android:codes="-103" android:keyLabel="1234" android:keyWidth="8.0%p" />
+        <Key android:codes="44" android:keyLabel="," />
+        <Key android:codes="-140" android:keyLabel="1234" />
         <Key android:codes="32" android:keyIcon="@drawable/ic_space_bar" android:keyWidth="30%p" />
-        <Key android:codes="46" android:keyLabel="." android:keyWidth="8.0%p" />
+        <Key android:codes="2404" android:keyLabel="।" />
         <Key android:codes="-4" android:keyIcon="@drawable/ic_search" android:keyWidth="15%p" android:keyEdgeFlags="right"  android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
     </Row>
-
 </Keyboard>

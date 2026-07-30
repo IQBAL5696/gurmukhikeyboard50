@@ -11,5 +11,6 @@ enum class KeyboardType {
     CALENDAR,
     GURMUKHI_SEARCH,
     CLIPBOARD,
-    PHONETIC
+    PHONETIC,
+    GRID_NUMBERS
 }

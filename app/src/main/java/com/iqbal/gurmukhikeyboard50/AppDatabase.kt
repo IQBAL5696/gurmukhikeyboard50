@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ClipboardItem::class, UserWord::class], version = 2, exportSchema = false)
+@Database(entities = [ClipboardItem::class, UserWord::class, CalendarNote::class, BookEntity::class], version = 5, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun clipboardDao(): ClipboardDao
     abstract fun userWordDao(): UserWordDao
+    abstract fun calendarNoteDao(): CalendarNoteDao
+    abstract fun bookDao(): BookDao
 
     companion object {
         @Volatile
@@ -21,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "gurmukhikeyboard_db"
                 )
-                .fallbackToDestructiveMigration() // Use this carefully if data preservation is needed
+                .fallbackToDestructiveMigration()
                 .build()
                 INSTANCE = instance
                 instance

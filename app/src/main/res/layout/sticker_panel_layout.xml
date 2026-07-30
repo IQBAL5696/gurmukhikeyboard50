@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/keyboardViewBackground">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ਪੰਜਾਬੀ ਸਟਿੱਕਰ"
+        android:textAlignment="center"
+        android:padding="8dp"
+        android:textStyle="bold"
+        android:textColor="?attr/keyboardKeyTextColor"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sticker_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="4dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#11000000">
+
+        <ImageButton
+            android:id="@+id/sticker_panel_close"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_keyboard"
+            android:contentDescription="Back to Keyboard" />
+
+    </LinearLayout>
+
+</LinearLayout>

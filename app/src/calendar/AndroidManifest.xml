@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Remove Microphone permissions for standalone Calendar app -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" tools:node="remove" />
+
+    <!-- Keep Location for accurate Sunrise/Sunset times in Calendar app -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application>
+        <activity
+            android:name="com.iqbal.gurmukhikeyboard50.CalendarActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GurmukhiKeyboard50"
+            tools:node="merge">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.iqbal.gurmukhikeyboard50.MainActivity"
+            android:exported="true"
+            tools:node="merge">
+            <intent-filter tools:node="removeAll" />
+        </activity>
+
+        <!-- Disable Keyboard services for this standalone flavor -->
+        <service
+            android:name="com.iqbal.gurmukhikeyboard50.MyKeyboardIME"
+            android:enabled="false"
+            tools:node="replace" />
+
+        <service
+            android:name="com.iqbal.gurmukhikeyboard50.MySpellCheckerService"
+            android:enabled="false"
+            tools:node="replace" />
+
+    </application>
+</manifest>

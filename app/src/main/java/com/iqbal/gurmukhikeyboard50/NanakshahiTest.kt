@@ -18,7 +18,11 @@ object NanakshahiTest {
 
         try {
             // 1. Convert information
-            val result = NanakshahiCalendar.convert(context, day, month, year)
+            // Parameter name is 'location', not 'loc'
+            val result = NanakshahiCalendar.convert(
+                context, day, month, year,
+                location = NanakshahiCalendar.LocationConfig.AMRITSAR
+            )
             Log.d("NanakshahiTest", "Detailed Result:\n$result")
 
             // 2. Specific field checks (using internal methods)

@@ -1,0 +1,7 @@
+- [ ] Add `switch_scientific_mode` to `dialog_calculator_settings.xml`
+- [ ] Add scientific button row to `activity_calculator.xml`
+- [ ] Add scientific button row to `calculator_panel_layout.xml`
+- [ ] Implement scientific logic and visibility toggle in `CalculatorActivity.kt`
+- [ ] Implement scientific logic and visibility toggle in `CalculatorPanel.kt`
+- [ ] Update `applyCalculatorTheme` to style new buttons in both files
+- [ ] Verify functionality and theming

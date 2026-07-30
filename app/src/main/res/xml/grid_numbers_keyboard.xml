@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="50%p"
+    android:keyHeight="55dp"
+    android:horizontalGap="0dp"
+    android:verticalGap="0dp">
+
+    <!-- Row 1: 1 2 -->
+    <Row>
+        <Key android:codes="49" android:keyLabel="1" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="50" android:keyLabel="2" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+    </Row>
+
+    <!-- Row 2: 3 4 -->
+    <Row>
+        <Key android:codes="51" android:keyLabel="3" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="52" android:keyLabel="4" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+    </Row>
+
+    <!-- Row 3: space (represented as 1234 in the button, but functions as space) -->
+    <Row android:keyHeight="55dp">
+        <Key android:codes="32" android:keyLabel="space" android:keyWidth="100%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+    </Row>
+
+    <!-- Row 4: Switch back to alphabetic -->
+    <Row>
+        <Key android:codes="-101" android:keyLabel="abc" android:keyWidth="100%p" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+    </Row>
+
+</Keyboard>

@@ -4,24 +4,28 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="green">#00FF00</color>
     <color name="charcoal_grey">#36454F</color>
     <color name="keyBackgroundPressed">#44FFFFFF</color>
 
     <!-- Essential Key State Colors -->
     <color name="keyboard_key_background_pressed_light">#BDBDBD</color>
-    <color name="keyboard_key_background_pressed_dark">#222222</color>
+    <color name="keyboard_key_background_pressed_dark">#44FFFFFF</color>
 
-    <!-- Light Theme -->
-    <color name="keyboard_background_light">#F5F5F5</color>
+    <!-- Light Theme: Neutral Grey/Blue palette -->
+    <color name="keyboard_background_light">#EEEEEE</color>
     <color name="keyboard_key_background_normal_light">#FFFFFF</color>
-    <color name="functional_key_background_light">#E0E0E0</color>
+    <color name="functional_key_background_light">#CFD8DC</color>
     <color name="key_text_light">#000000</color>
 
     <!-- Professional Dark Theme -->
-    <color name="keyboard_background_dark">#1A1A1A</color>
-    <color name="keyboard_key_background_normal_dark">#333333</color>
-    <color name="functional_key_background_dark">#252525</color>
-    <color name="key_text_dark">#E0E0E0</color>
+    <color name="keyboard_background_dark">#121212</color>
+    <color name="keyboard_key_background_normal_dark">#424242</color>
+    <color name="functional_key_background_dark">#424242</color>
+    <color name="key_preview_background_dark">#616161</color> <!-- Lighter grey for popup -->
+    <color name="key_text_dark">#FFFFFF</color>
+    <color name="key_text_dark_on_light">#000000</color>
+    <color name="key_text_dark_on_dark">#FFFFFF</color>
 
     <!-- Royal Red Theme -->
     <color name="keyboard_background_red">#B71C1C</color>
@@ -81,7 +85,7 @@
     <color name="keyboard_background_silver">#757575</color>
     <color name="key_background_silver">#9E9E9E</color>
     <color name="functional_key_background_silver">#616161</color>
-    <color name="key_text_silver_white">#FFFFFF</color>
+    <color name="key_text_silver_white" >#FFFFFF</color>
 
     <!-- Coffee Brown Theme -->
     <color name="keyboard_background_coffee">#3E2723</color>
@@ -90,9 +94,9 @@
     <color name="key_text_coffee_white">#FFFFFF</color>
 
     <!-- Midnight OLED -->
-    <color name="keyboard_background_midnight">#000000</color>
+    <color name="keyboard_background_midnight">#121212</color>
     <color name="key_background_midnight">#121212</color>
-    <color name="functional_key_background_midnight">#1F1F1F</color>
+    <color name="functional_key_background_midnight">#121212</color>
     <color name="key_text_midnight_blue">#00BCD4</color>
 
     <!-- Lavender Dream -->
@@ -114,9 +118,9 @@
     <color name="key_text_sunset_yellow">#FFF9C4</color>
 
     <!-- Deep Space Grey -->
-    <color name="keyboard_background_space">#263238</color>
+    <color name="keyboard_background_space">#37474F</color>
     <color name="key_background_space">#37474F</color>
-    <color name="functional_key_background_space">#455A64</color>
+    <color name="functional_key_background_space">#37474F</color>
     <color name="key_text_space_cyan">#80DEEA</color>
 
     <!-- Nature Themes -->

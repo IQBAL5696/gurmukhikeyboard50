@@ -5,6 +5,6 @@
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
     android:singleLine="true"
-    android:textColor="?attr/colorOnSurface"
-    android:background="?attr/colorSurface"
+    android:textColor="?attr/keyboardKeyTextColor"
+    android:background="?attr/keyboardViewBackground"
     android:padding="8dp" />

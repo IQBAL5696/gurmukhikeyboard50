@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/WidgetWeekHeader"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView style="@style/WidgetWeekDayText" android:text="ਐਤ" />
+    <TextView style="@style/WidgetWeekDayText" android:text="ਸੋਮ" />
+    <TextView style="@style/WidgetWeekDayText" android:text="ਮੰਗ" />
+    <TextView style="@style/WidgetWeekDayText" android:text="ਬੁੱਧ" />
+    <TextView style="@style/WidgetWeekDayText" android:text="ਵੀਰ" />
+    <TextView style="@style/WidgetWeekDayText" android:text="ਸ਼ੁੱਕ" />
+    <TextView style="@style/WidgetWeekDayText" android:text="ਸ਼ਨੀ" />
+</LinearLayout>

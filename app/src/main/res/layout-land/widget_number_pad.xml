@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <!-- Display Screen -->
+    <TextView
+        android:id="@+id/txt_display"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="2dp"
+        android:layout_weight="1.5"
+        android:background="#33FFFFFF"
+        android:elevation="4dp"
+        android:gravity="end|center_vertical"
+        android:padding="8dp"
+        android:text="0"
+        android:textColor="@android:color/white"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
+    <!-- Top Action Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_div"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_op"
+            android:text="/" />
+
+        <Button
+            android:id="@+id/btn_mul"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_op"
+            android:text="*" />
+
+        <Button
+            android:id="@+id/btn_add"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_op"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/btn_sub"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_op"
+            android:text="-" />
+
+        <Button
+            android:id="@+id/btn_percent"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_op"
+            android:text="%" />
+    </LinearLayout>
+
+    <!-- Special Units Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_y"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_special"
+            android:text="y"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_m"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_special"
+            android:text="m"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_d"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_special"
+            android:text="d"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_h"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_special"
+            android:text="h"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_s"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_special"
+            android:text="s"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Row 1: 7 8 9 C -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_7"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_num"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/btn_8"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_num"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/btn_9"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_num"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_clear"
+            android:text="C" />
+    </LinearLayout>
+
+    <!-- Row 2: 4 5 6 DEL -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_4"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_num"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/btn_5"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_num"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/btn_6"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_num"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/btn_del"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_special"
+            android:text="DEL"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Row 3: 1 2 3 SPACE -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_1"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_num"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/btn_2"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_num"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/btn_3"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_num"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/btn_space"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_special"
+            android:text="␣" />
+    </LinearLayout>
+
+    <!-- Row 4: . 0 = -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_dot"
+            style="@style/WidgetButton"
+            android:background="@drawable/bg_key_num"
+            android:text="." />
+
+        <Button
+            android:id="@+id/btn_0"
+            style="@style/WidgetButton"
+            android:layout_weight="2"
+            android:background="@drawable/bg_key_num"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/btn_equal"
+            style="@style/WidgetButton"
+            android:layout_weight="2"
+            android:background="@drawable/bg_key_equal"
+            android:text="=" />
+
+    </LinearLayout>
+
+</LinearLayout>

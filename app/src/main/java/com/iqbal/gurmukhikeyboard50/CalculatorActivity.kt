@@ -1,177 +1,741 @@
 package com.iqbal.gurmukhikeyboard50
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
+import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
+import android.widget.HorizontalScrollView
 import android.widget.ImageButton
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.switchmaterial.SwitchMaterial
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class CalculatorActivity : AppCompatActivity() {
 
     private lateinit var display: TextView
+    private lateinit var displayScrollView: HorizontalScrollView
+    private lateinit var stepsDisplay: TextView
+    private lateinit var formulaDisplay: TextView
+    private lateinit var memoryIndicator: TextView
+    private lateinit var historyRecyclerViewMain: RecyclerView
+    private lateinit var historyAdapterMain: HistoryAdapter
+    private lateinit var scientificRow1: View
+    private lateinit var scientificRow2: View
+    
     private var currentInput = ""
-    private var currentOperator = ""
-    private var operand1: Double? = null
-    private val history = ArrayList<Calculation>()
-    private val HISTORY_REQUEST_CODE = 1
+    private var lastValue = BigDecimal.ZERO
+    private var operator = ""
+    private var isNewOperation = true
+    private var memoryValue = BigDecimal.ZERO
+    private var grandTotal = BigDecimal.ZERO
+    private var historyList = ArrayList<Calculation>()
+    private var historyExpression = ""
 
-    companion object {
-        const val ACTION_CALCULATOR_RESULT = "com.iqbal.gurmukhikeyboard50.CALCULATOR_RESULT"
-        const val EXTRA_RESULT = "result"
+    private val dfSimple = DecimalFormat("#.##########")
+
+    private val historyLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data
+            if (data?.getBooleanExtra("history_cleared", false) == true) {
+                historyList.clear()
+                grandTotal = BigDecimal.ZERO
+            } else {
+                @Suppress("UNCHECKED_CAST", "DEPRECATION")
+                val updatedHistory = data?.getSerializableExtra("updated_history") as? ArrayList<Calculation>
+                if (updatedHistory != null) {
+                    historyList.clear()
+                    historyList.addAll(if (updatedHistory.size > 7) updatedHistory.takeLast(7) else updatedHistory)
+                    recalculateGrandTotal()
+                }
+
+                val selectedResult = data?.getStringExtra("selected_result")
+                if (selectedResult != null) {
+                    currentInput = selectedResult.replace(",", "")
+                    lastValue = currentInput.toBigDecimalOrNull() ?: BigDecimal.ZERO
+                    operator = ""
+                    isNewOperation = false
+                    historyExpression = formatValue(lastValue)
+                    updateDisplay()
+                }
+            }
+            updateStepsDisplay()
+            historyAdapterMain.notifyDataSetChanged()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calculator)
 
-        display = findViewById(R.id.calculator_display)
-
-        val checkButton: ImageButton = findViewById(R.id.button_check)
-        checkButton.setOnClickListener {
-            val intent = Intent(ACTION_CALCULATOR_RESULT)
-            intent.putExtra(EXTRA_RESULT, display.text.toString())
-            sendBroadcast(intent)
-            finish()
+        val root = findViewById<View>(R.id.calculator_root)
+        ViewCompat.setOnApplyWindowInsetsListener(root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
 
-        val buttons = listOf<Button>(
-            findViewById(R.id.button_0),
-            findViewById(R.id.button_1),
-            findViewById(R.id.button_2),
-            findViewById(R.id.button_3),
-            findViewById(R.id.button_4),
-            findViewById(R.id.button_5),
-            findViewById(R.id.button_6),
-            findViewById(R.id.button_7),
-            findViewById(R.id.button_8),
-            findViewById(R.id.button_9),
-            findViewById(R.id.button_dot),
-            findViewById(R.id.button_add),
-            findViewById(R.id.button_subtract),
-            findViewById(R.id.button_multiply),
-            findViewById(R.id.button_divide),
-            findViewById(R.id.button_equals),
-            findViewById(R.id.button_clear),
-            findViewById(R.id.button_percent),
-            findViewById(R.id.button_backspace),
-            findViewById(R.id.button_tax_5),
-            findViewById(R.id.button_tax_18),
-            findViewById(R.id.button_history)
+        display = findViewById(R.id.calculator_display)
+        displayScrollView = findViewById(R.id.display_scroll_view)
+        stepsDisplay = findViewById(R.id.calculator_steps)
+        formulaDisplay = findViewById(R.id.calculator_formula)
+        memoryIndicator = findViewById(R.id.memory_indicator)
+        scientificRow1 = findViewById(R.id.scientific_row_1)
+        scientificRow2 = findViewById(R.id.scientific_row_2)
+        
+        historyRecyclerViewMain = findViewById(R.id.history_recycler_view_main)
+        historyRecyclerViewMain.layoutManager = LinearLayoutManager(this).apply {
+            stackFromEnd = true
+        }
+        historyAdapterMain = HistoryAdapter(historyList) { selected ->
+            currentInput = selected.result.replace(",", "")
+            lastValue = currentInput.toBigDecimalOrNull() ?: BigDecimal.ZERO
+            operator = ""
+            isNewOperation = false
+            historyExpression = formatValue(lastValue)
+            updateDisplay()
+        }
+        historyRecyclerViewMain.adapter = historyAdapterMain
+
+        applyCalculatorTheme()
+        setupEventListeners()
+        setupScientificListeners()
+        updateMemoryIndicator()
+        updateScientificVisibility()
+        updateDisplay()
+        updateStepsDisplay()
+
+        stepsDisplay.setOnClickListener { openHistory() }
+
+        findViewById<View>(R.id.settings_calculator_button)?.setOnClickListener {
+            showQuickSettingsDialog()
+        }
+    }
+
+    private fun formatValue(value: BigDecimal): String {
+        if (value.isInfinite()) return "Infinity"
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val valueStr = value.stripTrailingZeros().toPlainString()
+        return if (prefs.getBoolean("calc_indian_format", true)) {
+            CalculatorHelper.formatIndianStyleString(valueStr)
+        } else {
+            CalculatorHelper.formatInternationalStyleString(valueStr)
+        }
+    }
+
+    private fun showQuickSettingsDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_calculator_settings, null)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        val switchVibrate = dialogView.findViewById<SwitchMaterial>(R.id.switch_vibrate)
+        val switchSound = dialogView.findViewById<SwitchMaterial>(R.id.switch_sound)
+        val switchIndian = dialogView.findViewById<SwitchMaterial>(R.id.switch_indian_format)
+        val switchScientific = dialogView.findViewById<SwitchMaterial>(R.id.switch_scientific_mode)
+        val themeGroup = dialogView.findViewById<RadioGroup>(R.id.theme_radio_group)
+        val btnDone = dialogView.findViewById<View>(R.id.btn_done)
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        switchVibrate.isChecked = prefs.getBoolean("vibrate_on_keypress", true)
+        switchSound.isChecked = prefs.getBoolean("sound_on_keypress", true)
+        switchIndian.isChecked = prefs.getBoolean("calc_indian_format", true)
+        switchScientific.isChecked = prefs.getBoolean("scientific_mode", false)
+
+        val currentTheme = prefs.getString("calc_theme", "dark")
+        when (currentTheme) {
+            "saffron" -> dialogView.findViewById<RadioButton>(R.id.radio_theme_saffron).isChecked = true
+            "white" -> dialogView.findViewById<RadioButton>(R.id.radio_theme_white).isChecked = true
+            "blue" -> dialogView.findViewById<RadioButton>(R.id.radio_theme_blue).isChecked = true
+            else -> dialogView.findViewById<RadioButton>(R.id.radio_theme_dark).isChecked = true
+        }
+
+        switchVibrate.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("vibrate_on_keypress", isChecked).apply()
+        }
+
+        switchSound.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("sound_on_keypress", isChecked).apply()
+        }
+
+        switchIndian.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("calc_indian_format", isChecked).apply()
+            updateDisplay()
+        }
+
+        switchScientific.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("scientific_mode", isChecked).apply()
+            updateScientificVisibility()
+        }
+
+        themeGroup.setOnCheckedChangeListener { _, checkedId ->
+            val newTheme = when (checkedId) {
+                R.id.radio_theme_saffron -> "saffron"
+                R.id.radio_theme_white -> "white"
+                R.id.radio_theme_blue -> "blue"
+                else -> "dark"
+            }
+            prefs.edit().putString("calc_theme", newTheme).apply()
+            applyCalculatorTheme()
+        }
+
+        btnDone.setOnClickListener { dialog.dismiss() }
+
+        dialog.show()
+    }
+
+    private fun updateScientificVisibility() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val isEnabled = prefs.getBoolean("scientific_mode", false)
+        scientificRow1.visibility = if (isEnabled) View.VISIBLE else View.GONE
+        scientificRow2.visibility = if (isEnabled) View.VISIBLE else View.GONE
+    }
+
+    private fun setupScientificListeners() {
+        findViewById<View>(R.id.button_sqrt)?.setOnClickListener { applyUnary { BigDecimal(kotlin.math.sqrt(it.toDouble())) } }
+        findViewById<View>(R.id.button_square)?.setOnClickListener { applyUnary { it.multiply(it) } }
+        findViewById<View>(R.id.button_pi)?.setOnClickListener { provideFeedback(); currentInput = Math.PI.toString(); updateDisplay() }
+        findViewById<View>(R.id.button_e)?.setOnClickListener { provideFeedback(); currentInput = Math.E.toString(); updateDisplay() }
+        findViewById<View>(R.id.button_power)?.setOnClickListener { provideFeedback(); setOperator("^") }
+        
+        findViewById<View>(R.id.button_sin)?.setOnClickListener { applyUnary { BigDecimal(kotlin.math.sin(Math.toRadians(it.toDouble()))) } }
+        findViewById<View>(R.id.button_cos)?.setOnClickListener { applyUnary { BigDecimal(kotlin.math.cos(Math.toRadians(it.toDouble()))) } }
+        findViewById<View>(R.id.button_tan)?.setOnClickListener { applyUnary { BigDecimal(kotlin.math.tan(Math.toRadians(it.toDouble()))) } }
+        findViewById<View>(R.id.button_log)?.setOnClickListener { applyUnary { BigDecimal(kotlin.math.log10(it.toDouble())) } }
+        findViewById<View>(R.id.button_ln)?.setOnClickListener { applyUnary { BigDecimal(kotlin.math.ln(it.toDouble())) } }
+    }
+
+    private fun applyUnary(operation: (BigDecimal) -> BigDecimal) {
+        provideFeedback()
+        val value = getActiveValue()
+        try {
+            val result = operation(value)
+            currentInput = result.stripTrailingZeros().toPlainString()
+            isNewOperation = true
+            updateDisplay()
+        } catch (e: Exception) {
+            display.text = "Error"
+        }
+    }
+
+    private fun applyCalculatorTheme() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val theme = prefs.getString("calc_theme", "dark")
+        
+        val isSaffron = theme == "saffron"
+        val isWhite = theme == "white"
+        val isBlue = theme == "blue"
+        
+        val displayColor = when {
+            isSaffron -> Color.parseColor("#FFF5E1")
+            isWhite -> Color.parseColor("#F5F5F5")
+            isBlue -> Color.parseColor("#001F3F")
+            else -> Color.parseColor("#B2D3C2")
+        }
+        val bgColor = when {
+            isSaffron -> Color.parseColor("#FFF5E1")
+            isWhite -> Color.parseColor("#F5F5F5")
+            isBlue -> Color.parseColor("#001F3F")
+            else -> Color.parseColor("#121212")
+        }
+        
+        val digitColor = when {
+            isSaffron -> Color.parseColor("#FFCC66")
+            isWhite -> Color.parseColor("#FFFFFF")
+            isBlue -> Color.parseColor("#0074D9")
+            else -> Color.parseColor("#424242")
+        }
+        val operatorColor = when {
+            isSaffron -> Color.parseColor("#FF9933")
+            isWhite -> Color.parseColor("#D6D6D6")
+            isBlue -> Color.parseColor("#0056b3")
+            else -> Color.parseColor("#212121")
+        }
+        val gstColor = when {
+            isSaffron -> Color.parseColor("#E65100")
+            isWhite -> Color.parseColor("#1976D2")
+            isBlue -> Color.parseColor("#00BCD4")
+            else -> Color.parseColor("#4696C2")
+        }
+        val acColor = when {
+            isSaffron -> Color.parseColor("#BF360C")
+            isWhite -> Color.parseColor("#D32F2F")
+            isBlue -> Color.parseColor("#FF4136")
+            else -> Color.parseColor("#2BB07A")
+        }
+        
+        val textColor = if (isWhite) Color.BLACK else Color.WHITE
+        val displayTextMain = when {
+            isWhite -> Color.BLACK
+            isSaffron -> Color.parseColor("#3E2723")
+            isBlue -> Color.WHITE
+            else -> Color.parseColor("#222222")
+        }
+        val headerTextColor = when {
+            isWhite || isSaffron -> Color.parseColor("#5D4037")
+            else -> Color.WHITE
+        }
+
+        findViewById<View>(R.id.calculator_root)?.setBackgroundColor(bgColor)
+        findViewById<View>(R.id.calculator_display_area)?.setBackgroundColor(displayColor)
+        
+        findViewById<TextView>(R.id.calculator_title)?.setTextColor(headerTextColor)
+        findViewById<ImageButton>(R.id.settings_calculator_button)?.imageTintList = ColorStateList.valueOf(headerTextColor)
+        
+        display.setTextColor(displayTextMain)
+        memoryIndicator.setTextColor(displayTextMain)
+        
+        val historyColor = if (isBlue) Color.WHITE else if (isWhite) Color.BLACK else Color.parseColor("#333333")
+        val historyExprColor = if (isBlue) Color.parseColor("#B2EBF2") else Color.GRAY
+        historyAdapterMain.updateColors(historyColor, historyExprColor)
+
+        stepsDisplay.setTextColor(when {
+            isWhite || isSaffron -> Color.parseColor("#5D4037")
+            isBlue -> Color.parseColor("#80DEEA")
+            else -> Color.parseColor("#333333")
+        })
+        formulaDisplay.setTextColor(when {
+            isWhite || isSaffron -> Color.parseColor("#8D6E63")
+            isBlue -> Color.parseColor("#B2EBF2")
+            else -> Color.parseColor("#555555")
+        })
+
+        // Update all buttons
+        val digits = listOf(R.id.button_0, R.id.button_1, R.id.button_2, R.id.button_3, R.id.button_4, R.id.button_5, R.id.button_6, R.id.button_7, R.id.button_8, R.id.button_9, R.id.button_00, R.id.button_dot)
+        val operators = listOf(R.id.button_add, R.id.button_subtract, R.id.button_multiply, R.id.button_divide, R.id.button_equals, R.id.button_plus_minus, R.id.button_percent, R.id.button_check, R.id.button_correct, R.id.button_gt, R.id.button_m_plus, R.id.button_m_minus, R.id.button_mrc, R.id.button_sqrt, R.id.button_square, R.id.button_pi, R.id.button_e, R.id.button_power, R.id.button_sin, R.id.button_cos, R.id.button_tan, R.id.button_log, R.id.button_ln)
+        val gsts = listOf(R.id.button_gst_5, R.id.button_gst_12, R.id.button_gst_18, R.id.button_gst_minus)
+        
+        digits.forEach { id -> findViewById<MaterialButton>(id)?.let { it.backgroundTintList = ColorStateList.valueOf(digitColor); it.setTextColor(textColor) } }
+        operators.forEach { id -> findViewById<MaterialButton>(id)?.let { it.backgroundTintList = ColorStateList.valueOf(operatorColor); it.setTextColor(textColor) } }
+        gsts.forEach { id -> findViewById<MaterialButton>(id)?.let { it.backgroundTintList = ColorStateList.valueOf(gstColor); it.setTextColor(Color.WHITE) } }
+        findViewById<MaterialButton>(R.id.button_clear)?.let { it.backgroundTintList = ColorStateList.valueOf(acColor); it.setTextColor(Color.WHITE) }
+    }
+
+    private fun setupEventListeners() {
+        val numbers = mapOf(
+            R.id.button_0 to "0", R.id.button_1 to "1", R.id.button_2 to "2",
+            R.id.button_3 to "3", R.id.button_4 to "4", R.id.button_5 to "5",
+            R.id.button_6 to "6", R.id.button_7 to "7", R.id.button_8 to "8",
+            R.id.button_9 to "9", R.id.button_00 to "00"
         )
 
-        for (button in buttons) {
-            button.setOnClickListener { onButtonClick(it) }
+        for ((id, value) in numbers) {
+            findViewById<MaterialButton>(id).setOnClickListener {
+                provideFeedback()
+                appendNumber(value)
+                updateDisplay()
+            }
+        }
+
+        findViewById<MaterialButton>(R.id.button_dot).setOnClickListener {
+            provideFeedback()
+            if (!currentInput.contains(".")) {
+                if (currentInput.isEmpty()) currentInput = "0"
+                currentInput += "."
+                updateDisplay()
+            }
+        }
+
+        findViewById<MaterialButton>(R.id.button_add).setOnClickListener { provideFeedback(); setOperator("+") }
+        findViewById<MaterialButton>(R.id.button_subtract).setOnClickListener { provideFeedback(); setOperator("-") }
+        findViewById<MaterialButton>(R.id.button_multiply).setOnClickListener { provideFeedback(); setOperator("×") }
+        findViewById<MaterialButton>(R.id.button_divide).setOnClickListener { provideFeedback(); setOperator("÷") }
+
+        findViewById<MaterialButton>(R.id.button_percent).setOnClickListener {
+            provideFeedback()
+            applyPercentage()
+        }
+
+        findViewById<MaterialButton>(R.id.button_gst_minus).setOnClickListener {
+            provideFeedback()
+            showGstMinusMenu(it)
+        }
+
+        findViewById<MaterialButton>(R.id.button_gst_5).setOnClickListener {
+            provideFeedback()
+            applyGST(BigDecimal("5.0"))
+        }
+
+        findViewById<MaterialButton>(R.id.button_gst_12).setOnClickListener {
+            provideFeedback()
+            applyGST(BigDecimal("12.0"))
+        }
+
+        findViewById<MaterialButton>(R.id.button_gst_18).setOnClickListener {
+            provideFeedback()
+            applyGST(BigDecimal("18.0"))
+        }
+
+        findViewById<MaterialButton>(R.id.button_clear).setOnClickListener { provideFeedback(); clear() }
+        findViewById<MaterialButton>(R.id.button_correct).setOnClickListener { provideFeedback(); backspace() }
+        findViewById<MaterialButton>(R.id.button_equals).setOnClickListener { provideFeedback(); calculateResult(true) }
+
+        findViewById<MaterialButton>(R.id.button_check).setOnClickListener { provideFeedback(); openHistory() }
+
+        findViewById<MaterialButton>(R.id.button_plus_minus).setOnClickListener {
+            provideFeedback()
+            if (currentInput.isNotEmpty()) {
+                val value = currentInput.toBigDecimalOrNull() ?: BigDecimal.ZERO
+                if (value.signum() != 0) {
+                    currentInput = value.negate().stripTrailingZeros().toPlainString()
+                    updateDisplay()
+                }
+            } else if (operator.isEmpty() && lastValue.signum() != 0) {
+                lastValue = lastValue.negate()
+                currentInput = lastValue.stripTrailingZeros().toPlainString()
+                isNewOperation = false
+                updateDisplay()
+            }
+        }
+
+        findViewById<MaterialButton>(R.id.button_gt).setOnClickListener {
+            provideFeedback()
+            display.text = "GT = ${formatValue(grandTotal)}"
+            currentInput = grandTotal.stripTrailingZeros().toPlainString()
+            isNewOperation = true
+            historyExpression = formatValue(grandTotal)
+        }
+
+        findViewById<MaterialButton>(R.id.button_m_plus).setOnClickListener {
+            provideFeedback()
+            val value = getActiveValue()
+            memoryValue = memoryValue.add(value)
+            isNewOperation = true
+            updateMemoryIndicator()
+        }
+        findViewById<MaterialButton>(R.id.button_m_minus).setOnClickListener {
+            provideFeedback()
+            val value = getActiveValue()
+            memoryValue = memoryValue.subtract(value)
+            isNewOperation = true
+            updateMemoryIndicator()
+        }
+        findViewById<MaterialButton>(R.id.button_mrc).setOnClickListener {
+            provideFeedback()
+            currentInput = memoryValue.stripTrailingZeros().toPlainString()
+            isNewOperation = false
+            historyExpression = formatValue(memoryValue)
+            updateDisplay()
         }
     }
 
-    private fun onButtonClick(view: View) {
-        val button = view as Button
-        val buttonText = button.text.toString()
-
-        when {
-            buttonText.matches(Regex("[0-9.]")) -> {
-                currentInput += buttonText
-                display.text = currentInput
-            }
-            buttonText.matches(Regex("[+*/-]")) -> {
-                if (currentInput.isNotEmpty()) {
-                    operand1 = currentInput.toDouble()
-                    currentInput = ""
-                }
-                currentOperator = buttonText
-            }
-            buttonText == "=" -> {
-                if (currentInput.isNotEmpty() && currentOperator.isNotEmpty() && operand1 != null) {
-                    val operand2 = currentInput.toDouble()
-                    val result = calculate(operand1!!, operand2, currentOperator)
-                    val expression = "$operand1 $currentOperator $operand2"
-                    history.add(Calculation(expression, result.toString()))
-                    display.text = result.toString()
-                    currentInput = result.toString()
-                    operand1 = null
-                    currentOperator = ""
-                }
-            }
-            buttonText == "Clear" -> {
-                currentInput = ""
-                currentOperator = ""
-                operand1 = null
-                display.text = ""
-            }
-            buttonText == "%" -> {
-                if (currentInput.isNotEmpty()) {
-                    val operand2 = currentInput.toDouble()
-                    if (operand1 != null && currentOperator.isNotEmpty()) {
-                        val finalOperand2 = if (currentOperator == "+" || currentOperator == "-") {
-                            (operand2 / 100.0) * operand1!!
-                        } else { // for * and /
-                            operand2 / 100.0
-                        }
-                        val result = calculate(operand1!!, finalOperand2, currentOperator)
-                        val expression = "$operand1 $currentOperator $operand2%"
-                        history.add(Calculation(expression, result.toString()))
-                        display.text = result.toString()
-                        currentInput = result.toString()
-                        operand1 = null
-                        currentOperator = ""
-                    } else {
-                        val result = operand2 / 100.0
-                        currentInput = result.toString()
-                        display.text = currentInput
-                    }
-                }
-            }
-            buttonText == "⌫" -> {
-                if (currentInput.isNotEmpty()) {
-                    currentInput = currentInput.substring(0, currentInput.length - 1)
-                    display.text = currentInput
-                }
-            }
-            buttonText == "5% Tax" -> {
-                calculateTax(5.0)
-            }
-            buttonText == "18% Tax" -> {
-                calculateTax(18.0)
-            }
-            buttonText == "History" -> {
-                val intent = Intent(this, CalculatorHistoryActivity::class.java)
-                intent.putExtra("history", history)
-                startActivityForResult(intent, HISTORY_REQUEST_CODE)
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == HISTORY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            if (data?.getBooleanExtra("history_cleared", false) == true) {
-                history.clear()
-            }
-        }
-    }
-
-    private fun calculate(operand1: Double, operand2: Double, operator: String): Double {
-        return when (operator) {
-            "+" -> operand1 + operand2
-            "-" -> operand1 - operand2
-            "*" -> operand1 * operand2
-            "/" -> operand1 / operand2
-            else -> 0.0
-        }
-    }
-
-    private fun calculateTax(taxRate: Double) {
+    private fun applyPercentage() {
         if (currentInput.isNotEmpty()) {
-            val value = currentInput.toDouble()
-            val taxAmount = value * (taxRate / 100)
-            val total = value + taxAmount
-            val expression = "$value + $taxRate%"
-            history.add(Calculation(expression, total.toString()))
-            currentInput = total.toString()
-            display.text = currentInput
+            val value = currentInput.toBigDecimalOrNull() ?: BigDecimal.ZERO
+            val result = when (operator) {
+                "+", "-" -> lastValue.multiply(value.divide(BigDecimal("100"), 10, RoundingMode.HALF_UP))
+                "×", "÷" -> value.divide(BigDecimal("100"), 10, RoundingMode.HALF_UP)
+                else -> value.divide(BigDecimal("100"), 10, RoundingMode.HALF_UP)
+            }
+            currentInput = result.stripTrailingZeros().toPlainString()
+            if (operator.isNotEmpty()) {
+                calculateResult(true)
+            } else {
+                isNewOperation = true
+                historyExpression = formatValue(result)
+                updateDisplay()
+            }
         }
     }
+
+    private fun applyGST(percentage: BigDecimal) {
+        val value = getActiveValue()
+        if (value.signum() == 0) return
+        
+        val gstAmount = value.multiply(percentage.divide(BigDecimal("100"), 10, RoundingMode.HALF_UP))
+        val result = value.add(gstAmount)
+        
+        val resultStr = formatValue(result)
+        val gstExpression = "${formatValue(value)}+${percentage.stripTrailingZeros().toPlainString()}%GST"
+        
+        addHistoryItem(gstExpression, resultStr)
+        
+        grandTotal = grandTotal.add(result)
+        currentInput = result.stripTrailingZeros().toPlainString()
+        operator = ""
+        historyExpression = resultStr
+        isNewOperation = true
+        updateDisplay()
+    }
+
+    private fun showGstMinusMenu(view: View) {
+        val popup = androidx.appcompat.widget.PopupMenu(this, view)
+        popup.menu.add("5% GST-")
+        popup.menu.add("12% GST-")
+        popup.menu.add("18% GST-")
+        popup.setOnMenuItemClickListener { item ->
+            when (item.title) {
+                "5% GST-" -> applyNegativeGST(BigDecimal("5.0"))
+                "12% GST-" -> applyNegativeGST(BigDecimal("12.0"))
+                "18% GST-" -> applyNegativeGST(BigDecimal("18.0"))
+            }
+            true
+        }
+        popup.show()
+    }
+
+    private fun applyNegativeGST(percentage: BigDecimal) {
+        val value = getActiveValue()
+        if (value.signum() == 0) return
+
+        // Formula: OriginalValue = InclusiveValue / (1 + percentage / 100)
+        val divisor = BigDecimal.ONE.add(percentage.divide(BigDecimal("100"), 10, RoundingMode.HALF_UP))
+        val originalValue = value.divide(divisor, 10, RoundingMode.HALF_UP)
+        
+        val resultStr = formatValue(originalValue)
+        val gstExpression = "${formatValue(value)}-${percentage.stripTrailingZeros().toPlainString()}%GST"
+        
+        addHistoryItem(gstExpression, resultStr)
+        
+        grandTotal = grandTotal.add(originalValue)
+        currentInput = originalValue.stripTrailingZeros().toPlainString()
+        operator = ""
+        historyExpression = resultStr
+        isNewOperation = true
+        updateDisplay()
+    }
+
+    private fun openHistory() {
+        val intent = Intent(this, CalculatorHistoryActivity::class.java)
+        intent.putExtra("history", historyList)
+        historyLauncher.launch(intent)
+    }
+
+    private fun recalculateGrandTotal() {
+        grandTotal = BigDecimal.ZERO
+        for (item in historyList) {
+            grandTotal = grandTotal.add(item.result.replace(",", "").toBigDecimalOrNull() ?: BigDecimal.ZERO)
+        }
+    }
+
+    private fun getActiveValue(): BigDecimal {
+        val dText = display.text.toString()
+        return if (dText.contains("=")) {
+            dText.split("=").last().trim().replace(",", "").toBigDecimalOrNull() ?: BigDecimal.ZERO
+        } else {
+            currentInput.replace(",", "").toBigDecimalOrNull() ?: lastValue
+        }
+    }
+
+    private fun updateMemoryIndicator() {
+        memoryIndicator.text = if (memoryValue.signum() != 0) "M=${formatValue(memoryValue)}" else ""
+    }
+
+    private fun updateStepsDisplay() {
+        stepsDisplay.text = String.format("%02d", historyList.size)
+    }
+
+    private fun updateDisplay() {
+        val digitsCount = currentInput.replace(".", "").length
+        val textSizeSp = when {
+            digitsCount <= 10 -> 50f
+            digitsCount <= 15 -> 44f
+            else -> 32f
+        }
+        display.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSizeSp)
+
+        if (operator.isNotEmpty()) {
+            formulaDisplay.text = "$historyExpression $operator"
+            display.text = if (currentInput.isEmpty()) formatValue(lastValue) else formatRawInput(currentInput)
+        } else {
+            formulaDisplay.text = ""
+            display.text = if (currentInput.isEmpty()) "0" else formatRawInput(currentInput)
+        }
+        
+        // Auto-scroll to the right so the latest digit is visible
+        displayScrollView.post {
+            displayScrollView.fullScroll(View.FOCUS_RIGHT)
+        }
+    }
+
+    private fun formatRawInput(input: String): String {
+        if (input.isEmpty()) return "0"
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val isIndian = prefs.getBoolean("calc_indian_format", true)
+        val formatted = if (isIndian) CalculatorHelper.formatIndianStyleString(input) else CalculatorHelper.formatInternationalStyleString(input)
+        if (input.endsWith(".")) return "$formatted."
+        return formatted
+    }
+
+    private fun tryComputeResult(): BigDecimal? {
+        if (currentInput.isEmpty()) return null
+        val v2 = currentInput.toBigDecimalOrNull() ?: return null
+        return try {
+            when (operator) {
+                "+" -> lastValue.add(v2)
+                "-" -> lastValue.subtract(v2)
+                "×" -> lastValue.multiply(v2)
+                "÷" -> if (v2.signum() != 0) lastValue.divide(v2, 10, RoundingMode.HALF_UP) else null
+                "^" -> BigDecimal(Math.pow(lastValue.toDouble(), v2.toDouble()))
+                else -> null
+            }
+        } catch (e: ArithmeticException) { null }
+    }
+
+    private fun calculateResult(isFinal: Boolean = false) {
+        if (operator.isEmpty()) return
+        
+        if (currentInput.isEmpty() && isFinal) {
+            val resultStr = formatValue(lastValue)
+            val cleanHistoryExpr = historyExpression.replace(" ", "")
+            if (cleanHistoryExpr.isNotEmpty() && cleanHistoryExpr != resultStr) {
+                addHistoryItem(cleanHistoryExpr, resultStr)
+            }
+            operator = ""
+            historyExpression = resultStr
+            isNewOperation = true
+            updateDisplay()
+            return
+        }
+
+        if (currentInput.isEmpty()) return
+        
+        val result = tryComputeResult() ?: return
+        val opForHistory = when(operator) { "×" -> "*"; "÷" -> "/"; else -> operator }
+        historyExpression = if (historyExpression.isEmpty()) "${formatValue(lastValue)}$opForHistory${formatRawInput(currentInput)}" else "$historyExpression$opForHistory${formatRawInput(currentInput)}"
+        
+        val resultStr = formatValue(result)
+
+        if (isFinal) {
+            val cleanHistoryExpr = historyExpression.replace(" ", "")
+            addHistoryItem(cleanHistoryExpr, resultStr)
+            
+            grandTotal = grandTotal.add(result)
+            currentInput = result.stripTrailingZeros().toPlainString()
+            operator = ""
+            historyExpression = resultStr
+            isNewOperation = true
+            updateDisplay()
+        } else {
+            lastValue = result
+            currentInput = ""
+            isNewOperation = true
+            updateDisplay()
+        }
+    }
+
+    private fun addHistoryItem(expression: String, result: String) {
+        historyList.add(Calculation("$expression=", result))
+        historyAdapterMain.notifyItemInserted(historyList.size - 1)
+        updateStepsDisplay()
+        historyRecyclerViewMain.scrollToPosition(historyList.size - 1)
+    }
+
+    private fun appendNumber(num: String) {
+        if (isNewOperation) { 
+            currentInput = if (num == "00") "0" else num
+            isNewOperation = false
+            return
+        }
+        
+        // Prevent multiple leading zeros
+        if (currentInput == "0") {
+            if (num == "00" || num == "0") return
+            currentInput = num
+            return
+        }
+        
+        // Increased limit for literal digit support
+        if (currentInput.replace(".", "").length >= 1000) return
+        
+        currentInput += num
+    }
+
+    private fun setOperator(op: String) {
+        if (currentInput.isNotEmpty() || operator.isNotEmpty()) {
+            if (currentInput.isNotEmpty() && operator.isNotEmpty()) {
+                calculateResult(false)
+            } else if (currentInput.isNotEmpty()) {
+                lastValue = currentInput.toBigDecimalOrNull() ?: BigDecimal.ZERO
+                historyExpression = formatValue(lastValue)
+            }
+            operator = op
+            currentInput = ""
+            isNewOperation = true
+            updateDisplay()
+        }
+    }
+
+    private fun clear() {
+        grandTotal = BigDecimal.ZERO
+        currentInput = ""
+        lastValue = BigDecimal.ZERO
+        operator = ""
+        isNewOperation = true
+        historyExpression = ""
+        historyList.clear()
+        historyAdapterMain.notifyDataSetChanged()
+        updateStepsDisplay()
+        updateDisplay()
+    }
+
+    private fun backspace() {
+        if (display.text.toString().contains("GT")) {
+            display.text = "0"
+            currentInput = ""
+            historyExpression = ""
+            return
+        }
+        if (currentInput.isNotEmpty()) {
+            currentInput = currentInput.dropLast(1)
+            updateDisplay()
+        } else if (operator.isNotEmpty()) {
+            operator = ""
+            currentInput = lastValue.stripTrailingZeros().toPlainString()
+            isNewOperation = false
+            updateDisplay()
+        }
+    }
+
+    private fun provideFeedback() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val vibrateOn = prefs.getBoolean("vibrate_on_keypress", true)
+        val soundOn = prefs.getBoolean("sound_on_keypress", true)
+
+        if (vibrateOn) {
+            val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                (getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
+            } else {
+                @Suppress("DEPRECATION") getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            }
+            val intensity = prefs.getInt("vibration_intensity", 30)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(intensity.toLong(), VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION") vibrator.vibrate(intensity.toLong())
+            }
+        }
+
+        if (soundOn) {
+            val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            val volume = prefs.getInt("sound_volume", 5) / 100f
+            audioManager.playSoundEffect(AudioManager.FX_KEYPRESS_STANDARD, volume)
+        }
+    }
+
+    private fun BigDecimal.isInfinite(): Boolean = false // BigDecimal does not have infinity
 }

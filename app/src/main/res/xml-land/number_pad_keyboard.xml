@@ -1,48 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:keyWidth="8%p"
-    android:keyHeight="35dp"
-    android:horizontalGap="6.7dp"
-    android:verticalGap="6.7dp">
+    android:keyWidth="20%p"
+    android:keyHeight="39.7dp"
+    android:horizontalGap="2dp"
+    android:verticalGap="2dp">
 
-    <Row>
-        <Key android:codes="43" android:keyLabel="+" android:keyEdgeFlags="left" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="49" android:keyLabel="1" android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="50" android:keyLabel="2" android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="51" android:keyLabel="3" android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="95" android:keyLabel="-" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-    </Row>
-
+    <!-- Row 1 -->
     <Row>
         <Key android:codes="47" android:keyLabel="/" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="52" android:keyLabel="4"  android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="53" android:keyLabel="5" android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="54" android:keyLabel="6" android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="58" android:keyLabel=":" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="49" android:keyLabel="1" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="50" android:keyLabel="2" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="51" android:keyLabel="3" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="43" android:keyLabel="+" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
     </Row>
+
+    <!-- Row 2 -->
+    <Row>
+
+        <Key android:codes="34" android:keyLabel="&quot;" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="52" android:keyLabel="4" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="53" android:keyLabel="5" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="54" android:keyLabel="6" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="45" android:keyLabel="-" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+
+    </Row>
+    <!-- Row 3 -->
 
     <Row>
-        <Key android:codes="59" android:keyLabel=";" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="55" android:keyLabel="7"  android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="56" android:keyLabel="8" android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="57" android:keyLabel="9" android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="-5" android:keyIcon="@drawable/ic_backspace" android:isRepeatable="true" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="37" android:keyLabel="%" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="55" android:keyLabel="7" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="56" android:keyLabel="8" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="57" android:keyLabel="9" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="42" android:keyLabel="*" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout" />
+
+
     </Row>
 
-    <Row android:keyHeight="52dp">
-        <Key android:codes="-101" android:keyLabel="abc"
-            android:keyTextSize="5sp" android:keyWidth="15%p" android:keyEdgeFlags="left" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="44" android:keyLabel=","
-            android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="-2" android:keyLabel="@string/symbols_label"
-            android:keyTextSize="5sp" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="48" android:keyLabel="0"
-            android:keyWidth="25%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="46" android:keyLabel="." android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="32"  android:keyIcon="@drawable/ic_space_bar" android:keyPreviewLayout="@layout/no_preview_layout"/>
-        <Key android:codes="-4" app:forPackage="com.whatsapp" android:keyIcon="@drawable/ic_return_arrow"
-            android:keyEdgeFlags="right" android:keyWidth="15%p" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/> <!-- ENT for Enter -->
+    <!-- Row 4 -->
+    <Row>
+        <Key android:codes="46" android:keyLabel="." android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="58" android:keyLabel=":" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="48" android:keyLabel="0" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="59" android:keyLabel=";" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout" android:keyEdgeFlags="right" />
+        <Key android:codes="61" android:keyLabel="=" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+    </Row>
+
+    <!-- Row 5 -->
+    <Row android:rowEdgeFlags="bottom" android:keyHeight="45dp">
+        <Key android:codes="-101" android:keyLabel="abc" android:keyWidth="20%p" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="-133" android:keyLabel="\?#!" android:keyWidth="20%p" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
+        <Key android:codes="32" android:keyLabel="space" android:keyWidth="20%p" android:keyBackground="?attr/keyboardKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout" android:isRepeatable="true"/>
+        <Key android:codes="-5" android:keyIcon="@drawable/ic_backspace" android:keyWidth="20%p" android:isRepeatable="true" android:keyEdgeFlags="right" />
+        <Key android:codes="-4" android:keyIcon="@drawable/ic_search" android:keyWidth="20%p" android:keyBackground="?attr/functionalKeyBackground" android:keyPreviewLayout="@layout/no_preview_layout"/>
     </Row>
 
 </Keyboard>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ਇਕੁਏਸ਼ਨ ਸੋਧੋ:"
+        android:textSize="14sp"
+        android:textColor="#666666"/>
+
+    <EditText
+        android:id="@+id/edit_expression"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ਉਦਾਹਰਨ: 3*10"
+        android:inputType="text"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"
+        android:textSize="22sp"
+        android:background="@android:drawable/edit_text"
+        android:fontFamily="monospace"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/tv_preview_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="end"
+        android:text="= 0"
+        android:textColor="#2BB07A"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:fontFamily="monospace"/>
+
+</LinearLayout>

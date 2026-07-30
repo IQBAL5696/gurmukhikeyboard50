@@ -58,12 +58,24 @@ class AiHelper(private val context: Context) {
             if (apiResponse != null) return@withContext apiResponse
         }
 
-        // Priority 3: Fallback to Wikipedia
+        // Priority 3: Fallback to Wikipedia (supports multiple languages)
         if (!isNetworkAvailable()) {
             return@withContext "📡 No internet connection available."
         }
+        
+        // Try searching in Punjabi first if the query is in Gurmukhi, otherwise search in English
+        val language = if (isGurmukhi(originalText)) "pa" else "en"
+        val result = searchWikipedia(originalText, language) ?: 
+                    (if (language == "pa") searchWikipedia(originalText, "en") else null)
 
-        return@withContext searchWikipedia(originalText) ?: "I couldn't find a direct answer. Try asking 'correct grammar: [your text]' or 'joke'."
+        return@withContext result ?: "ਮਾਫ਼ ਕਰਨਾ, ਮੈਨੂੰ ਇਸ ਬਾਰੇ ਕੋਈ ਸਿੱਧੀ ਜਾਣਕਾਰੀ ਨਹੀਂ ਮਿਲੀ। ਤੁਸੀਂ ਕੁਝ ਹੋਰ ਪੁੱਛ ਸਕਦੇ ਹੋ ਜਾਂ 'ਚੁਟਕਲਾ' ਲਿਖ ਸਕਦੇ ਹੋ।"
+    }
+
+    private fun isGurmukhi(text: String): Boolean {
+        for (char in text) {
+            if (char in '\u0A00'..'\u0A7F') return true
+        }
+        return false
     }
 
     private suspend fun callExternalAiApi(prompt: String, apiKey: String): String? {
@@ -80,7 +92,7 @@ class AiHelper(private val context: Context) {
                 put("messages", JSONArray().apply {
                     put(JSONObject().apply {
                         put("role", "system")
-                        put("content", "You are a helpful writing assistant. If the user asks to 'correct grammar', fix their text. If they ask to 'continue writing', add a few sentences.")
+                        put("content", "You are a helpful writing assistant. You can speak and understand both English and Punjabi (Gurmukhi). If the user asks to 'correct grammar', fix their text. If they ask to 'continue writing', add a few sentences.")
                     })
                     put(JSONObject().apply {
                         put("role", "user")
@@ -109,17 +121,17 @@ class AiHelper(private val context: Context) {
         return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
-    private suspend fun searchWikipedia(query: String): String? {
+    private suspend fun searchWikipedia(query: String, lang: String = "en"): String? {
         return try {
             val encodedQuery = URLEncoder.encode(query, "UTF-8")
-            val searchUrl = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=$encodedQuery&format=json"
+            val searchUrl = "https://$lang.wikipedia.org/w/api.php?action=query&list=search&srsearch=$encodedQuery&format=json"
             val searchResponse = URL(searchUrl).readText()
             val searchJson = JSONObject(searchResponse)
             val searchResults = searchJson.optJSONObject("query")?.optJSONArray("search")
 
             if (searchResults != null && searchResults.length() > 0) {
                 val topResultTitle = searchResults.getJSONObject(0).getString("title")
-                val extractUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles=${URLEncoder.encode(topResultTitle, "UTF-8")}&format=json"
+                val extractUrl = "https://$lang.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&titles=${URLEncoder.encode(topResultTitle, "UTF-8")}&format=json"
                 val extractResponse = URL(extractUrl).readText()
                 val extractJson = JSONObject(extractResponse)
                 val pages = extractJson.getJSONObject("query").getJSONObject("pages")
@@ -131,16 +143,16 @@ class AiHelper(private val context: Context) {
 
     private suspend fun getLocalCommandResponse(normalizedText: String, originalText: String): String? {
         return when {
-            normalizedText.startsWith("correct grammar:") -> {
+            normalizedText.startsWith("correct grammar:") || normalizedText.startsWith("ਸ਼ੁੱਧ ਕਰੋ:") -> {
                 val content = originalText.substringAfter(":").trim()
                 autoCorrectHelper.checkGrammarOffline(content)
             }
-            normalizedText.startsWith("correct word:") -> {
+            normalizedText.startsWith("correct word:") || normalizedText.startsWith("ਸ਼ਬਦ ਸ਼ੁੱਧ ਕਰੋ:") -> {
                 val word = originalText.substringAfter(":").trim()
                 autoCorrectHelper.autoCorrectWord(word)
             }
-            normalizedText == "joke" -> "😂 ${jokes.random()}"
-            normalizedText.contains("who are you") -> "I am your AI Keyboard Assistant with Auto-Correction features."
+            normalizedText == "joke" || normalizedText == "ਚੁਟਕਲਾ" -> "😂 ${jokes.random()}"
+            normalizedText.contains("who are you") || normalizedText.contains("ਤੁਸੀਂ ਕੌਣ ਹੋ") -> "ਮੈਂ ਤੁਹਾਡਾ AI ਕੀਬੋਰਡ ਸਹਾਇਕ ਹਾਂ ਜੋ ਤੁਹਾਡੀ ਲਿਖਤ ਨੂੰ ਸ਼ੁੱਧ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹਾਂ।"
             else -> null
         }
     }

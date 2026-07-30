@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/widgetRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_calendar_main_header"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <!-- Header with Year Navigation and Full Info -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFF3E0"
+        android:paddingBottom="6dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp">
+
+            <ImageButton
+                android:id="@+id/btnPrevYear"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@android:drawable/ic_media_previous"
+                app:tint="#BF360C" />
+
+            <!-- Detailed Today's Information -->
+            <TextView
+                android:id="@+id/txtHeaderFullInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/btnPrevYear"
+                android:layout_toLeftOf="@+id/btnNextYear"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="੨੦੨੫, ੨੬ ਫਰਵਰੀ, ਫੱਗਣ ੧੫"
+                android:textColor="#BF360C"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btnNextYear"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@android:drawable/ic_media_next"
+                app:tint="#BF360C" />
+        </RelativeLayout>
+
+        <!-- Time Row with Sun/Moon Icons -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:layout_marginTop="2dp">
+
+            <!-- Local Time with Icon -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                
+                <TextView
+                    android:id="@+id/widgetIconLocal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="☀️"
+                    android:textSize="12sp"
+                    android:layout_marginRight="2dp" />
+
+                <TextClock
+                    android:id="@+id/widgetTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#388E3C"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:format12Hour="hh:mm a" />
+            </LinearLayout>
+
+            <!-- Secondary Time with Icon -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/widgetIconSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🌙"
+                    android:textSize="12sp"
+                    android:layout_marginRight="2dp" />
+
+                <TextClock
+                    android:id="@+id/widgetTimeOttawa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#1976D2"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:timeZone="America/Toronto"
+                    android:format12Hour="hh:mm a" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/calendarList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:scrollbars="none" />
+
+</LinearLayout>

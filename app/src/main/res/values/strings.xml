@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Gurmukhi Keyboard 5.0</string>
+    <string name="app_name" translatable="false">GURMUKHI KEYBOARD-NITNEM &amp; NANAKSHAHI CALENDER</string>
     <string name="title_activity_keyboard_settings" translatable="false">Keyboard Settings</string>
 
     <string name="settings_voice_input_summary" translatable="false">Set voice recognition options</string>
@@ -7,6 +7,13 @@
     <string name="pref_clear_dictionary_title" translatable="false">Clear Learned Words</string>
     <string name="pref_clear_dictionary_summary" translatable="false">Remove all custom learned words from dictionary</string>
     <string name="dictionary_cleared" translatable="false">Dictionary cleared successfully</string>
+
+    <!-- Shortcut Strings -->
+    <string name="shortcut_nitnem_short" translatable="false">ਨਿਤਨੇਮ</string>
+    <string name="shortcut_nitnem_long" translatable="false">ਨਿਤਨੇਮ ਪਾਠ</string>
+    <string name="shortcut_calendar_short" translatable="false">ਜੰਤਰੀ</string>
+    <string name="shortcut_calendar_long" translatable="false">ਨਾਨਕਸ਼ਾਹੀ ਜੰਤਰੀ</string>
+    <string name="shortcut_disabled_msg" translatable="false">ਸ਼ਾਰਟਕੱਟ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
 
     <!-- Content Descriptions for Accessibility -->
     <string name="desc_backspace" translatable="false">Backspace</string>

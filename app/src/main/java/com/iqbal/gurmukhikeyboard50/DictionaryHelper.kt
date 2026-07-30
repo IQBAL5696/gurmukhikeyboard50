@@ -15,6 +15,7 @@ object DictionaryHelper {
     fun convertParagraphToDictionary(context: Context): Boolean {
         val file = context.getFileStreamPath(DICTIONARY_FILE)
         if (file.exists() && file.length() > 0) {
+            sanitizeExistingDictionary(context)
             return true
         }
 
@@ -30,14 +31,14 @@ object DictionaryHelper {
             }
             reader.close()
 
-            val words = paragraphBuilder.toString().split("\\s+".toRegex())
-                .dropLastWhile { it.isEmpty() }.toTypedArray()
-
+            // Split by whitespace and all punctuation/digits to isolate pure words
+            val rawWords = paragraphBuilder.toString().split("[\\s,;.:=()\"'।॥/?!\\-\\[\\]{}<>*+_\\\\|0-9੦-੯]+".toRegex())
+            
             val unique = mutableSetOf<String>()
-            for (w in words) {
-                val trimmedWord = w.trim()
-                if (trimmedWord.isNotEmpty()) {
-                    unique.add(trimmedWord)
+            for (w in rawWords) {
+                val cleaned = cleanWord(w)
+                if (isValidWord(cleaned)) {
+                    unique.add(cleaned)
                 }
             }
 
@@ -47,6 +48,34 @@ object DictionaryHelper {
             Log.e(TAG, "Error converting dictionary:", e)
             false
         }
+    }
+
+    private fun sanitizeExistingDictionary(context: Context) {
+        try {
+            val words = getAllDictionaryWords(context)
+            val cleaned = words.map { cleanWord(it) }.filter { isValidWord(it) }.distinct()
+            saveFullDictionary(context, cleaned.reversed())
+        } catch (e: Exception) {
+            Log.e(TAG, "Error sanitizing dictionary", e)
+        }
+    }
+
+    fun cleanWord(word: String): String {
+        // Remove any unwanted punctuation, symbols, or digits from anywhere in the word
+        return word.trim().replace("['\"।॥/?!,.=()\\-\\[\\]{}:;<>*+_\\\\|0-9੦-੯]+".toRegex(), "")
+    }
+
+    fun isValidWord(word: String): Boolean {
+        if (word.length < 2) return false
+        
+        // Final check: should not contain any digits or restricted symbols
+        val hasDigits = word.any { it.isDigit() || "੦੧੨੩੪੫੬੭੮੯".contains(it) }
+        if (hasDigits) return false
+        
+        val hasSymbols = word.any { ",.=()!?;:\"'।॥/\\-[]{}<>*+_|".contains(it) }
+        if (hasSymbols) return false
+        
+        return true
     }
 
     private fun saveFullDictionary(context: Context, words: List<String>) {
@@ -65,14 +94,14 @@ object DictionaryHelper {
     }
 
     fun addWordToDictionary(context: Context, word: String) {
-        val trimmedWord = word.trim()
-        if (trimmedWord.length < 2) return
+        val cleaned = cleanWord(word)
+        if (!isValidWord(cleaned)) return
         
         try {
             val writer = BufferedWriter(
                 OutputStreamWriter(context.openFileOutput(DICTIONARY_FILE, Context.MODE_APPEND), "UTF-8")
             )
-            writer.write(trimmedWord)
+            writer.write(cleaned)
             writer.newLine()
             writer.close()
         } catch (e: IOException) {
@@ -87,7 +116,8 @@ object DictionaryHelper {
             val reader = BufferedReader(InputStreamReader(fis, "UTF-8"))
             var line: String?
             while ((reader.readLine().also { line = it }) != null) {
-                words.add(line!!)
+                val l = line
+                if (l != null) words.add(l)
             }
             reader.close()
         } catch (e: Exception) {

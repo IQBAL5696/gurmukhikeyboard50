@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_calendar_main_header"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp">
+
+        <TextView
+            android:id="@+id/widgetMonthYear"
+            style="@style/WidgetTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:text="ਫੱਗਣ ੫੫੭" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical"
+            android:gravity="end">
+
+            <!-- Local Time -->
+            <TextClock
+                android:id="@+id/widgetTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#388E3C"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:format12Hour="hh:mm a"
+                android:format24Hour="HH:mm" />
+
+            <!-- Dynamic Secondary Time -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/widgetTimeOttawaLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ਓਟਾਵਾ: "
+                    android:textColor="#1976D2"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+
+                <TextClock
+                    android:id="@+id/widgetTimeOttawa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#1976D2"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:timeZone="America/Toronto"
+                    android:format12Hour="hh:mm a"
+                    android:format24Hour="HH:mm" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFE0B2"
+        android:layout_marginTop="2dp">
+        <TextView style="@style/WidgetWeekDayText" android:text="ਐਤ" />
+        <TextView style="@style/WidgetWeekDayText" android:text="ਸੋਮ" />
+        <TextView style="@style/WidgetWeekDayText" android:text="ਮੰਗ" />
+        <TextView style="@style/WidgetWeekDayText" android:text="ਬੁੱਧ" />
+        <TextView style="@style/WidgetWeekDayText" android:text="ਵੀਰ" />
+        <TextView style="@style/WidgetWeekDayText" android:text="ਸ਼ੁੱਕ" />
+        <TextView style="@style/WidgetWeekDayText" android:text="ਸ਼ਨੀ" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/calendarGrid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:numColumns="7"
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="1dp"
+        android:gravity="center"
+        android:stretchMode="columnWidth" />
+
+</LinearLayout>

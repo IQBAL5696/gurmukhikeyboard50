@@ -2,7 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="Keyboard Feedback (ਕੀਬੋਰਡ ਫੀਡਬੈਕ)">
+    <PreferenceCategory
+        android:title="Keyboard Feedback (ਕੀਬੋਰਡ ਫੀਡਬੈਕ)"
+        app:iconSpaceReserved="false">
 
         <SwitchPreferenceCompat
             android:key="vibrate_on_keypress"
@@ -52,7 +54,18 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Appearance (ਦਿੱਖ ਅਤੇ ਡਿਜ਼ਾਈਨ)">
+    <PreferenceCategory
+        android:title="Appearance (ਦਿੱਖ ਅਤੇ ਡਿਜ਼ਾਈਨ)"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:key="pref_keyboard_font"
+            android:title="Gurmukhi Font (ਫੋਂਟ ਬਦਲੋ)"
+            android:summary="ਕੀਬੋਰਡ ਦੇ ਅੱਖਰਾਂ ਲਈ ਫੋਂਟ ਚੁਣੋ"
+            android:entries="@array/font_entries"
+            android:entryValues="@array/font_values"
+            android:defaultValue="NotoSerifGurmukhi-Regular.ttf"
+            app:useSimpleSummaryProvider="true" />
 
         <ListPreference
             android:key="pref_keyboard_theme"
@@ -60,7 +73,7 @@
             android:summary="ਕੀਬੋਰਡ ਦਾ ਰੰਗ ਬਦਲੋ"
             android:entries="@array/theme_entries"
             android:entryValues="@array/theme_values"
-            android:defaultValue="light" 
+            android:defaultValue="light"
             app:useSimpleSummaryProvider="true"/>
 
         <Preference
@@ -90,7 +103,7 @@
             android:title="Key Roundness Intensity"
             android:max="50"
             app:min="0"
-            android:defaultValue="12"
+            android:defaultValue="5"
             app:showSeekBarValue="true"
             android:dependency="pref_use_rounded_keys" />
 
@@ -111,19 +124,80 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Toolbar Customization (ਟੂਲਬਾਰ ਸੈਟਿੰਗਜ਼)">
+    <PreferenceCategory
+        android:title="Keyboard Layout (ਲੇਆਉਟ ਕਸਟਮਾਈਜ਼ੇਸ਼ਨ)"
+        app:iconSpaceReserved="false">
 
-        <MultiSelectListPreference
-            android:key="pref_toolbar_pinned_items"
-            android:title="Pinned Toolbar Icons (ਟੂਲਬਾਰ ਆਈਕਨ ਚੁਣੋ)"
-            android:summary="ਉਹ ਫੀਚਰ ਚੁਣੋ ਜੋ ਤੁਸੀਂ ਟੂਲਬਾਰ ਵਿੱਚ ਹਮੇਸ਼ਾ ਦੇਖਣਾ ਚਾਹੁੰਦੇ ਹੋ"
-            android:entries="@array/top_row_button_entries"
-            android:entryValues="@array/top_row_button_values"
-            android:defaultValue="@array/top_row_default_values" />
+        <SeekBarPreference
+            android:key="pref_key_height"
+            android:title="Key Height (ਕੀਅ ਦੀ ਉਚਾਈ)"
+            android:max="150"
+            app:min="50"
+            android:defaultValue="100"
+            app:showSeekBarValue="true"
+            android:summary="ਕੀਬੋਰਡ ਦੇ ਬਟਨਾਂ ਦੀ ਉਚਾਈ ਬਦਲੋ" />
+
+        <SeekBarPreference
+            android:key="pref_font_size"
+            android:title="Font Size (ਅੱਖਰਾਂ ਦਾ ਆਕਾਰ)"
+            android:max="30"
+            app:min="10"
+            android:defaultValue="25"
+            app:showSeekBarValue="true"
+            android:summary="ਕੀਅਜ਼ ਉੱਪਰ ਲਿਖੇ ਅੱਖਰਾਂ ਦਾ ਆਕਾਰ ਬਦਲੋ" />
+
+        <SeekBarPreference
+            android:key="pref_key_gap"
+            android:title="Key Gap (ਬਟਨਾਂ ਵਿਚਕਾਰ ਦੂਰੀ)"
+            android:max="20"
+            app:min="0"
+            android:defaultValue="4"
+            app:showSeekBarValue="true"
+            android:summary="ਬਟਨਾਂ ਦੇ ਆਪਸੀ ਫਾਸਲੇ ਨੂੰ ਘਟਾਓ ਜਾਂ ਵਧਾਓ" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Gestures (ਜੈਸਚਰ ਸੈਟਿੰਗਜ਼)">
+    <PreferenceCategory
+        android:title="Features &amp; Functions (ਫੀਚਰ ਅਤੇ ਫੰਕਸ਼ਨ)"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:key="pref_manage_shortcuts"
+            android:title="Manage Custom Shortcuts (ਸ਼ੌਰਟਕਟ)"
+            android:summary="ਆਪਣੇ ਪਸੰਦੀਦਾ ਸ਼ੌਰਟਕਟ ਸੈੱਟ ਕਰੋ" />
+
+        <Preference
+            android:key="pref_toolbar_settings"
+            android:title="Toolbar Pinned Icons (ਟੂਲਬਾਰ ਆਈਕਨ)"
+            android:summary="ਟੂਲਬਾਰ ਵਿੱਚ ਦਿਖਾਏ ਜਾਣ ਵਾਲੇ ਆਈਕਨ ਚੁਣੋ" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Calendar &amp; Time (ਕੈਲੰਡਰ ਅਤੇ ਸਮਾਂ)"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            android:key="pref_widget_timezone"
+            android:title="Secondary Timezone (ਦੂਜਾ ਸਮਾਂ ਖੇਤਰ)"
+            android:summary="ਵਿਜੇਟ 'ਤੇ ਦਿਖਾਉਣ ਲਈ ਦੂਜੇ ਦੇਸ਼ ਦਾ ਸਮਾਂ ਚੁਣੋ"
+            android:entries="@array/timezone_entries"
+            android:entryValues="@array/timezone_values"
+            android:defaultValue="America/Toronto"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            android:key="pref_calendar_mode"
+            android:title="Calendar Mode (ਕੈਲੰਡਰ ਵਿਧੀ)"
+            android:summary="ਕੈਲੰਡਰ ਪ੍ਰਣਾਲੀ ਅਤੇ ਗਣਨਾ ਵਿਧੀ ਚੁਣੋ"
+            android:entries="@array/calendar_mode_entries"
+            android:entryValues="@array/calendar_mode_values"
+            android:defaultValue="mool"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Gestures (ਜੈਸਚਰ ਸੈਟਿੰਗਜ਼)"
+        app:iconSpaceReserved="false">
 
         <SwitchPreferenceCompat
             android:key="pref_gesture_typing"
@@ -140,12 +214,20 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Typing Assistance (ਟਾਈਪਿੰਗ ਸਹਾਇਤਾ)">
+    <PreferenceCategory
+        android:title="Typing Assistance (ਟਾਈਪਿੰਗ ਸਹਾਇਤਾ)"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            android:key="pref_auto_correct"
+            android:title="Auto-Correction (ਆਪਣੇ ਆਪ ਸੁਧਾਰੋ)"
+            android:summary="ਗਲਤ ਲਿਖੇ ਸ਼ਬਦਾਂ ਨੂੰ ਆਪਣੇ ਆਪ ਸਹੀ ਸੁਝਾਅ ਨਾਲ ਬਦਲੋ"
+            android:defaultValue="true" />
 
         <SwitchPreferenceCompat
             android:key="pref_smart_punctuation"
             android:title="Smart Punctuation (ਸਮਾਰਟ ਪੰਕਚੂਏਸ਼ਨ)"
-            android:summary="ਡਬਲ ਸਪੇਸ ਦਬਾਉਣ 'ਤੇ ਆਪਣੇ ਆਪ '।' ਜਾਂ '.' ਲਗਾਓ"
+            android:summary="ਡਬਲ ਸਪੇਸ ਦਬਾਉਣ 'ਤੇ ਆਪਣੇ ਆਪ '। ' ਜਾਂ '.' ਲਗਾਓ"
             android:defaultValue="true" />
 
         <SwitchPreferenceCompat
@@ -163,7 +245,7 @@
         <SwitchPreferenceCompat
             android:key="pref_next_word_prediction"
             android:title="Next Word Prediction (ਅਗਲਾ ਸ਼ਬਦ ਸੁਝਾਅ)"
-            android:summary="ਤੁਹਾਡੇ ਲਿਖਣ ਦੇ ਅੰਦਾਜ਼ ਮੁਤਾਬਕ ਅਗਲੇ ਸ਼ਬਦ ਦਾ ਅੰਦਾਜ਼ਾ ਲਗਾਓ"
+            android:summary="ਤੁਹਾਡੇ ਲਿਖਣ ਦੇ ਅੰਦਾਜ਼ ਮੁਤਾਬਕ ਅਗਲਾ ਸ਼ਬਦ ਦਾ ਅੰਦਾਜ਼ਾ ਲਗਾਓ"
             android:defaultValue="true"
             android:dependency="pref_show_suggestions" />
 
@@ -175,58 +257,27 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Layout Customization (ਲੇਆਉਟ ਕਸਟਮਾਈਜ਼ੇਸ਼ਨ)">
-
-        <SeekBarPreference
-            android:key="pref_key_height"
-            android:title="Key Height (ਕੀਅ ਦੀ ਉਚਾਈ)"
-            android:max="150"
-            app:min="50"
-            android:defaultValue="100"
-            app:showSeekBarValue="true"
-            android:summary="ਕੀਬੋਰਡ ਦੇ ਬਟਨਾਂ ਦੀ ਉਚਾਈ ਬਦਲੋ" />
-
-        <SeekBarPreference
-            android:key="pref_font_size"
-            android:title="Font Size (ਅੱਖਰਾਂ ਦਾ ਆਕਾਰ)"
-            android:max="30"
-            app:min="10"
-            android:defaultValue="18"
-            app:showSeekBarValue="true"
-            android:summary="ਕੀਅਜ਼ ਉੱਪਰ ਲਿਖੇ ਅੱਖਰਾਂ ਦਾ ਆਕਾਰ ਬਦਲੋ" />
-
-        <SeekBarPreference
-            android:key="pref_key_gap"
-            android:title="Key Gap (ਬਟਨਾਂ ਵਿਚਕਾਰ ਦੂਰੀ)"
-            android:max="20"
-            app:min="0"
-            android:defaultValue="4"
-            app:showSeekBarValue="true"
-            android:summary="ਬਟਨਾਂ ਦੇ ਆਪਸੀ ਫਾਸਲੇ ਨੂੰ ਘਟਾਓ ਜਾਂ ਵਧਾਓ" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Dictionary Management (ਸ਼ਬਦਕੋਸ਼ ਪ੍ਰਬੰਧਨ)">
+    <PreferenceCategory
+        android:title="Dictionary Management (ਸ਼ਬਦਕੋਸ਼ ਪ੍ਰਬੰਧਨ)"
+        app:iconSpaceReserved="false">
         <Preference
             android:key="pref_manage_learned_words"
             android:title="Manage Learned Words (ਸਿੱਖੇ ਹੋਏ ਸ਼ਬਦਾਂ ਦਾ ਪ੍ਰਬੰਧਨ)"
             android:summary="ਕੀਬੋਰਡ ਦੁਆਰਾ ਸਿੱਖੇ ਗਏ ਸ਼ਬਦਾਂ ਨੂੰ ਦੇਖੋ ਅਤੇ ਮਿਟਾਓ" />
-            
+
         <Preference
             android:key="pref_clear_dictionary"
             android:title="Clear All Learned Words (ਸਾਰੇ ਸ਼ਬਦ ਮਿਟਾਓ)"
             android:summary="ਕੀਬੋਰਡ ਦੀ ਡਿਕਸ਼ਨਰੀ ਨੂੰ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸਾਫ਼ ਕਰੋ" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="ਕੀਬੋਰਡ ਫੰਕਸ਼ਨ ਗਾਈਡ (Features Guide)">
+    <PreferenceCategory
+        android:title="About &amp; Privacy"
+        app:iconSpaceReserved="false">
         <Preference
-            android:key="guide_calendar"
-            android:title="📅 ਨਾਨਕਸ਼ਾਹੀ ਕੈਲੰਡਰ"
-            android:summary="ਕੀਬੋਰਡ ਦੀ ਉੱਪਰਲੀ ਲਾਈਨ ਵਿੱਚ ਕੈਲੰਡਰ ਆਈਕਨ ਦਬਾਓ। ਸੂਰਜ ਚੜ੍ਹਨ/ਡੁੱਬਣ ਦਾ ਸਮਾਂ, ਸੰਗਰਾਂਦ ਆਦਿ ਦੇਖੋ।" />
-        <Preference
-            android:key="guide_search"
-            android:title="🔍 ਗੁਰਬਾਣੀ ਸਰਚ"
-            android:summary="ਕੋਈ ਵੀ ਸ਼ਬਦ ਲਿਖ ਕੇ ਸਰਚ ਆਈਕਨ ਦਬਾਓ, ਉਹ GurbaniNow 'ਤੇ ਸਰਚ ਹੋ ਜਾਵੇਗਾ।" />
+            android:key="pref_privacy_policy"
+            android:title="Privacy Policy (ਪ੍ਰਾਈਵੇਸੀ ਪਾਲਿਸੀ)"
+            android:summary="ਸਾਡੀ ਪ੍ਰਾਈਵੇਸੀ ਪਾਲਿਸੀ ਪੜ੍ਹੋ" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -1,33 +1,29 @@
 <resources>
     <string-array name="top_row_button_entries">
         <item>Translate</item>
-        <item>AI</item>
         <item>Emoji</item>
-        <item>Mic</item>
+        <item>Voice Input (Mic)</item>
         <item>Gurmukhi Search</item>
-        <item>Gurbani</item>
-        <item>Settings</item>
-        <item>Image to Text</item>
-        <item>Calendar</item>
+        <item>Gurbani Player</item>
+        <item>Language Switch</item>
+        <item>More Tools (Arrows)</item>
     </string-array>
 
     <string-array name="top_row_button_values">
         <item>translate</item>
-        <item>ai</item>
         <item>emoji</item>
         <item>mic</item>
         <item>gurmukhi_search</item>
         <item>gurbani</item>
-        <item>settings</item>
-        <item>image_to_text</item>
-        <item>calendar</item>
+        <item>language_switch</item>
+        <item>expanded_menu</item>
     </string-array>
-    
+
     <string-array name="top_row_default_values">
         <item>emoji</item>
         <item>mic</item>
         <item>translate</item>
-        <item>calendar</item>
+        <item>expanded_menu</item>
     </string-array>
 
     <string-array name="theme_entries">
@@ -109,17 +105,67 @@
     </string-array>
 
     <string-array name="font_entries">
-        <item>Default (Bold)</item>
-        <item>Raavi</item>
-        <item>Anmol Lipi</item>
-        <item>Raavi</item>
+        <item>Raavi (System Default)</item>
+        <item>Raavi Bold (ਪੰਜਾਬੀ ਬੋਲਡ)</item>
+        <item>Noto Serif Gurmukhi (Modern)</item>
+        <item>Gurbani Akhar (Standard)</item>
+        <item>Web Akhar Thick (Bold)</item>
+        <item>Web Akhar Slim</item>
+        <item>Gurmukhi Lys (Classic)</item>
+        <item>Web Lipi Heavy</item>
+        <item>Asees (ਅਸੀਸ)</item>
+        <item>Sukhmani (ਸੁਖਮਨੀ)</item>
+        <item>Gurbani WT (Standard)</item>
+        <item>Anmol Lipi (Standard)</item>
+        <item>Anmol Lipi (Compact)</item>
+        <item>Amr Lipi Light</item>
+        <item>Amr Lipi Heavy</item>
+        <item>Prabhki (Elegance)</item>
+        <item>Joy Punjabi (Stylized)</item>
+        <item>Bulara (Bold)</item>
+        <item>Lanma Slim</item>
+        <item>Lanma Bold</item>
+        <item>Raajaa Light</item>
+        <item>Raajaa Stylish</item>
+        <item>Raajaa Ultra Bold</item>
+        <item>Magaz Light</item>
+        <item>Magaz Medium</item>
+        <item>Magaz Bold</item>
+        <item>Karmic Thin</item>
+        <item>Karmic Medium</item>
+        <item>Karmic Bold</item>
     </string-array>
 
     <string-array name="font_values">
         <item>default</item>
-        <item>raavi</item>
-        <item>anmol</item>
-        <item>raavi</item>
+        <item>default_bold</item>
+        <item>NotoSerifGurmukhi-Regular.ttf</item>
+        <item>AKHAR.ttf.TTF</item>
+        <item>WebAkharThick.ttf</item>
+        <item>webakharslim.ttf</item>
+        <item>GurmukhiLys 020 Normal.ttf</item>
+        <item>WebLipiHeavy.ttf</item>
+        <item>ASEES.TTF</item>
+        <item>Sukhmani.ttf</item>
+        <item>gurbaniwt.ttf</item>
+        <item>AMRLIPI.TTF</item>
+        <item>AMRLIP_S.TTF</item>
+        <item>AMRLIP_L.TTF</item>
+        <item>AMR_HEAV.TTF</item>
+        <item>Prabhki.ttf</item>
+        <item>MFPUN040.TTF</item>
+        <item>bulara_5.ttf</item>
+        <item>lanma_s3.ttf</item>
+        <item>lanma_s5.ttf</item>
+        <item>raajaa_1.ttf</item>
+        <item>raajaa_5.ttf</item>
+        <item>raajaa_9.ttf</item>
+        <item>magaz__1.ttf</item>
+        <item>magaz__5.ttf</item>
+        <item>magaz__9.ttf</item>
+        <item>karmic_1.ttf</item>
+        <item>karmic_5.ttf</item>
+        <item>karmic_9.ttf</item>
     </string-array>
 
     <!-- One-Handed & Split Mode Arrays -->
@@ -135,5 +181,48 @@
         <item>left</item>
         <item>right</item>
         <item>split</item>
+    </string-array>
+
+    <string-array name="calendar_mode_entries">
+        <item>ਮੂਲ ਨਾਨਕਸ਼ਾਹੀ</item>
+        <item>ਬਿਕ੍ਰਮੀ (ਦ੍ਰਿਕ)</item>
+        <item>ਸੂਰਜ ਸਿਧਾਂਤ</item>
+        <item>ਬਿਕ੍ਰਮੀ (ਚੰਦਰ)</item>
+        <item>ਗ੍ਰੈਗੋਰੀਅਨ (ਅੰਗਰੇਜ਼ੀ)</item>
+    </string-array>
+
+    <string-array name="calendar_mode_values">
+        <item>mool</item>
+        <item>bikrami_drik</item>
+        <item>bikrami_surya</item>
+        <item>bikrami_lunar</item>
+        <item>gregorian</item>
+    </string-array>
+
+    <!-- Timezone Arrays for Widget -->
+    <string-array name="timezone_entries">
+        <item>Ottawa, Canada (EST)</item>
+        <item>Calgary, Canada (MST)</item>
+        <item>Vancouver, Canada (PST)</item>
+        <item>London, UK (GMT)</item>
+        <item>New York, USA (EST)</item>
+        <item>California, USA (PST)</item>
+        <item>Sydney, Australia (AEST)</item>
+        <item>Dubai, UAE (GST)</item>
+        <item>Singapore (SGT)</item>
+        <item>Hong Kong (HKT)</item>
+    </string-array>
+
+    <string-array name="timezone_values">
+        <item>America/Toronto</item>
+        <item>America/Edmonton</item>
+        <item>America/Vancouver</item>
+        <item>Europe/London</item>
+        <item>America/New_York</item>
+        <item>America/Los_Angeles</item>
+        <item>Australia/Sydney</item>
+        <item>Asia/Dubai</item>
+        <item>Asia/Singapore</item>
+        <item>Asia/Hong_Kong</item>
     </string-array>
 </resources>

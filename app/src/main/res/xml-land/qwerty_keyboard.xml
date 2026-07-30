@@ -61,13 +61,13 @@
     </Row>
 
     <!-- Bottom Row -->
-    <Row android:rowEdgeFlags="bottom">
+    <Row android:rowEdgeFlags="bottom" android:keyHeight="45dp">
         <Key android:codes="-100" android:keyLabel="ੳਅੲ" android:keyWidth="15%p" android:keyEdgeFlags="left" />
-        <Key android:codes="44" android:keyLabel="," android:keyWidth="8.0%p" />
-        <Key android:codes="-103" android:keyLabel="1234" android:keyWidth="8.0%p" />
+        <Key android:codes="44" android:keyLabel="," />
+        <Key android:codes="-140" android:keyLabel="1234"  />
         <Key android:codes="32" android:keyIcon="@drawable/ic_space_bar" android:keyWidth="30%p" />
-        <Key android:codes="46" android:keyLabel="." android:keyWidth="8.0%p"/>
-        <Key android:codes="-4" android:keyIcon="@drawable/ic_search" android:keyWidth="15%p" android:keyEdgeFlags="right" />
+        <Key android:codes="46" android:keyLabel="." />
+        <Key android:codes="-4" android:keyIcon="@drawable/ic_return_arrow" android:keyWidth="15%p" android:keyEdgeFlags="right" />
     </Row>
 
 </Keyboard>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Calculator standalone app manifest -->
+    <application>
+        <activity
+            android:name="com.iqbal.gurmukhikeyboard50.CalculatorActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GurmukhiKeyboard50"
+            tools:node="merge">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.iqbal.gurmukhikeyboard50.MainActivity"
+            android:exported="true"
+            tools:node="merge">
+            <intent-filter tools:node="removeAll" />
+        </activity>
+
+        <!-- Disable Keyboard services for standalone Calculator app -->
+        <service
+            android:name="com.iqbal.gurmukhikeyboard50.MyKeyboardIME"
+            android:enabled="false"
+            tools:node="replace" />
+
+        <service
+            android:name="com.iqbal.gurmukhikeyboard50.MySpellCheckerService"
+            android:enabled="false"
+            tools:node="replace" />
+    </application>
+</manifest>

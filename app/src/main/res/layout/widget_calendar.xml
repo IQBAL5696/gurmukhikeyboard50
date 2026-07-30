@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_calendar_main_header"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/widgetTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ਨਾਨਕਸ਼ਾਹੀ ਜੰਤਰੀ"
+        android:textColor="#D32F2F"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/widgetGurbaniLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#4A148C"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        android:text="ਉਪਦੇਸ਼: ਸੋਮਵਾਰਿ ਸਸਿ ਅੰਮ੍ਰਿਤੁ ਝਰੈ ॥" />
+
+    <TextView
+        android:id="@+id/widgetText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:text="੧੫ ਫੱਗਣ" />
+
+    <TextView
+        android:id="@+id/widgetTithiText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#2E7D32"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        android:text="🌑 ਫੱਗਣ ਸੁਦੀ ੭" />
+
+    <TextView
+        android:id="@+id/widgetGurpurabText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#E65100"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:text="ਅੱਜ ਦਾ ਦਿਹਾੜਾ" />
+
+    <TextView
+        android:id="@+id/widgetSubText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#555555"
+        android:textSize="12sp"
+        android:text="ਸੰਮਤ ੫੫੭ ਨਾਨਕਸ਼ਾਹੀ" />
+
+    <TextView
+        android:id="@+id/widgetGregText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#757575"
+        android:textSize="11sp"
+        android:text="26 Feb 2025" />
+
+</LinearLayout>

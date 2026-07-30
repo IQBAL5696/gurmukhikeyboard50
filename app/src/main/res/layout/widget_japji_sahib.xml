@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="4dp">
+
+    <LinearLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="4dp">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ik_onkar_svg"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/widget_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ਜਪੁਜੀ ਸਾਹਿਬ"
+            android:textColor="#EF6C00"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btn_larivaar_japji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ਲੜੀਵਾਰ"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:background="#EF6C00"
+            android:padding="4dp"
+            android:layout_marginEnd="4dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btn_to_top_japji"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@android:drawable/ic_menu_upload"
+            android:padding="2dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="To Top" />
+
+        <ImageView
+            android:id="@+id/btn_font_dec_japji"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@android:drawable/ic_menu_zoom"
+            android:rotation="180"
+            android:padding="2dp"
+            android:layout_marginEnd="4dp" />
+
+        <ImageView
+            android:id="@+id/btn_font_inc_japji"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@android:drawable/ic_menu_zoom"
+            android:padding="2dp"
+            android:layout_marginEnd="4dp" />
+
+        <ImageView
+            android:id="@+id/btn_play_pause_japji"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@android:drawable/ic_media_play"
+            android:padding="2dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="Play/Pause" />
+
+        <ImageView
+            android:id="@+id/btn_refresh_japji"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@android:drawable/ic_menu_rotate"
+            android:padding="2dp"
+            android:contentDescription="Refresh" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EEEEEE"
+        android:layout_below="@id/header_layout" />
+
+    <ListView
+        android:id="@+id/japji_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/divider"
+        android:dividerHeight="0.5dp" />
+
+    <TextView
+        android:id="@+id/japji_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/divider"
+        android:gravity="center"
+        android:text="ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ..."
+        android:textColor="#9E9E9E"
+        android:visibility="gone" />
+
+</RelativeLayout>

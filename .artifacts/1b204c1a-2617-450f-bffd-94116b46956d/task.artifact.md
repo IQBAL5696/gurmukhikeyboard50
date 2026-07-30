@@ -1,0 +1,6 @@
+- [x] Update `showGurbaniDialog` and `showContentDialog` signatures to include `title: String`
+- [x] Pass the correct Bani/Raga name from `setupNitnemPanel` and `showRagasDialog`
+- [x] Add title `TextView` at the top of the reading dialog inside the frame
+- [x] Adjust root padding and layout for the "wide top frame" effect
+- [x] Apply similar title styling to the main Nitnem menu
+- [x] Verify UI across Light and Dark modes

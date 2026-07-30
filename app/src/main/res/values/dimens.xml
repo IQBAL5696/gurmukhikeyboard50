@@ -6,10 +6,10 @@
 
     <dimen name="candidate_button_horizontal_padding">8dp</dimen>
     <dimen name="candidate_button_vertical_padding">8dp</dimen>
-    
+
     <!-- Keyboard Bottom Spacing -->
-    <dimen name="bottom_spacer_height">50dp</dimen>
-    
-    <!-- Calendar Bottom Spacing -->
-    <dimen name="calendar_bottom_spacer_height">35dp</dimen>
+    <dimen name="bottom_spacer_height">0dp</dimen>
+
+    <!-- Calendar Bottom Spacing (Increased to avoid navigation buttons overlap) -->
+    <dimen name="calendar_bottom_spacer_height">25dp</dimen>
 </resources>

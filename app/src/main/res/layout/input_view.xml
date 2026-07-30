@@ -12,185 +12,217 @@
         android:layout_gravity="bottom"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/one_handed_container"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="100">
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/one_handed_spacer_left"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="15"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-                <ImageButton
-                    android:id="@+id/btn_move_to_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/outline_arrows_output_24"
-                    app:tint="?attr/iconColor" />
-                <ImageButton
-                    android:id="@+id/btn_expand_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:layout_marginTop="8dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_keyboard"
-                    app:tint="?attr/iconColor" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/mainKeyboardLayout"
-                android:layout_width="0dp"
+                android:id="@+id/one_handed_container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="100"
-                android:orientation="vertical"
-                android:background="@android:color/transparent">
-
-                <include
-                    android:id="@+id/translation_panel_container"
-                    layout="@layout/translation_panel_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
-
-                <!-- AI Assistant Panel Container -->
-                <FrameLayout
-                    android:id="@+id/ai_assistant_panel_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone">
-                    <include layout="@layout/ai_answer_panel" />
-                </FrameLayout>
+                android:orientation="horizontal"
+                android:weightSum="100">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/one_handed_spacer_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="15"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <ImageButton
+                        android:id="@+id/btn_move_to_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/outline_arrows_output_24"
+                        app:tint="?attr/iconColor" />
+                    <ImageButton
+                        android:id="@+id/btn_expand_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:layout_marginTop="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_keyboard"
+                        app:tint="?attr/iconColor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mainKeyboardLayout"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="100"
                     android:orientation="vertical"
                     android:background="@android:color/transparent">
 
                     <include
-                        android:id="@+id/suggestion_panel_root"
-                        layout="@layout/suggestion_panel_root"
+                        android:id="@+id/translation_panel_container"
+                        layout="@layout/translation_panel_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
 
-                    <View
+                    <!-- AI Assistant Panel Container -->
+                    <FrameLayout
+                        android:id="@+id/ai_assistant_panel_container"
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="#22000000" />
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+                        <include layout="@layout/ai_answer_panel" />
+                    </FrameLayout>
 
-                    <include
-                        android:id="@+id/fixed_top_row_buttons"
-                        layout="@layout/fixed_top_row_buttons"
+                    <!-- Shared Row for Toolbar and Suggestions (Standardized 40dp) -->
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="40dp"
+                        android:background="@android:color/transparent">
+
+                        <include
+                            android:id="@+id/fixed_top_row_buttons"
+                            layout="@layout/fixed_top_row_buttons"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <include
+                            android:id="@+id/suggestion_panel_root"
+                            layout="@layout/suggestion_panel_root"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone" />
+
+                    </FrameLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#33CCCCCC" />
-                </LinearLayout>
 
-                <include
-                    android:id="@+id/expanded_top_row_container"
-                    layout="@layout/expanded_top_row_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:background="@android:color/transparent">
-                    <com.iqbal.gurmukhikeyboard50.MyKeyboardView
-                        android:id="@+id/keyboardView"
+                    <include
+                        android:id="@+id/expanded_top_row_container"
+                        layout="@layout/expanded_top_row_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:keyPreviewLayout="@layout/small_key_preview"
-                        android:popupLayout="@layout/keyboard_popup_layout"
-                        android:keyPreviewHeight="50dp" />
-                </FrameLayout>
+                        android:visibility="gone" />
+
+                    <!-- KaarView (Ik Onkar) Display Area -->
+                    <FrameLayout
+                        android:id="@+id/kaar_view_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:visibility="gone"
+                        android:background="@android:color/white">
+                        <com.iqbal.gurmukhikeyboard50.KaarView
+                            android:id="@+id/kaarView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@android:color/transparent">
+                        <com.iqbal.gurmukhikeyboard50.MyKeyboardView
+                            android:id="@+id/keyboardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:keyPreviewLayout="@layout/small_key_preview"
+                            android:popupLayout="@layout/keyboard_popup_layout"
+                            android:keyPreviewHeight="50dp" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/one_handed_spacer_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="15"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+                    <ImageButton
+                        android:id="@+id/btn_move_to_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/outline_arrows_output_24"
+                        android:rotation="180"
+                        app:tint="?attr/iconColor" />
+                    <ImageButton
+                        android:id="@+id/btn_expand_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp"
+                        android:layout_marginTop="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_keyboard"
+                        app:tint="?attr/iconColor" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/one_handed_spacer_right"
-                android:layout_width="0dp"
+            <include
+                android:id="@+id/suggestion_panel"
+                layout="@layout/suggestion_panel"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="15"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-                <ImageButton
-                    android:id="@+id/btn_move_to_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/outline_arrows_output_24"
-                    android:rotation="180"
-                    app:tint="?attr/iconColor" />
-                <ImageButton
-                    android:id="@+id/btn_expand_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:layout_marginTop="8dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_keyboard"
-                    app:tint="?attr/iconColor" />
-            </LinearLayout>
-        </LinearLayout>
+                android:paddingBottom="10dp"
+                android:visibility="gone" />
+            <FrameLayout
+                android:id="@+id/nanakshahi_calendar_panel_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp"
+                android:visibility="gone" />
+            <include
+                android:id="@+id/nitnem_panel_container"
+                layout="@layout/nitnem_panel_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp"
+                android:visibility="gone" />
+            <FrameLayout
+                android:id="@+id/calculator_panel_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp"
+                android:visibility="gone" />
+            <include
+                android:id="@+id/emoji_panel_container"
+                layout="@layout/emoji_panel_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp"
+                android:visibility="gone" />
+            <include
+                android:id="@+id/clipboard_panel_layout"
+                layout="@layout/clipboard_panel_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp"
+                android:visibility="gone" />
 
+            <include
+                android:id="@+id/voice_input_popup_container"
+                layout="@layout/voice_input_popup_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="50dp"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <!-- Dynamic Spacer for Navigation Bar -->
         <View
             android:id="@+id/navigation_bar_spacer"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/bottom_spacer_height"
+            android:layout_height="0dp"
             android:background="@android:color/transparent" />
     </LinearLayout>
 
-    <include
-        android:id="@+id/suggestion_panel"
-        layout="@layout/suggestion_panel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="10dp"
-        android:visibility="gone" />
-    <FrameLayout
-        android:id="@+id/nanakshahi_calendar_panel_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="10dp"
-        android:visibility="gone" />
-    <include
-        android:id="@+id/emoji_panel_container"
-        layout="@layout/emoji_panel_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="10dp"
-        android:visibility="gone" />
-    <include
-        android:id="@+id/voice_input_popup_container"
-        layout="@layout/voice_input_popup_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="50dp"
-        android:visibility="gone" />
-    <include
-        android:id="@+id/clipboard_panel_layout"
-        layout="@layout/clipboard_panel_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="10dp"
-        android:visibility="gone" />
 </FrameLayout>

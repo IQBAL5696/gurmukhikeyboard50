@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/aiAnswerPanel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
             android:src="@drawable/ic_close"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Close"
-            android:tint="?attr/iconColor" />
+            app:tint="?attr/iconColor" />
 
         <TextView
             android:id="@+id/ai_answer_title"
@@ -40,7 +41,7 @@
             android:src="@drawable/ic_search"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Search AI"
-            android:tint="?attr/iconColor" />
+            app:tint="?attr/iconColor" />
 
     </LinearLayout>
 
@@ -68,7 +69,7 @@
             android:src="@drawable/ic_check"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Correct Word"
-            android:tint="?attr/iconColor" />
+            app:tint="?attr/iconColor" />
 
         <ImageButton
             android:id="@+id/ai_continue_writing_button"
@@ -78,7 +79,7 @@
             android:src="@drawable/ic_continue_writing"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Continue Writing"
-            android:tint="?attr/iconColor" />
+            app:tint="?attr/iconColor" />
 
         <ImageButton
             android:id="@+id/ai_answer_copy_button"
@@ -88,7 +89,7 @@
             android:src="@drawable/ic_clipboard"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Copy"
-            android:tint="?attr/iconColor" />
+            app:tint="?attr/iconColor" />
 
         <ImageButton
             android:id="@+id/ai_answer_insert_button"
@@ -98,7 +99,7 @@
             android:src="@drawable/ic_return_arrow"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Insert"
-            android:tint="?attr/iconColor" />
+            app:tint="?attr/iconColor" />
     </LinearLayout>
 
     <ScrollView

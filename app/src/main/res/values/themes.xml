@@ -1,6 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Base.Theme.GurmukhiKeyboard50" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Default Keyboard Attributes to prevent InflateException -->
+        <item name="keyboardViewBackground">#FFFFFF</item>
+        <item name="keyboardKeyBackground">#EEEEEE</item>
+        <item name="functionalKeyBackground">#DDDDDD</item>
+        <item name="keyboardKeyTextColor">#000000</item>
+        <item name="keyPreviewBackground">#444444</item>
+        <item name="keyPreviewTextColor">#FFFFFF</item>
+        <item name="keyPressedBackgroundColor">#44FFFFFF</item>
+        <item name="candidatesBackground">#FFFFFF</item>
+        <item name="candidatesTextColor">#000000</item>
+        <item name="iconColor">#000000</item>
     </style>
 
     <style name="Theme.GurmukhiKeyboard50" parent="Base.Theme.GurmukhiKeyboard50" />
@@ -11,35 +22,44 @@
     </style>
 
     <!-- 1. Light Theme -->
-    <style name="KeyboardTheme.Light" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Light" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_light</item>
         <item name="keyboardKeyBackground">@color/keyboard_key_background_normal_light</item>
         <item name="functionalKeyBackground">@color/functional_key_background_light</item>
         <item name="keyboardKeyTextColor">@color/key_text_light</item>
+        <item name="keyPreviewBackground">@color/functional_key_background_light</item>
+        <item name="keyPreviewTextColor">@color/key_text_light</item>
+        <item name="keyPressedBackgroundColor">@color/keyboard_key_background_pressed_light</item>
         <item name="candidatesBackground">@color/keyboard_background_light</item>
         <item name="candidatesTextColor">@color/key_text_light</item>
         <item name="iconColor">@color/key_text_light</item>
         <item name="android:textColorPrimary">@color/key_text_light</item>
     </style>
 
-    <!-- 2. Dark Theme -->
-    <style name="KeyboardTheme.Dark" parent="Theme.Material3.Dark.NoActionBar">
+    <!-- 2. Dark Theme (Updated: White Text on Dark Keys) -->
+    <style name="KeyboardTheme.Dark" parent="Base.Theme.GurmukhiKeyboard50">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
         <item name="keyboardViewBackground">@color/keyboard_background_dark</item>
         <item name="keyboardKeyBackground">@color/keyboard_key_background_normal_dark</item>
         <item name="functionalKeyBackground">@color/functional_key_background_dark</item>
-        <item name="keyboardKeyTextColor">@color/key_text_dark</item>
+        <item name="keyboardKeyTextColor">@color/white</item>
+        <item name="keyPreviewBackground">@color/functional_key_background_dark</item>
+        <item name="keyPreviewTextColor">@color/white</item>
+        <item name="keyPressedBackgroundColor">@color/keyboard_key_background_pressed_dark</item>
         <item name="candidatesBackground">@color/keyboard_background_dark</item>
-        <item name="candidatesTextColor">@color/key_text_dark</item>
-        <item name="iconColor">@color/key_text_dark</item>
-        <item name="android:textColorPrimary">@color/key_text_dark</item>
+        <item name="candidatesTextColor">@color/white</item>
+        <item name="iconColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 
     <!-- Kesari Theme (New) -->
-    <style name="KeyboardTheme.Kesari" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Kesari" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">#FFF5E1</item> <!-- Light Kesari background -->
         <item name="keyboardKeyBackground">#FF9933</item> <!-- Deep Saffron key -->
         <item name="functionalKeyBackground">#FFCC66</item> <!-- Light Saffron functional -->
         <item name="keyboardKeyTextColor">#FFFFFF</item>
+        <item name="keyPreviewBackground">#FF9933</item>
+        <item name="keyPreviewTextColor">#FFFFFF</item>
         <item name="candidatesBackground">#FFF5E1</item>
         <item name="candidatesTextColor">#FF9933</item>
         <item name="iconColor">#FFFFFF</item>
@@ -47,11 +67,13 @@
     </style>
 
     <!-- Royal Blue Theme (New) -->
-    <style name="KeyboardTheme.RoyalBlue" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.RoyalBlue" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">#001F3F</item> <!-- Navy background -->
         <item name="keyboardKeyBackground">#0074D9</item> <!-- Royal Blue key -->
         <item name="functionalKeyBackground">#0056b3</item>
         <item name="keyboardKeyTextColor">#FFFFFF</item>
+        <item name="keyPreviewBackground">#0074D9</item>
+        <item name="keyPreviewTextColor">#FFFFFF</item>
         <item name="candidatesBackground">#001F3F</item>
         <item name="candidatesTextColor">#FFFFFF</item>
         <item name="iconColor">#FFFFFF</item>
@@ -59,11 +81,13 @@
     </style>
 
     <!-- 3. Beautiful Blue Theme -->
-    <style name="KeyboardTheme.Blue" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Blue" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_blue</item>
         <item name="keyboardKeyBackground">@color/key_background_blue</item>
         <item name="functionalKeyBackground">@color/functional_key_background_blue</item>
         <item name="keyboardKeyTextColor">@color/key_text_blue_white</item>
+        <item name="keyPreviewBackground">@color/key_background_blue</item>
+        <item name="keyPreviewTextColor">@color/key_text_blue_white</item>
         <item name="candidatesBackground">@color/keyboard_background_blue</item>
         <item name="candidatesTextColor">@color/key_text_blue_white</item>
         <item name="iconColor">@color/key_text_blue_white</item>
@@ -71,11 +95,13 @@
     </style>
 
     <!-- 4. Nature Green Theme -->
-    <style name="KeyboardTheme.Green" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Green" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_green</item>
         <item name="keyboardKeyBackground">@color/key_background_green</item>
         <item name="functionalKeyBackground">@color/functional_key_background_green</item>
         <item name="keyboardKeyTextColor">@color/key_text_green_white</item>
+        <item name="keyPreviewBackground">@color/key_background_green</item>
+        <item name="keyPreviewTextColor">@color/key_text_green_white</item>
         <item name="candidatesBackground">@color/keyboard_background_green</item>
         <item name="candidatesTextColor">@color/key_text_green_white</item>
         <item name="iconColor">@color/key_text_green_white</item>
@@ -83,11 +109,13 @@
     </style>
 
     <!-- 5. Royal Red Theme -->
-    <style name="KeyboardTheme.Red" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Red" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_red</item>
         <item name="keyboardKeyBackground">@color/key_background_red</item>
         <item name="functionalKeyBackground">@color/functional_key_background_red</item>
         <item name="keyboardKeyTextColor">@color/key_text_red_white</item>
+        <item name="keyPreviewBackground">@color/key_background_red</item>
+        <item name="keyPreviewTextColor">@color/key_text_red_white</item>
         <item name="candidatesBackground">@color/keyboard_background_red</item>
         <item name="candidatesTextColor">@color/key_text_red_white</item>
         <item name="iconColor">@color/key_text_red_white</item>
@@ -95,11 +123,13 @@
     </style>
 
     <!-- 6. Lovely Pink Theme -->
-    <style name="KeyboardTheme.Pink" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Pink" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_pink</item>
         <item name="keyboardKeyBackground">@color/key_background_pink</item>
         <item name="functionalKeyBackground">@color/functional_key_background_pink</item>
         <item name="keyboardKeyTextColor">@color/key_text_pink_white</item>
+        <item name="keyPreviewBackground">@color/key_background_pink</item>
+        <item name="keyPreviewTextColor">@color/key_text_pink_white</item>
         <item name="candidatesBackground">@color/keyboard_background_pink</item>
         <item name="candidatesTextColor">@color/key_text_pink_white</item>
         <item name="iconColor">@color/key_text_pink_white</item>
@@ -107,11 +137,13 @@
     </style>
 
     <!-- 7. Royal Purple Theme -->
-    <style name="KeyboardTheme.Purple" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Purple" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_purple</item>
         <item name="keyboardKeyBackground">@color/key_background_purple</item>
         <item name="functionalKeyBackground">@color/functional_key_background_purple</item>
         <item name="keyboardKeyTextColor">@color/key_text_purple_white</item>
+        <item name="keyPreviewBackground">@color/key_background_purple</item>
+        <item name="keyPreviewTextColor">@color/key_text_purple_white</item>
         <item name="candidatesBackground">@color/keyboard_background_purple</item>
         <item name="candidatesTextColor">@color/key_text_purple_white</item>
         <item name="iconColor">@color/key_text_purple_white</item>
@@ -119,11 +151,13 @@
     </style>
 
     <!-- 8. Bright Orange Theme -->
-    <style name="KeyboardTheme.Orange" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Orange" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_orange</item>
         <item name="keyboardKeyBackground">@color/key_background_orange</item>
         <item name="functionalKeyBackground">@color/functional_key_background_orange</item>
         <item name="keyboardKeyTextColor">@color/key_text_orange_white</item>
+        <item name="keyPreviewBackground">@color/key_background_orange</item>
+        <item name="keyPreviewTextColor">@color/key_text_orange_white</item>
         <item name="candidatesBackground">@color/keyboard_background_orange</item>
         <item name="candidatesTextColor">@color/key_text_orange_white</item>
         <item name="iconColor">@color/key_text_orange_white</item>
@@ -131,11 +165,13 @@
     </style>
 
     <!-- 9. Golden Luxury Theme -->
-    <style name="KeyboardTheme.Gold" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Gold" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_gold</item>
         <item name="keyboardKeyBackground">@color/key_background_gold</item>
         <item name="functionalKeyBackground">@color/functional_key_background_gold</item>
         <item name="keyboardKeyTextColor">@color/key_text_gold_black</item>
+        <item name="keyPreviewBackground">@color/key_background_gold</item>
+        <item name="keyPreviewTextColor">@color/key_text_gold_black</item>
         <item name="candidatesBackground">@color/keyboard_background_gold</item>
         <item name="candidatesTextColor">@color/key_text_gold_black</item>
         <item name="iconColor">@color/key_text_gold_black</item>
@@ -143,11 +179,13 @@
     </style>
 
     <!-- 10. Teal Ocean Theme -->
-    <style name="KeyboardTheme.Teal" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Teal" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_teal</item>
         <item name="keyboardKeyBackground">@color/key_background_teal</item>
         <item name="functionalKeyBackground">@color/functional_key_background_teal</item>
         <item name="keyboardKeyTextColor">@color/key_text_teal_white</item>
+        <item name="keyPreviewBackground">@color/key_background_teal</item>
+        <item name="keyPreviewTextColor">@color/key_text_teal_white</item>
         <item name="candidatesBackground">@color/keyboard_background_teal</item>
         <item name="candidatesTextColor">@color/key_text_teal_white</item>
         <item name="iconColor">@color/key_text_teal_white</item>
@@ -155,11 +193,13 @@
     </style>
 
     <!-- 11. Indigo Night Theme -->
-    <style name="KeyboardTheme.Indigo" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Indigo" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_indigo</item>
         <item name="keyboardKeyBackground">@color/key_background_indigo</item>
         <item name="functionalKeyBackground">@color/functional_key_background_indigo</item>
         <item name="keyboardKeyTextColor">@color/key_text_indigo_white</item>
+        <item name="keyPreviewBackground">@color/key_background_indigo</item>
+        <item name="keyPreviewTextColor">@color/key_text_indigo_white</item>
         <item name="candidatesBackground">@color/keyboard_background_indigo</item>
         <item name="candidatesTextColor">@color/key_text_indigo_white</item>
         <item name="iconColor">@color/key_text_indigo_white</item>
@@ -167,11 +207,13 @@
     </style>
 
     <!-- 12. Silver Metallic Theme -->
-    <style name="KeyboardTheme.Silver" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Silver" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_silver</item>
         <item name="keyboardKeyBackground">@color/key_background_silver</item>
         <item name="functionalKeyBackground">@color/functional_key_background_silver</item>
         <item name="keyboardKeyTextColor">@color/key_text_silver_white</item>
+        <item name="keyPreviewBackground">@color/key_background_silver</item>
+        <item name="keyPreviewTextColor">@color/key_text_silver_white</item>
         <item name="candidatesBackground">@color/keyboard_background_silver</item>
         <item name="candidatesTextColor">@color/key_text_silver_white</item>
         <item name="iconColor">@color/key_text_silver_white</item>
@@ -179,11 +221,13 @@
     </style>
 
     <!-- 13. Coffee Brown Theme -->
-    <style name="KeyboardTheme.Coffee" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Coffee" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_coffee</item>
         <item name="keyboardKeyBackground">@color/key_background_coffee</item>
         <item name="functionalKeyBackground">@color/functional_key_background_coffee</item>
         <item name="keyboardKeyTextColor">@color/key_text_coffee_white</item>
+        <item name="keyPreviewBackground">@color/key_background_coffee</item>
+        <item name="keyPreviewTextColor">@color/key_text_coffee_white</item>
         <item name="candidatesBackground">@color/keyboard_background_coffee</item>
         <item name="candidatesTextColor">@color/key_text_coffee_white</item>
         <item name="iconColor">@color/key_text_coffee_white</item>
@@ -191,11 +235,13 @@
     </style>
 
     <!-- 14. Custom Photo Theme -->
-    <style name="KeyboardTheme.Custom" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Custom" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@android:color/transparent</item>
         <item name="keyboardKeyBackground">#BBFFFFFF</item>
         <item name="functionalKeyBackground">#CCEEEEEE</item>
         <item name="keyboardKeyTextColor">@color/key_text_light</item>
+        <item name="keyPreviewBackground">#FFFFFF</item>
+        <item name="keyPreviewTextColor">#000000</item>
         <item name="candidatesBackground">#CCFFFFFF</item>
         <item name="candidatesTextColor">@color/key_text_light</item>
         <item name="iconColor">@color/key_text_light</item>
@@ -203,11 +249,13 @@
     </style>
 
     <!-- 15. Midnight OLED Theme -->
-    <style name="KeyboardTheme.Midnight" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Midnight" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_midnight</item>
         <item name="keyboardKeyBackground">@color/key_background_midnight</item>
         <item name="functionalKeyBackground">@color/functional_key_background_midnight</item>
         <item name="keyboardKeyTextColor">@color/key_text_midnight_blue</item>
+        <item name="keyPreviewBackground">@color/key_background_midnight</item>
+        <item name="keyPreviewTextColor">@color/key_text_midnight_blue</item>
         <item name="candidatesBackground">@color/keyboard_background_midnight</item>
         <item name="candidatesTextColor">@color/key_text_midnight_blue</item>
         <item name="iconColor">@color/key_text_midnight_blue</item>
@@ -215,11 +263,13 @@
     </style>
 
     <!-- 16. Lavender Dream Theme -->
-    <style name="KeyboardTheme.Lavender" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Lavender" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_lavender</item>
         <item name="keyboardKeyBackground">@color/key_background_lavender</item>
         <item name="functionalKeyBackground">@color/functional_key_background_lavender</item>
         <item name="keyboardKeyTextColor">@color/key_text_lavender_purple</item>
+        <item name="keyPreviewBackground">@color/key_background_lavender</item>
+        <item name="keyPreviewTextColor">@color/key_text_lavender_purple</item>
         <item name="candidatesBackground">@color/keyboard_background_lavender</item>
         <item name="candidatesTextColor">@color/key_text_lavender_purple</item>
         <item name="iconColor">@color/key_text_lavender_purple</item>
@@ -227,11 +277,13 @@
     </style>
 
     <!-- 17. Forest Moss Theme -->
-    <style name="KeyboardTheme.Moss" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Moss" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_moss</item>
         <item name="keyboardKeyBackground">@color/key_background_moss</item>
         <item name="functionalKeyBackground">@color/functional_key_background_moss</item>
         <item name="keyboardKeyTextColor">@color/key_text_moss_cream</item>
+        <item name="keyPreviewBackground">@color/key_background_moss</item>
+        <item name="keyPreviewTextColor">@color/key_text_moss_cream</item>
         <item name="candidatesBackground">@color/keyboard_background_moss</item>
         <item name="candidatesTextColor">@color/key_text_moss_cream</item>
         <item name="iconColor">@color/key_text_moss_cream</item>
@@ -239,11 +291,13 @@
     </style>
 
     <!-- 18. Sunset Glow Theme -->
-    <style name="KeyboardTheme.Sunset" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Sunset" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_sunset</item>
         <item name="keyboardKeyBackground">@color/key_background_sunset</item>
         <item name="functionalKeyBackground">@color/functional_key_background_sunset</item>
         <item name="keyboardKeyTextColor">@color/key_text_sunset_yellow</item>
+        <item name="keyPreviewBackground">@color/key_background_sunset</item>
+        <item name="keyPreviewTextColor">@color/key_text_sunset_yellow</item>
         <item name="candidatesBackground">@color/keyboard_background_sunset</item>
         <item name="candidatesTextColor">@color/key_text_sunset_yellow</item>
         <item name="iconColor">@color/key_text_sunset_yellow</item>
@@ -251,11 +305,13 @@
     </style>
 
     <!-- 19. Deep Space Grey Theme -->
-    <style name="KeyboardTheme.Space" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Space" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_space</item>
         <item name="keyboardKeyBackground">@color/key_background_space</item>
         <item name="functionalKeyBackground">@color/functional_key_background_space</item>
         <item name="keyboardKeyTextColor">@color/key_text_space_cyan</item>
+        <item name="keyPreviewBackground">@color/key_background_space</item>
+        <item name="keyPreviewTextColor">@color/key_text_space_cyan</item>
         <item name="candidatesBackground">@color/keyboard_background_space</item>
         <item name="candidatesTextColor">@color/key_text_space_cyan</item>
         <item name="iconColor">@color/key_text_space_cyan</item>
@@ -264,11 +320,13 @@
 
     <!-- NATURE THEMES -->
     <!-- 20. Ocean Breeze Theme -->
-    <style name="KeyboardTheme.Ocean" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Ocean" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_ocean</item>
         <item name="keyboardKeyBackground">@color/key_background_ocean</item>
         <item name="functionalKeyBackground">@color/functional_key_background_ocean</item>
         <item name="keyboardKeyTextColor">@color/key_text_ocean</item>
+        <item name="keyPreviewBackground">@color/key_background_ocean</item>
+        <item name="keyPreviewTextColor">@color/key_text_ocean</item>
         <item name="candidatesBackground">@color/keyboard_background_ocean</item>
         <item name="candidatesTextColor">@color/key_text_ocean</item>
         <item name="iconColor">@color/key_text_ocean</item>
@@ -276,11 +334,13 @@
     </style>
 
     <!-- 21. Autumn Leaf Theme -->
-    <style name="KeyboardTheme.Autumn" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.Autumn" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_autumn</item>
         <item name="keyboardKeyBackground">@color/key_background_autumn</item>
         <item name="functionalKeyBackground">@color/functional_key_background_autumn</item>
         <item name="keyboardKeyTextColor">@color/key_text_autumn</item>
+        <item name="keyPreviewBackground">@color/key_background_autumn</item>
+        <item name="keyPreviewTextColor">@color/key_text_autumn</item>
         <item name="candidatesBackground">@color/keyboard_background_autumn</item>
         <item name="candidatesTextColor">@color/key_text_autumn</item>
         <item name="iconColor">@color/key_text_autumn</item>
@@ -288,11 +348,13 @@
     </style>
 
     <!-- 22. Spring Blossom Theme -->
-    <style name="KeyboardTheme.Blossom" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Blossom" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_blossom</item>
         <item name="keyboardKeyBackground">@color/key_background_blossom</item>
         <item name="functionalKeyBackground">@color/functional_key_background_blossom</item>
         <item name="keyboardKeyTextColor">@color/key_text_blossom</item>
+        <item name="keyPreviewBackground">@color/key_background_blossom</item>
+        <item name="keyPreviewTextColor">@color/key_text_blossom</item>
         <item name="candidatesBackground">@color/keyboard_background_blossom</item>
         <item name="candidatesTextColor">@color/key_text_blossom</item>
         <item name="iconColor">@color/key_text_blossom</item>
@@ -300,11 +362,13 @@
     </style>
 
     <!-- 23. Desert Sand Theme -->
-    <style name="KeyboardTheme.Sand" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Sand" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_sand</item>
         <item name="keyboardKeyBackground">@color/key_background_sand</item>
         <item name="functionalKeyBackground">@color/functional_key_background_sand</item>
         <item name="keyboardKeyTextColor">@color/key_text_sand</item>
+        <item name="keyPreviewBackground">@color/key_background_sand</item>
+        <item name="keyPreviewTextColor">@color/key_text_sand</item>
         <item name="candidatesBackground">@color/keyboard_background_sand</item>
         <item name="candidatesTextColor">@color/key_text_sand</item>
         <item name="iconColor">@color/key_text_sand</item>
@@ -312,11 +376,13 @@
     </style>
 
     <!-- 24. Night Sky Theme -->
-    <style name="KeyboardTheme.NightSky" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="KeyboardTheme.NightSky" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_night_sky</item>
         <item name="keyboardKeyBackground">@color/key_background_night_sky</item>
         <item name="functionalKeyBackground">@color/functional_key_background_night_sky</item>
         <item name="keyboardKeyTextColor">@color/key_text_night_sky</item>
+        <item name="keyPreviewBackground">@color/key_background_night_sky</item>
+        <item name="keyPreviewTextColor">@color/key_text_night_sky</item>
         <item name="candidatesBackground">@color/keyboard_background_night_sky</item>
         <item name="candidatesTextColor">@color/key_text_night_sky</item>
         <item name="iconColor">@color/key_text_night_sky</item>
@@ -325,11 +391,13 @@
 
     <!-- NEW BEAUTIFUL LIGHT THEMES -->
     <!-- 25. Cotton Candy Theme -->
-    <style name="KeyboardTheme.Cotton" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Cotton" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_cotton</item>
         <item name="keyboardKeyBackground">@color/key_background_cotton</item>
         <item name="functionalKeyBackground">@color/functional_key_background_cotton</item>
         <item name="keyboardKeyTextColor">@color/key_text_cotton</item>
+        <item name="keyPreviewBackground">@color/key_background_cotton</item>
+        <item name="keyPreviewTextColor">@color/key_text_cotton</item>
         <item name="candidatesBackground">@color/keyboard_background_cotton</item>
         <item name="candidatesTextColor">@color/key_text_cotton</item>
         <item name="iconColor">@color/key_text_cotton</item>
@@ -337,11 +405,13 @@
     </style>
 
     <!-- 26. Sunny Morning Theme -->
-    <style name="KeyboardTheme.Sunny" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Sunny" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_sunny</item>
         <item name="keyboardKeyBackground">@color/key_background_sunny</item>
         <item name="functionalKeyBackground">@color/functional_key_background_sunny</item>
         <item name="keyboardKeyTextColor">@color/key_text_sunny</item>
+        <item name="keyPreviewBackground">@color/key_background_sunny</item>
+        <item name="keyPreviewTextColor">@color/key_text_sunny</item>
         <item name="candidatesBackground">@color/keyboard_background_sunny</item>
         <item name="candidatesTextColor">@color/key_text_sunny</item>
         <item name="iconColor">@color/key_text_sunny</item>
@@ -349,11 +419,13 @@
     </style>
 
     <!-- 27. Fresh Mint Theme -->
-    <style name="KeyboardTheme.Mint" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Mint" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_mint</item>
         <item name="keyboardKeyBackground">@color/key_background_mint</item>
         <item name="functionalKeyBackground">@color/functional_key_background_mint</item>
         <item name="keyboardKeyTextColor">@color/key_text_mint</item>
+        <item name="keyPreviewBackground">@color/key_background_mint</item>
+        <item name="keyPreviewTextColor">@color/key_text_mint</item>
         <item name="candidatesBackground">@color/keyboard_background_mint</item>
         <item name="candidatesTextColor">@color/key_text_mint</item>
         <item name="iconColor">@color/key_text_mint</item>
@@ -361,11 +433,13 @@
     </style>
 
     <!-- 28. Royal Ivory Theme -->
-    <style name="KeyboardTheme.Ivory" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.Ivory" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_ivory</item>
         <item name="keyboardKeyBackground">@color/key_background_ivory</item>
         <item name="functionalKeyBackground">@color/functional_key_background_ivory</item>
         <item name="keyboardKeyTextColor">@color/key_text_ivory</item>
+        <item name="keyPreviewBackground">@color/key_background_ivory</item>
+        <item name="keyPreviewTextColor">@color/key_text_ivory</item>
         <item name="candidatesBackground">@color/keyboard_background_ivory</item>
         <item name="candidatesTextColor">@color/key_text_ivory</item>
         <item name="iconColor">@color/key_text_ivory</item>
@@ -373,23 +447,17 @@
     </style>
 
     <!-- 29. Sky Blue Bliss Theme -->
-    <style name="KeyboardTheme.SkyBliss" parent="Theme.Material3.Light.NoActionBar">
+    <style name="KeyboardTheme.SkyBliss" parent="Base.Theme.GurmukhiKeyboard50">
         <item name="keyboardViewBackground">@color/keyboard_background_sky_bliss</item>
         <item name="keyboardKeyBackground">@color/key_background_sky_bliss</item>
         <item name="functionalKeyBackground">@color/functional_key_background_sky_bliss</item>
         <item name="keyboardKeyTextColor">@color/key_text_sky_bliss</item>
+        <item name="keyPreviewBackground">@color/key_background_sky_bliss</item>
+        <item name="keyPreviewTextColor">@color/key_text_sky_bliss</item>
         <item name="candidatesBackground">@color/keyboard_background_sky_bliss</item>
         <item name="candidatesTextColor">@color/key_text_sky_bliss</item>
         <item name="iconColor">@color/key_text_sky_bliss</item>
         <item name="android:textColorPrimary">@color/key_text_sky_bliss</item>
-    </style>
-
-    <!-- Re-adding the missing style to fix build error -->
-    <style name="CalculatorButton" parent="Widget.Material3.Button">
-        <item name="android:textSize">20sp</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:backgroundTint">#FFFFFF</item>
-        <item name="android:textColor">#000000</item>
     </style>
 
 </resources>

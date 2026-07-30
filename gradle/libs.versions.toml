@@ -1,5 +1,5 @@
 [versions]
-agp = "8.13.0"  # Changed from 9.0.0-alpha04
+agp = "9.3.0"
 coreKtx = "1.17.0"
 coreKtxVersion = "1.17.0"
 junit = "4.13.2"
@@ -9,7 +9,9 @@ appcompat = "1.7.1"
 material = "1.13.0"
 activity = "1.11.0"
 constraintlayout = "2.2.1"
-kotlin = "2.3.0"
+kotlin = "2.2.10"
+ksp = "2.2.10-2.0.2"
+room = "2.8.4"
 translate = "17.0.3"
 datastoreCore = "1.1.7"
 protoliteWellKnownTypes = "18.0.1"

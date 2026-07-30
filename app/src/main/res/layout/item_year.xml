@@ -2,18 +2,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="3dp">
+    android:padding="2dp">
 
     <TextView
         android:id="@+id/yearText"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="42dp"
         android:gravity="center"
         android:maxLines="1"
         android:singleLine="true"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:textStyle="bold"
-        android:elevation="2dp"
+        android:elevation="1dp"
         android:stateListAnimator="@null"
         android:textColor="#E65100"
         android:background="@drawable/bg_calendar_day" />

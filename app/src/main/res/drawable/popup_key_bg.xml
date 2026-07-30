@@ -2,14 +2,14 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="#1976D2" />
+            <solid android:color="?attr/keyPressedBackgroundColor" />
             <corners android:radius="10dp" />
-            <stroke android:width="1dp" android:color="@android:color/white" />
+            <stroke android:width="1dp" android:color="?attr/keyboardKeyTextColor" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#2196F3" />
+            <solid android:color="?attr/functionalKeyBackground" />
             <corners android:radius="10dp" />
         </shape>
     </item>

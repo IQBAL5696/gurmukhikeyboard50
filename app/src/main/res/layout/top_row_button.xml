@@ -4,6 +4,6 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:background="?attr/selectableItemBackgroundBorderless"
-    android:padding="10dp"
+    android:padding="6dp"
     android:scaleType="fitCenter"
     android:contentDescription="Top Row Button" />

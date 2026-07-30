@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1E1E1E"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="ਕੈਲਕੁਲੇਟਰ ਸੈਟਿੰਗਜ਼"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="ਥੀਮ ਚੁਣੋ (Choose Theme)"
+        android:textColor="#CCCCCC"
+        android:textSize="14sp" />
+
+    <RadioGroup
+        android:id="@+id/theme_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <RadioButton
+            android:id="@+id/radio_theme_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#4696C2"
+            android:text="Professional Dark"
+            android:textColor="#FFFFFF" />
+
+        <RadioButton
+            android:id="@+id/radio_theme_saffron"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#FF9933"
+            android:text="Saffron Kesari"
+            android:textColor="#FFFFFF" />
+
+        <RadioButton
+            android:id="@+id/radio_theme_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#FFFFFF"
+            android:text="Classic White"
+            android:textColor="#FFFFFF" />
+
+        <RadioButton
+            android:id="@+id/radio_theme_blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#0074D9"
+            android:text="Royal Blue"
+            android:textColor="#FFFFFF" />
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="12dp"
+        android:background="#333333" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_vibrate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:text="ਵਾਇਬਰੇਸ਼ਨ (Vibration)"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_sound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:text="ਆਵਾਜ਼ (Sound)"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_indian_format"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:text="Indian Format (1,23,456)"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_scientific_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        android:text="Scientific Mode (√, sin, cos...)"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_done"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="16dp"
+        android:text="ਠੀਕ ਹੈ"
+        android:textColor="#4696C2" />
+
+</LinearLayout>
