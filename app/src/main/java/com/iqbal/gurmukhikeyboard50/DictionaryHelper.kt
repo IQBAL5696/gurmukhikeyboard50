@@ -60,13 +60,17 @@ object DictionaryHelper {
         }
     }
 
+    fun isWordInDictionary(context: Context, word: String): Boolean {
+        return getAllDictionaryWords(context).contains(word)
+    }
+
     fun cleanWord(word: String): String {
         // Remove any unwanted punctuation, symbols, or digits from anywhere in the word
         return word.trim().replace("['\"।॥/?!,.=()\\-\\[\\]{}:;<>*+_\\\\|0-9੦-੯]+".toRegex(), "")
     }
 
     fun isValidWord(word: String): Boolean {
-        if (word.length < 2) return false
+        if (word.isEmpty()) return false
         
         // Final check: should not contain any digits or restricted symbols
         val hasDigits = word.any { it.isDigit() || "੦੧੨੩੪੫੬੭੮੯".contains(it) }

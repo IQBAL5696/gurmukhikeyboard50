@@ -1,0 +1,4 @@
+- [ ] Update `NitnemEngine.kt` with expanded book list
+- [ ] Implement search functionality in `showBooksDialog`
+- [ ] Add "Search Online" feature
+- [ ] Verify changes in the app

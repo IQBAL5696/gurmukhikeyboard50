@@ -4,9 +4,8 @@
     android:id="@+id/nitnem_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF9C4"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,27 +28,24 @@
             android:id="@+id/btn_search_nitnem"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_search"
-            android:layout_marginEnd="4dp"
-            app:tint="#000000" />
+            android:layout_marginEnd="4dp" />
 
         <ImageButton
             android:id="@+id/btn_theme_nitnem"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_settings"
-            android:layout_marginEnd="4dp"
-            app:tint="#000000" />
+            android:layout_marginEnd="4dp" />
 
         <ImageButton
             android:id="@+id/btn_close_nitnem"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            app:tint="#000000" />
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_menu_close_clear_cancel" />
     </LinearLayout>
 
     <FrameLayout

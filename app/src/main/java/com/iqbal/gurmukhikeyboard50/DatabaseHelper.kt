@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import kotlinx.coroutines.*
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -133,21 +134,41 @@ class DatabaseHelper(private val context: Context) :
         if (db == null) return
         if (isPopulating.getAndSet(true)) return
         try {
+            val wordsList = mutableListOf<String>()
             context.assets.open(PARAGRAPH_ASSET_FILENAME).use { input ->
                 BufferedReader(InputStreamReader(input, "UTF-8")).use { reader ->
                     val words = reader.readText().split(Regex("\\s+")).map { it.trim('|', '॥', ',', '.', '!', '?', ';', ':', '"', '\'', '(', ')', '[', ']', '{', '}', '—', '-') }.filter { it.isNotEmpty() && isCleanGurmukhi(it) }.distinct()
-                    db.beginTransaction()
-                    for (word in words) {
-                        val values = ContentValues().apply { put(COLUMN_WORD, word) }
-                        db.insertWithOnConflict(TABLE_WORDS, null, values, SQLiteDatabase.CONFLICT_IGNORE)
-                    }
-                    db.setTransactionSuccessful(); db.endTransaction()
+                    wordsList.addAll(words)
                 }
             }
+            try {
+                context.assets.open("gurbani_dictionary.json").use { input ->
+                    val jsonStr = input.bufferedReader(Charsets.UTF_8).readText()
+                    val jsonObj = JSONObject(jsonStr)
+                    val keys = jsonObj.keys()
+                    while (keys.hasNext()) {
+                        val k = keys.next().trim()
+                        if (k.isNotEmpty() && isCleanGurmukhi(k)) {
+                            wordsList.add(k)
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error reading gurbani_dictionary.json", e)
+            }
+
+            db.beginTransaction()
+            for (word in wordsList.distinct()) {
+                val values = ContentValues().apply { put(COLUMN_WORD, word) }
+                db.insertWithOnConflict(TABLE_WORDS, null, values, SQLiteDatabase.CONFLICT_IGNORE)
+            }
+            db.setTransactionSuccessful(); db.endTransaction()
         } catch (e: Exception) { Log.e(TAG, "Error populating database", e) } finally { isPopulating.set(false) }
     }
 
-    private fun isCleanGurmukhi(word: String): Boolean = word.matches(Regex("^[\\u0A00-\\u0A7F]+$")) && !word.contains(Regex("[0-9੦-੯]"))
+    private fun isCleanGurmukhi(word: String): Boolean = word.isNotEmpty() && 
+        (word.matches(Regex("^[\\u0A00-\\u0A7F\\s]+$")) || word.matches(Regex("^[a-zA-Z\\s]+$"))) && 
+        !word.contains(Regex("[0-9੦-੯]"))
 
     suspend fun addWord(word: String) = withContext(Dispatchers.IO) {
         if (isPopulating.get()) return@withContext
@@ -159,6 +180,14 @@ class DatabaseHelper(private val context: Context) :
         if (result == -1L) db.execSQL("UPDATE $TABLE_WORDS SET $COLUMN_FREQUENCY = $COLUMN_FREQUENCY + 1 WHERE $COLUMN_WORD = ?", arrayOf(w))
     }
 
+    suspend fun learnWordPair(prev: String, current: String) = withContext(Dispatchers.IO) {
+        if (prev.isBlank() || current.isBlank()) return@withContext
+        val db = writableDatabase
+        val query = "INSERT OR IGNORE INTO word_pairs_table (previous_word, next_word, frequency) VALUES (?, ?, 1)"
+        db.execSQL(query, arrayOf(prev, current))
+        db.execSQL("UPDATE word_pairs_table SET frequency = frequency + 1 WHERE previous_word = ? AND next_word = ?", arrayOf(prev, current))
+    }
+
     suspend fun getWordSuggestions(prefix: String, limit: Int): List<String> = withContext(Dispatchers.IO) {
         if (isPopulating.get() || prefix.isEmpty()) return@withContext emptyList()
         val suggestions = mutableListOf<String>()
@@ -168,6 +197,17 @@ class DatabaseHelper(private val context: Context) :
             while (c.moveToNext()) suggestions.add(c.getString(idx))
         }
         suggestions
+    }
+
+    suspend fun getContextAwareSuggestions(previousWord: String, prefix: String, limit: Int): List<String> = withContext(Dispatchers.IO) {
+        val list = mutableListOf<String>()
+        val query = "SELECT next_word FROM word_pairs_table WHERE previous_word = ? AND next_word LIKE ? ORDER BY frequency DESC LIMIT ?"
+        readableDatabase.rawQuery(query, arrayOf(previousWord, "$prefix%", limit.toString()))?.use { c ->
+            while (c.moveToNext()) {
+                list.add(c.getString(0))
+            }
+        }
+        list
     }
 
     suspend fun getClipboardHistory(searchQuery: String?, limit: Int): List<ClipboardItem> = withContext(Dispatchers.IO) {
@@ -190,5 +230,14 @@ class DatabaseHelper(private val context: Context) :
     suspend fun deleteClipboardItems(ids: List<Long>) = withContext(Dispatchers.IO) {
         if (ids.isEmpty()) return@withContext
         writableDatabase.execSQL("DELETE FROM $TABLE_CLIPBOARD WHERE _id IN (${ids.joinToString(",")}) AND is_pinned = 0")
+    }
+
+    fun cleanupSingleCharWords() {
+        try {
+            val db = writableDatabase
+            db.execSQL("DELETE FROM $TABLE_WORDS WHERE LENGTH($COLUMN_WORD) < 2")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error cleaning up single char words", e)
+        }
     }
 }

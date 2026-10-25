@@ -88,32 +88,39 @@ class MonthlyCalendarAdapter(
 
         textView.setBackgroundResource(R.drawable.bg_calendar_day)
         val background = textView.background as? GradientDrawable
-        val themeOrange = Color.parseColor("#EF6C00")
-        val sundayRed = Color.parseColor("#D32F2F")
-        val lightSundayRed = Color.parseColor("#FFCDD2")
+
+        val isDark = CalendarThemeHelper.isDarkMode(context)
+        val themeOrange = if (isDark) Color.parseColor("#FF9800") else Color.parseColor("#EF6C00")
+        val sundayRed = if (isDark) Color.parseColor("#EF5350") else Color.parseColor("#D32F2F")
+        val sundayBg = if (isDark) Color.parseColor("#3E1A1A") else Color.parseColor("#FFCDD2")
+        val normalCellBg = if (isDark) Color.parseColor("#252528") else Color.parseColor("#FFFDE7")
+        val normalTextColor = if (isDark) Color.WHITE else Color.BLACK
+        val nonMonthCellBg = if (isDark) Color.parseColor("#1A1A1A") else Color.parseColor("#EEEEEE")
+        val nonMonthTextColor = if (isDark) Color.parseColor("#666666") else Color.parseColor("#9E9E9E")
+
         val defaultStrokeWidth = 3
         val eventStrokeWidth = 5
 
         background?.setStroke(defaultStrokeWidth, themeOrange)
 
         if (!day.isCurrentMonth) {
-            textView.setTextColor(Color.parseColor("#9E9E9E"))
-            background?.setColor(Color.parseColor("#F5F5F5"))
-            background?.setAlpha(150)
+            textView.setTextColor(nonMonthTextColor)
+            background?.setColor(nonMonthCellBg)
+            background?.setAlpha(255)
         } else {
-            textView.setTextColor(Color.BLACK)
-            background?.setColor(Color.parseColor("#FFFDE7"))
+            textView.setTextColor(normalTextColor)
+            background?.setColor(normalCellBg)
             background?.setAlpha(255)
             if (position % 7 == 0) {
                 textView.setTextColor(sundayRed)
                 background?.setStroke(defaultStrokeWidth, sundayRed)
-                background?.setColor(lightSundayRed)
+                background?.setColor(sundayBg)
             }
         }
 
         indicator?.visibility = View.GONE
         if (day.isToday) {
-            background?.setColor(themeOrange)
+            background?.setColor(if (isDark) Color.parseColor("#E65100") else themeOrange)
             background?.setStroke(0, Color.TRANSPARENT)
             background?.setAlpha(255)
             textView.setTextColor(Color.WHITE)
@@ -126,26 +133,29 @@ class MonthlyCalendarAdapter(
             when {
                 day.gurpurabName != null -> {
                     val color = day.gurpurabColor ?: themeOrange
-                    background?.setColor(if (isSunday) lightSundayRed else Color.parseColor("#FFF3E0"))
+                    background?.setColor(if (isSunday) sundayBg else (if (isDark) Color.parseColor("#382618") else Color.parseColor("#FFF3E0")))
                     background?.setStroke(eventStrokeWidth, color)
                     textView.setTextColor(color)
                 }
                 day.isSangrand -> {
-                    val color = Color.parseColor("#2E7D32")
-                    background?.setColor(if (isSunday) lightSundayRed else Color.parseColor("#E8F5E9"))
-                    background?.setStroke(eventStrokeWidth, color)
+                    val color = if (isDark) Color.parseColor("#81C784") else Color.parseColor("#2E7D32")
+                    val strokeColor = if (isDark) Color.parseColor("#4CAF50") else Color.parseColor("#2E7D32")
+                    background?.setColor(if (isSunday) sundayBg else (if (isDark) Color.parseColor("#1B3320") else Color.parseColor("#E8F5E9")))
+                    background?.setStroke(eventStrokeWidth, strokeColor)
                     textView.setTextColor(color)
                 }
                 day.isPunia -> {
-                    val color = Color.parseColor("#1565C0")
-                    background?.setColor(if (isSunday) lightSundayRed else Color.parseColor("#E3F2FD"))
-                    background?.setStroke(eventStrokeWidth, color)
+                    val color = if (isDark) Color.parseColor("#90CAF9") else Color.parseColor("#1565C0")
+                    val strokeColor = if (isDark) Color.parseColor("#42A5F5") else Color.parseColor("#1565C0")
+                    background?.setColor(if (isSunday) sundayBg else (if (isDark) Color.parseColor("#1A233A") else Color.parseColor("#E3F2FD")))
+                    background?.setStroke(eventStrokeWidth, strokeColor)
                     textView.setTextColor(color)
                 }
                 day.isMasaya -> {
-                    val color = Color.parseColor("#7B1FA2")
-                    background?.setColor(if (isSunday) lightSundayRed else Color.parseColor("#F3E5F5"))
-                    background?.setStroke(eventStrokeWidth, color)
+                    val color = if (isDark) Color.parseColor("#CE93D8") else Color.parseColor("#7B1FA2")
+                    val strokeColor = if (isDark) Color.parseColor("#AB47BC") else Color.parseColor("#7B1FA2")
+                    background?.setColor(if (isSunday) sundayBg else (if (isDark) Color.parseColor("#2E1C38") else Color.parseColor("#F3E5F5")))
+                    background?.setStroke(eventStrokeWidth, strokeColor)
                     textView.setTextColor(color)
                 }
             }

@@ -13,7 +13,18 @@ object ShortcutsManager {
         "acc" to "Bank: SBI, A/c: 1234567890, IFSC: SBIN0001234",
         "gst" to "GSTIN: 03AAAAA0000A1Z5",
         "addr" to "Main Bazar, near Clock Tower, Ludhiana, Punjab",
-        "pay" to "ਕਿਰਪਾ ਕਰਕੇ ਪੇਮੈਂਟ ਕਰਕੇ ਸਕ੍ਰੀਨਸ਼ੌਟ ਭੇਜ ਦਿਓ ਜੀ।"
+        "pay" to "ਕਿਰਪਾ ਕਰਕੇ ਪੇਮੈਂਟ ਕਰਕੇ ਸਕ੍ਰੀਨਸ਼ੌਟ ਭੇਜ ਦਿਓ ਜੀ।" ,
+        "ਪਜ" to "ਪੰਜ",
+        "ਪਜਾਬ" to "ਪੰਜਾਬ",
+        "ਪਜਾਬੀ" to "ਪੰਜਾਬੀ",
+        "ਵਾਹਿ" to "ਵਾਹਿਗੁਰੂ",
+        "ਸਤਿ" to "ਸਤਿਨਾਮੁ",
+        "ਗੁਰ" to "ਗੁਰੂ",
+        "ਅੰਮ੍ਰਿ" to "ਅੰਮ੍ਰਿਤਸਰ",
+        "ਧਨ" to "ਧੰਨਵਾਦ",
+        "ਤੁਹਾਨ" to "ਤੁਹਾਨੂੰ",
+        "ਮੈਨ" to "ਮੈਨੂੰ",
+        "ਸਸਕ" to "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ"
     )
 
     fun getShortcut(context: Context, key: String): String? {
@@ -21,7 +32,7 @@ object ShortcutsManager {
         // Check for user-defined first
         val result = prefs.getString(key, null)
         if (result != null) return result
-        
+
         // Then check defaults
         val defaultResult = defaultShortcuts[key]
         if (defaultResult != null) return defaultResult
@@ -43,7 +54,7 @@ object ShortcutsManager {
     fun getAllShortcuts(context: Context): Map<String, String> {
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val allUserShortcuts = prefs.all as Map<String, String?>
-        
+
         val result = defaultShortcuts.toMutableMap()
         allUserShortcuts.forEach { (k, v) -> if (v != null) result[k] = v }
         return result

@@ -53,11 +53,15 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
     private var spacebarStartX = 0f
     private var isSpacebarDragging = false
     private var isSwipeDetected = false
-    private val moveThreshold = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15f, context.resources.displayMetrics)
+    private val moveThreshold = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30f, context.resources.displayMetrics)
     private var lastMoveX = 0f
+    private var gestureStartX = 0f
+    private var gestureStartY = 0f
+    private val gestureThreshold = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25f, context.resources.displayMetrics)
 
     private var previewPopup: PopupWindow? = null
     private var previewTextView: TextView? = null
+    private var currentPreviewKey: Keyboard.Key? = null
     private val dismissHandler = Handler(Looper.getMainLooper())
     private val dismissRunnable = Runnable { dismissKeyPreview() }
     private val POPUP_DISMISS_DELAY = 50L
@@ -195,7 +199,7 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
             var opacity = if (useTransparencyPref) sharedPrefs.getInt(ImeConstants.PREF_KEY_OPACITY, 200) else 255
             
             val typedValue = TypedValue()
-            
+
             if (currentTheme == "custom") {
                 opacity = 0
                 keyTextColor = Color.WHITE
@@ -218,13 +222,13 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
             if (context.theme.resolveAttribute(R.attr.keyPressedBackgroundColor, typedValue, true)) keyPressedColor = typedValue.data else keyPressedColor = 0x44FFFFFF
             val density = context.resources.displayMetrics.density; val cornerRadius = roundnessDp * density
             
-            if (context.theme.resolveAttribute(R.attr.keyboardKeyBackground, typedValue, true)) { 
+            if (context.theme.resolveAttribute(R.attr.keyboardKeyBackground, typedValue, true)) {
                 val baseColor = if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) typedValue.data else Color.LTGRAY
                 val colorWithAlpha = Color.argb(opacity, Color.red(baseColor), Color.green(baseColor), Color.blue(baseColor))
                 keyboardKeyBackground = createRoundedDrawable(colorWithAlpha, keyPressedColor, cornerRadius, currentTheme == "custom") 
             }
             
-            if (context.theme.resolveAttribute(R.attr.functionalKeyBackground, typedValue, true)) { 
+            if (context.theme.resolveAttribute(R.attr.functionalKeyBackground, typedValue, true)) {
                 val baseColor = if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT) typedValue.data else Color.GRAY
                 val colorWithAlpha = Color.argb(opacity, Color.red(baseColor), Color.green(baseColor), Color.blue(baseColor))
                 functionalKeyBackground = createRoundedDrawable(colorWithAlpha, keyPressedColor, cornerRadius, currentTheme == "custom") 
@@ -325,6 +329,7 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
 
     private fun showKeyPreview(key: Keyboard.Key) {
         if (isLongPressHandled) return
+        if (currentPreviewKey == key && previewPopup?.isShowing == true) return
         dismissHandler.removeCallbacks(dismissRunnable); val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context); val popupEnabled = sharedPrefs.getBoolean("popup_on_keypress", true)
         if (!popupEnabled || isFunctional(key) || (key.label == null && key.icon == null)) { dismissKeyPreview(); return }
         val scale = sharedPrefs.getInt("popup_size_scale", 100) / 100f
@@ -369,13 +374,20 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
         val y = location[1] + key.y - popupHeight + (10 * density).toInt() // Overlap slightly to look connected
 
         try {
-            if (previewPopup?.isShowing == true) previewPopup?.update(x, y, popupWidth, popupHeight) else previewPopup?.showAtLocation(this, Gravity.NO_GRAVITY, x, y)
+            if (previewPopup?.isShowing == true) {
+                previewPopup?.dismiss()
+            }
+            previewPopup?.showAtLocation(this, Gravity.NO_GRAVITY, x, y)
+            currentPreviewKey = key
         } catch (e: Exception) {
             Log.e("MyKeyboardView", "Error showing preview popup", e)
         }
     }
 
-    private fun dismissKeyPreview() { try { previewPopup?.dismiss() } catch (e: Exception) {} }
+    private fun dismissKeyPreview() {
+        currentPreviewKey = null
+        try { previewPopup?.dismiss() } catch (e: Exception) {}
+    }
     override fun onDetachedFromWindow() { super.onDetachedFromWindow(); dismissHandler.removeCallbacks(dismissRunnable); dismissKeyPreview() }
 
     private fun showLongPressMenu(key: Keyboard.Key) {
@@ -464,7 +476,20 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
 
     override fun onTouchEvent(me: MotionEvent): Boolean {
         val x = me.x.toInt() - paddingLeft; val y = me.y.toInt() - paddingTop
+        val key = findKeyAt(x, y)
+        val isNearMiss = key != null && !key.isInside(x, y)
+        
+        val originalX = me.x
+        val originalY = me.y
+
+        // Snap coordinates for near-misses to ensure KeyboardView detects the hit
+        if (isNearMiss) {
+            val k = key!!
+            me.setLocation(k.x + k.width / 2f + paddingLeft, k.y + k.height / 2f + paddingTop)
+        }
+
         gestureDetector.onTouchEvent(me)
+        
         when (me.action) {
             MotionEvent.ACTION_DOWN -> {
                 isSwipeDetected = false
@@ -472,13 +497,14 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
                 gesturePath.clear()
                 isGestureTyping = false
                 swipePath.reset()
-                swipePath.moveTo(me.x, me.y)
-                val key = findKeyAt(x, y)
+                swipePath.moveTo(originalX, originalY)
+                gestureStartX = originalX
+                gestureStartY = originalY
                 if (key != null) {
                     if (!isFunctional(key)) {
                         key.label?.toString()?.let { gesturePath.add(it) }
                     }
-                    if (key.codes.contains(32)) { spacebarStartX = me.x; lastMoveX = me.x; isSpacebarDragging = false } else { spacebarStartX = -1f }
+                    if (key.codes.contains(32)) { spacebarStartX = originalX; lastMoveX = originalX; isSpacebarDragging = false } else { spacebarStartX = -1f }
                     showKeyPreview(key); longPressKey = key; longPressHandler.postDelayed(longPressRunnable, LONG_PRESS_TIMEOUT)
                 } else { spacebarStartX = -1f }
             }
@@ -494,45 +520,31 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
                         highlightedVariantIndex = found
                         for (i in variantTextViews.indices) { variantTextViews[i].setBackgroundColor(if (i == highlightedVariantIndex) (if (keyPreviewBgColor == Color.WHITE) Color.parseColor("#DDDDDD") else Color.parseColor("#444444")) else keyPreviewBgColor) }
                     }
+                    me.setLocation(originalX, originalY) // Restore for move logic
                     return true
                 }
                 if (spacebarStartX != -1f) {
-                    val totalDx = me.x - spacebarStartX
+                    val totalDx = originalX - spacebarStartX
                     if (isSpacebarDragging || abs(totalDx) > moveThreshold * 1.2f) {
-                        isSpacebarDragging = true; val dxSinceLast = me.x - lastMoveX
+                        isSpacebarDragging = true; val dxSinceLast = originalX - lastMoveX
                         if (abs(dxSinceLast) > moveThreshold) {
                             val listener = onKeyboardActionListener
                             if (listener is MyKeyboardActionListener) {
                                 if (dxSinceLast > 0) listener.moveCursor(1)
                                 else listener.moveCursor(-1)
                             }
-                            lastMoveX = me.x
+                            lastMoveX = originalX
                         }
-                        dismissKeyPreview(); longPressHandler.removeCallbacks(longPressRunnable); return true
+                        dismissKeyPreview(); longPressHandler.removeCallbacks(longPressRunnable)
+                        me.setLocation(originalX, originalY) // Restore
+                        return true
                     }
                 }
                 
-                val key = findKeyAt(x, y)
                 if (key != null) {
                     showKeyPreview(key)
-                    if (!isFunctional(key) && !isSpacebarDragging) {
-                        val label = key.label?.toString()
-                        if (label != null && (gesturePath.isEmpty() || gesturePath.last() != label)) {
-                            gesturePath.add(label)
-                            if (gesturePath.size > 1) {
-                                isGestureTyping = true
-                                dismissKeyPreview()
-                                longPressHandler.removeCallbacks(longPressRunnable)
-                            }
-                        }
-                    }
                 } else {
                     dismissKeyPreview()
-                }
-
-                if (isGestureTyping) {
-                    swipePath.lineTo(me.x, me.y)
-                    invalidate()
                 }
 
                 longPressKey?.let { if (!it.isInside(x, y)) longPressHandler.removeCallbacks(longPressRunnable) }
@@ -541,47 +553,63 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
                 longPressHandler.removeCallbacks(longPressRunnable)
                 dismissHandler.postDelayed(dismissRunnable, POPUP_DISMISS_DELAY)
                 
-                if (isGestureTyping && gesturePath.size >= 2) {
-                    service?.handleGestureSequence(gesturePath)
-                    gesturePath.clear()
-                    isGestureTyping = false
-                    swipePath.reset()
-                    invalidate()
-                    unpressAllKeys()
-                    return true
-                }
-
                 swipePath.reset()
                 invalidate()
 
                 if (isSwipeDetected) {
                     isSwipeDetected = false
                     unpressAllKeys()
+                    me.setLocation(originalX, originalY) // Restore
                     return true
                 }
 
                 if (isLongPressHandled) {
                     if (highlightedVariantIndex != -1) { onKeyboardActionListener?.onText(variantTextViews[highlightedVariantIndex].text) }
                     try { longPressMenuPopup?.dismiss() } catch (e: Exception) {}
-                    isLongPressHandled = false; unpressAllKeys(); return true
+                    isLongPressHandled = false; unpressAllKeys()
+                    me.setLocation(originalX, originalY) // Restore
+                    return true
                 }
 
-                if (isSpacebarDragging) { isSpacebarDragging = false; spacebarStartX = -1f; unpressAllKeys(); val cancelEvent = MotionEvent.obtain(me); cancelEvent.action = MotionEvent.ACTION_CANCEL; super.onTouchEvent(cancelEvent); cancelEvent.recycle(); return true }
+                if (isSpacebarDragging) { 
+                    isSpacebarDragging = false; spacebarStartX = -1f; unpressAllKeys()
+                    val cancelEvent = MotionEvent.obtain(me)
+                    cancelEvent.action = MotionEvent.ACTION_CANCEL
+                    cancelEvent.setLocation(originalX, originalY)
+                    super.onTouchEvent(cancelEvent)
+                    cancelEvent.recycle()
+                    me.setLocation(originalX, originalY) // Restore
+                    return true 
+                }
                 
                 spacebarStartX = -1f
                 val result = super.onTouchEvent(me)
                 unpressAllKeys()
+                me.setLocation(originalX, originalY) // Restore
                 return result
             }
         }
-        return super.onTouchEvent(me)
+        val result = super.onTouchEvent(me)
+        me.setLocation(originalX, originalY) // Restore
+        return result
     }
 
     private fun findKeyAt(x: Int, y: Int): Keyboard.Key? {
         val keys = keyboard?.keys ?: return null
-        for (key in keys) if (key.isInside(x, y)) return key
-        val margin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, context.resources.displayMetrics).toInt()
-        for (key in keys) if (x >= key.x - margin && x < key.x + key.width + margin && y >= key.y - margin && y < key.y + key.height + margin) return key
+        
+        // 1. Strict Direct Hits First:
+        // If a touch falls directly inside a key's visual rectangle, always return that key first!
+        for (key in keys) {
+            if (x >= key.x && x < key.x + key.width && y >= key.y && y < key.y + key.height) {
+                return key
+            }
+        }
+
+        // 2. Expanded Bounds (for touches in gaps/padding):
+        for (key in keys) {
+            if (key.isInside(x, y)) return key
+        }
+        
         return null
     }
 
@@ -644,10 +672,6 @@ class MyKeyboardView(context: Context, attrs: AttributeSet?) : KeyboardView(cont
                     val label = key.label.toString(); val x = key.x + (key.width / 2f) + paddingLeft; val y = key.y + (key.height / 2f) + paddingTop - ((textPaint.descent() + textPaint.ascent()) / 2f); canvas.drawText(label, x, y, textPaint)
                 }
             }
-        }
-        
-        if (isGestureTyping) {
-            canvas.drawPath(swipePath, swipePaint)
         }
     }
 

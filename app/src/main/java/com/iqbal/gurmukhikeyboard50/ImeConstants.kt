@@ -8,6 +8,8 @@ object ImeConstants {
     const val PANEL_NANAKSHAHI_CALENDAR = 4
     const val PANEL_NITNEM = 5
     const val PANEL_CALCULATOR = 6
+    const val PANEL_PHRASES = 7
+    const val PANEL_AI = 8
 
     const val KEYCODE_LANGUAGE_SWITCH = -101
     const val KEYCODE_EMOJI = -102
@@ -20,6 +22,7 @@ object ImeConstants {
     const val KEYCODE_SWITCH_TO_NANAKSHAHI_CALENDAR_PANEL = -109
     const val KEYCODE_NITNEM = -110
     const val KEYCODE_CALCULATOR = -111
+    const val KEYCODE_PHRASES = -112
     const val KEYCODE_SWITCH_TO_SYMBOLS = -133
     const val KEYCODE_NUMPAD_SWITCH = -140
 
@@ -34,8 +37,11 @@ object ImeConstants {
     const val PREF_CUSTOM_BACKGROUND_IMAGE = "pref_custom_background_image"
     const val PREF_BACKGROUND_DIM_AMOUNT = "pref_background_dim_amount"
     const val PREF_FONT_SIZE = "pref_font_size"
+    const val PREF_AUTO_CORRECT = "pref_auto_correct"
     const val PREF_CLIPBOARD_HISTORY = "pref_clipboard_history"
     const val PREF_AI_API_KEY = "pref_ai_api_key"
+    const val PREF_SHOW_INLINE_SUGGESTIONS = "pref_show_inline_suggestions"
+    const val PREF_BOTTOM_MARGIN = "pref_bottom_margin"
 
     const val ACTION_SETTINGS_CHANGED = "com.iqbal.gurmukhikeyboard50.SETTINGS_CHANGED"
 }

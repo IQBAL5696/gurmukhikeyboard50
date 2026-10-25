@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    tools:context=".TranslatorActivity">
+
+    <!-- Header Toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#00897B"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="12dp">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_backspace"
+            app:tint="#FFFFFF"
+            android:rotation="180"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ਅਨੁਵਾਦਕ ਮੈਨੇਜਰ (Translator Manager)"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingStart="12dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Language Selector Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="12dp">
+
+                    <Spinner
+                        android:id="@+id/source_language_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/prediction_item_background" />
+
+                    <ImageButton
+                        android:id="@+id/btn_swap_languages"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_swap_horiz"
+                        app:tint="#00897B"
+                        android:contentDescription="Swap Languages" />
+
+                    <Spinner
+                        android:id="@+id/target_language_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/prediction_item_background" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Input Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_source_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="ਇਨਪੁੱਟ ਟੈਕਸਟ (Enter Text)"
+                            android:textColor="#333333"
+                            android:textStyle="bold"
+                            android:textSize="14sp" />
+
+                        <ImageButton
+                            android:id="@+id/btn_clear_input"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_close"
+                            app:tint="#757575"
+                            android:contentDescription="Clear" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/et_source_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:gravity="top|start"
+                        android:hint="Type or paste text here to translate..."
+                        android:inputType="textMultiLine"
+                        android:padding="10dp"
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:background="@drawable/prediction_item_background" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_translate_now"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:text="ਅਨੁਵਾਦ ਕਰੋ (Translate)"
+                            app:cornerRadius="10dp"
+                            app:backgroundTint="#00897B"
+                            app:icon="@drawable/ic_translate" />
+
+                        <ImageButton
+                            android:id="@+id/btn_voice_input"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/rounded_button_bg"
+                            android:src="@drawable/ic_mic"
+                            app:tint="#00897B"
+                            android:contentDescription="Voice Input" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Output Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_target_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="ਅਨੁਵਾਦ ਦਾ ਨਤੀਜਾ (Translation Result)"
+                            android:textColor="#333333"
+                            android:textStyle="bold"
+                            android:textSize="14sp" />
+
+                        <ImageButton
+                            android:id="@+id/btn_speak_output"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@android:drawable/ic_media_play"
+                            app:tint="#00897B"
+                            android:contentDescription="Listen" />
+
+                        <ImageButton
+                            android:id="@+id/btn_copy_output"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_clipboard"
+                            app:tint="#00897B"
+                            android:contentDescription="Copy" />
+
+                        <ImageButton
+                            android:id="@+id/btn_share_output"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@android:drawable/ic_menu_share"
+                            app:tint="#00897B"
+                            android:contentDescription="Share" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_translated_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="110dp"
+                        android:gravity="top|start"
+                        android:hint="Translation will appear here..."
+                        android:padding="10dp"
+                        android:textSize="16sp"
+                        android:textColor="#000000"
+                        android:textIsSelectable="true"
+                        android:background="@drawable/prediction_item_background" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

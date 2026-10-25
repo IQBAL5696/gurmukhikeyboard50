@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/graph_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Equation Graph"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/trace_toggle_button"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Trace: Off"
+                android:textSize="12sp"
+                android:backgroundTint="#424242"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp"
+                android:padding="0dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
+
+            <Button
+                android:id="@+id/mode_3d_toggle_button"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="3D: Off"
+                android:textSize="12sp"
+                android:backgroundTint="#424242"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="8dp"
+                android:padding="0dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
+
+            <ImageButton
+                android:id="@+id/close_graph_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_close"
+                app:tint="#FFFFFF"
+                android:contentDescription="Close Graph" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/graph_equation_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="y = sin(x)"
+        android:textColor="#00FFFF"
+        android:textSize="16sp"
+        android:fontFamily="monospace"
+        android:gravity="center" />
+
+    <com.iqbal.gurmukhikeyboard50.GraphView
+        android:id="@+id/graph_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/animation_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/animation_toggle_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_media_pause"
+            app:tint="#00FFFF"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Speed:"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:layout_marginEnd="8dp" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/speed_slider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:valueFrom="0.1"
+            android:valueTo="5.0"
+            android:value="1.0"
+            app:thumbColor="#00FFFF"
+            app:trackColorActive="#00FFFF" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Drag to move | Works with variables 'x'"
+        android:textColor="#888888"
+        android:textSize="12sp"
+        android:gravity="center" />
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-- [x] Modify `GurbaniUIUtils.kt` to insert a newline after `ੴ`
-- [x] Update `GurbaniSearchHelper.kt` to handle `ੴ` and main headers with newlines
-- [x] Verify formatting in both Pad-ched and Larivaar modes
-- [x] Create walkthrough documentation
+- [ ] Update `NitnemEngine.kt` to include "ਜੀਵਨ ਸਿੱਖਿਆ" in the main menu
+- [ ] Implement `showGurbaniLessonsDialog` to display educational verses
+- [ ] Create a custom adapter and ViewHolder for the lesson cards
+- [ ] Verify UI and theme consistency

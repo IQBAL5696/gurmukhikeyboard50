@@ -2,28 +2,28 @@ package com.iqbal.gurmukhikeyboard50
 import android.content.Context; import android.media.AudioManager; import android.os.Build; import android.os.SystemClock; import android.util.Log; import android.os.VibrationEffect; import android.os.Vibrator; import android.os.VibratorManager; import android.view.KeyEvent; import android.view.inputmethod.EditorInfo; import android.inputmethodservice.Keyboard; import android.inputmethodservice.KeyboardView; import android.view.inputmethod.BaseInputConnection; import android.view.inputmethod.InputConnection; import androidx.preference.PreferenceManager; import android.widget.Toast
 class MyKeyboardActionListener(private val service: MyKeyboardIME) : KeyboardView.OnKeyboardActionListener { val englishWordBuffer = StringBuilder(); private val audioManager = service.getSystemService(Context.AUDIO_SERVICE) as AudioManager; private val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { (service.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator } else { @Suppress("DEPRECATION") (service.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator) }
     private fun getTargetInputConnection(): InputConnection? { if (MyKeyboardIME.currentPanel == ImeConstants.PANEL_TRANSLATION) { val translationInput = service.translationInput; if (translationInput != null) return translationInput.onCreateInputConnection(EditorInfo()) }; return service.currentInputConnection }
-    private fun isFunctional(keyCode: Int): Boolean = keyCode == Keyboard.KEYCODE_DELETE || keyCode == Keyboard.KEYCODE_SHIFT || keyCode == Keyboard.KEYCODE_MODE_CHANGE || keyCode == Keyboard.KEYCODE_DONE || keyCode == 10 || keyCode == 32 || keyCode == -100 || keyCode == -101 || keyCode == -103 || keyCode == -153 || keyCode == -133 || keyCode == -138 || keyCode == ImeConstants.KEYCODE_LANGUAGE_SWITCH || keyCode < 0
+    private fun isFunctional(keyCode: Int): Boolean = keyCode == Keyboard.KEYCODE_DELETE || keyCode == Keyboard.KEYCODE_SHIFT || keyCode == Keyboard.KEYCODE_MODE_CHANGE || keyCode == Keyboard.KEYCODE_DONE || keyCode == 10 || keyCode == 32 || keyCode == -100 || keyCode == -101 || keyCode == -103 || keyCode == -153 || keyCode == -133 || keyCode == -138 || keyCode == ImeConstants.KEYCODE_LANGUAGE_SWITCH || (keyCode < 0 && keyCode > -1000)
     override fun onPress(primaryCode: Int) {
         provideFeedback(primaryCode)
         ReviewHelper.incrementUsage(service)
     }
-    private fun provideFeedback(keyCode: Int) { 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(service); 
-        if (prefs.getBoolean("sound_on_keypress", true)) { 
-            val volume = prefs.getInt("sound_volume", 5) / 100f; 
+    private fun provideFeedback(keyCode: Int) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(service);
+        if (prefs.getBoolean("sound_on_keypress", true)) {
+            val volume = prefs.getInt("sound_volume", 5) / 100f;
             // Unified sound: All keys now play the standard click sound for consistency
-            audioManager.playSoundEffect(AudioManager.FX_KEY_CLICK, volume) 
-        }; 
-        if (prefs.getBoolean("vibrate_on_keypress", true)) { 
-            val base = prefs.getInt("vibration_intensity", 20); 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { 
+            audioManager.playSoundEffect(AudioManager.FX_KEY_CLICK, volume)
+        };
+        if (prefs.getBoolean("vibrate_on_keypress", true)) {
+            val base = prefs.getInt("vibration_intensity", 20);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 // Unified vibration: All keys now use the same vibration intensity
-                val effect = VibrationEffect.createOneShot(base.toLong(), VibrationEffect.DEFAULT_AMPLITUDE); 
-                vibrator.vibrate(effect) 
-            } else { 
-                @Suppress("DEPRECATION") vibrator.vibrate(base.toLong()) 
-            } 
-        } 
+                val effect = VibrationEffect.createOneShot(base.toLong(), VibrationEffect.DEFAULT_AMPLITUDE);
+                vibrator.vibrate(effect)
+            } else {
+                @Suppress("DEPRECATION") vibrator.vibrate(base.toLong())
+            }
+        }
     }
     override fun onKey(primaryCode: Int, keyCodes: IntArray?) { val ic = getTargetInputConnection() ?: return; when (primaryCode) { ImeConstants.KEYCODE_EMOJI -> { service.switchPanel(ImeConstants.PANEL_EMOJI); return }; ImeConstants.KEYCODE_TRANSLATE -> { service.switchPanel(ImeConstants.PANEL_TRANSLATION); return };
         ImeConstants.KEYCODE_VOICE_INPUT, -103 -> {
@@ -100,7 +100,7 @@ class MyKeyboardActionListener(private val service: MyKeyboardIME) : KeyboardVie
                     ShortcutsManager.getShortcut(service, word)?.let {
                         ic.commitText(it, 1)
                         if (service.currentInputEditorInfo?.packageName == "com.whatsapp") service.saveToClipboard(it)
-                    } ?: run { 
+                    } ?: run {
                         if (word.isNotEmpty()) {
                             service.learnWord(word)
                             if (service.currentInputEditorInfo?.packageName == "com.whatsapp") service.saveToClipboard(word)
@@ -139,7 +139,6 @@ class MyKeyboardActionListener(private val service: MyKeyboardIME) : KeyboardVie
                 resetBuffers();
             } else {
                 englishWordBuffer.append(char);
-                ic.setComposingText(englishWordBuffer.toString(), 1);
                 service.updateSuggestions(englishWordBuffer.toString())
             };
             checkUnshift()
@@ -168,6 +167,6 @@ class MyKeyboardActionListener(private val service: MyKeyboardIME) : KeyboardVie
     private fun getCurrentWord(): String = if (service.keyboardManager.currentKeyboardType == KeyboardType.GURMUKHI) service.gurmukhiInputHandler.getCurrentWord() else englishWordBuffer.toString()
     fun resetBuffers() { englishWordBuffer.clear(); service.gurmukhiInputHandler.reset(); service.updateSuggestions("") }
     override fun onRelease(primaryCode: Int) { service.kv?.unpressAllKeys() }
-    override fun onText(text: CharSequence?) { val ic = getTargetInputConnection() ?: return; provideFeedback(0); text?.let { ic.finishComposingText(); resetBuffers(); ic.commitText(it, 1); if (it.length >= 2) { service.learnWord(it.toString()); if (service.currentInputEditorInfo?.packageName == "com.whatsapp") service.saveToClipboard(it.toString()) }; checkUnshift() } }
+    override fun onText(text: CharSequence?) { val ic = getTargetInputConnection() ?: return; provideFeedback(0); text?.let { ic.finishComposingText(); resetBuffers(); ic.commitText(it, 1); if (it.isNotEmpty()) { service.learnWord(it.toString()); if (service.currentInputEditorInfo?.packageName == "com.whatsapp") service.saveToClipboard(it.toString()) }; checkUnshift() } }
     override fun swipeLeft() { }; override fun swipeRight() { }; override fun swipeDown() {}; override fun swipeUp() {}
     fun moveCursor(direction: Int) { val ic = getTargetInputConnection() ?: return; val keyCode = if (direction > 0) KeyEvent.KEYCODE_DPAD_RIGHT else KeyEvent.KEYCODE_DPAD_LEFT; val now = SystemClock.uptimeMillis() ; ic.sendKeyEvent(KeyEvent(now, now, KeyEvent.ACTION_DOWN, keyCode, 0)); ic.sendKeyEvent(KeyEvent(now, now, KeyEvent.ACTION_UP, keyCode, 0)) } }

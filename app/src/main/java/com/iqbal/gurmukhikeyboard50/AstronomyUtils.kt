@@ -18,7 +18,7 @@ object AstronomyUtils {
         var m = mIn
         if (m <= 2) { y -= 1; m += 12 }
         val a = floor(y / 100.0).toInt()
-        val isG = (yIn > 1752) || (yIn == 1752 && (mIn > 9 || (mIn == 9 && d >= 14)))
+        val isG = (NanakshahiCalendar.selectedSystem == NanakshahiCalendar.CalendarSystem.GREGORIAN) || (yIn > 1752) || (yIn == 1752 && (mIn > 9 || (mIn == 9 && d >= 14)))
         val b = if (isG) 2 - a + floor(a / 4.0).toInt() else 0
         return floor(365.25 * (y + 4716)) + floor(30.6001 * (m + 1)) + d + b - 1524.5
     }

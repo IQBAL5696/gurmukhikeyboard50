@@ -27,6 +27,7 @@
     </string-array>
 
     <string-array name="theme_entries">
+        <item>System Default (ਸਿਸਟਮ ਮੁਤਾਬਕ)</item>
         <item>Light (ਚਿੱਟਾ)</item>
         <item>Dark (ਕਾਲਾ)</item>
         <item>Kesari (ਕੇਸਰੀ - Royal Saffron)</item>
@@ -61,6 +62,7 @@
     </string-array>
 
     <string-array name="theme_values">
+        <item>system</item>
         <item>light</item>
         <item>dark</item>
         <item>kesari</item>

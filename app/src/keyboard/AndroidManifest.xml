@@ -7,15 +7,91 @@
         <activity
             android:name="com.iqbal.gurmukhikeyboard50.MainActivity"
             android:exported="true"
+            android:label="@string/app_name"
             android:theme="@style/Theme.GurmukhiKeyboard50"
-            tools:node="merge">
+            tools:node="replace">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Enable feature activities in the keyboard app so shortcuts can open them -->
+        <activity
+            android:name="com.iqbal.gurmukhikeyboard50.NitnemActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:label="ਨਿਤਨੇਮ"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|smallestScreenSize"
+            android:theme="@style/Theme.GurmukhiKeyboard50"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.iqbal.gurmukhikeyboard50.CalculatorActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:label="ਕੈਲਕੁਲੇਟਰ"
+            android:theme="@style/Theme.GurmukhiKeyboard50"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.iqbal.gurmukhikeyboard50.CalendarActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:label="ਨਾਨਕਸ਼ਾਹੀ ਜੰਤਰੀ"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|smallestScreenSize"
+            android:theme="@style/Theme.GurmukhiKeyboard50"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.iqbal.gurmukhikeyboard50.ExcelViewerActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:label="ਐਕਸਲ ਓਪਨਰ (Excel Viewer)"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|smallestScreenSize"
+            android:theme="@style/Theme.GurmukhiKeyboard50"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="application/vnd.ms-excel" />
+                <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                <data android:mimeType="application/excel" />
+                <data android:mimeType="application/x-excel" />
+                <data android:mimeType="application/x-msexcel" />
+                <data android:mimeType="application/x-spreadsheet" />
+                <data android:mimeType="text/csv" />
+                <data android:mimeType="text/comma-separated-values" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.xlsx" />
+                <data android:pathPattern=".*\\.xls" />
+                <data android:pathPattern=".*\\.csv" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
-
-

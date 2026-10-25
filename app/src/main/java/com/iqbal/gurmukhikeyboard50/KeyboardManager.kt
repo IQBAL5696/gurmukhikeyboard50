@@ -43,8 +43,14 @@ class KeyboardManager(
         private const val TAG = "KeyboardManager"
     }
 
-    fun getThemeResIdForValue(themeValue: String?): Int {
-        return when (themeValue) {
+    fun getThemeResIdForValue(themeValue: String?, currentContext: Context): Int {
+        var resolvedTheme = themeValue
+        if (themeValue == "system") {
+            val uiMode = currentContext.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+            resolvedTheme = if (uiMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) "dark" else "light"
+        }
+
+        return when (resolvedTheme) {
             "dark" -> R.style.KeyboardTheme_Dark
             "kesari" -> R.style.KeyboardTheme_Kesari
             "royal_blue" -> R.style.KeyboardTheme_RoyalBlue

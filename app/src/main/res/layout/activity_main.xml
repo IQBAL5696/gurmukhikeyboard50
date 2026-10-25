@@ -57,9 +57,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ਹੋਮ ਸਕ੍ਰੀਨ ਸ਼ਾਰਟਕੱਟ"
+                    android:text="ਹੋਮ ਸਕ੍ਰੀਨ ਸ਼ਾਰਟਕੱਟ (Quick Access)"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ਦਬਾ ਕੇ ਖੋਲ੍ਹੋ | ਲੰਮਾ ਦਬਾਓ ਹੋਮ ਸਕ੍ਰੀਨ 'ਤੇ ਆਈਕਨ ਜੋੜਨ ਲਈ"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
                     android:layout_marginBottom="12dp"/>
 
                 <com.google.android.material.button.MaterialButton
@@ -67,11 +75,71 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
-                    android:text="ਕੈਲਕੁਲੇਟਰ ਸ਼ਾਰਟਕੱਟ ਜੋੜੋ"
+                    android:text="ਕੈਲਕੁਲੇਟਰ (Calculator)"
                     app:icon="@drawable/ic_calculator"
                     app:iconTint="#EF6C00"
                     app:strokeColor="#EF6C00"
                     android:textColor="#EF6C00" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpenImageToText"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="10dp"
+                    android:text="ਇਮੇਜ ਤੋਂ ਟੈਕਸਟ (Image to Text)"
+                    app:icon="@drawable/ic_camera"
+                    app:iconTint="#9C27B0"
+                    app:strokeColor="#9C27B0"
+                    android:textColor="#9C27B0" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpenTranslatorManager"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="10dp"
+                    android:text="ਅਨੁਵਾਦਕ ਮੈਨੇਜਰ (Translator - All Languages)"
+                    app:icon="@drawable/ic_translate"
+                    app:iconTint="#00897B"
+                    app:strokeColor="#00897B"
+                    android:textColor="#00897B" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpenPdfReader"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="10dp"
+                    android:text="ਪੀ.ਡੀ.ਐੱਫ. ਰੀਡਰ ਅਤੇ ਪੁਸਤਕਾਂ (PDF Reader &amp; Books)"
+                    app:icon="@drawable/ic_library"
+                    app:iconTint="#D81B60"
+                    app:strokeColor="#D81B60"
+                    android:textColor="#D81B60" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpenExcelViewer"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="10dp"
+                    android:text="ਐਕਸਲ ਫਾਈਲ ਓਪਨਰ (Excel Viewer)"
+                    app:icon="@drawable/ic_library"
+                    app:iconTint="#2E7D32"
+                    app:strokeColor="#2E7D32"
+                    android:textColor="#2E7D32" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpenLiveDarbarSahib"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="10dp"
+                    android:text="ਲਾਈਵ ਦਰਬਾਰ ਸਾਹਿਬ (Live Darbar Sahib)"
+                    app:icon="@drawable/ik_onkar_svg"
+                    app:iconTint="#E65100"
+                    app:strokeColor="#E65100"
+                    android:textColor="#E65100" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAddNitnemShortcut"
@@ -79,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="10dp"
-                    android:text="ਨਿਤਨੇਮ ਸ਼ਾਰਟਕੱਟ ਜੋੜੋ"
+                    android:text="ਨਿਤਨੇਮ (Nitnem Gutka)"
                     app:icon="@drawable/ik_onkar_svg"
                     app:iconTint="#4CAF50"
                     app:strokeColor="#4CAF50"
@@ -91,7 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="10dp"
-                    android:text="ਜੰਤਰੀ ਸ਼ਾਰਟਕੱਟ ਜੋੜੋ"
+                    android:text="ਜੰਤਰੀ (Nanakshahi Calendar)"
                     app:icon="@drawable/ic_calender"
                     app:iconTint="#1976D2"
                     app:strokeColor="#1976D2"
@@ -217,7 +285,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Help Section -->
-        <com.google.android.material.card.MaterialCardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/featuresCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -249,7 +317,7 @@
                     android:textSize="14sp"
                     android:textColor="#424242" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnShareApp"

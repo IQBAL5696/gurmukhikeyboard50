@@ -27,21 +27,41 @@ class GurbaniPlayerService : Service() {
         const val ACTION_STOP = "com.iqbal.gurmukhikeyboard50.ACTION_STOP"
         private const val NOTIFICATION_ID = 1
         private const val NOTIFICATION_CHANNEL_ID = "GurbaniPlayerChannel"
-        private const val STREAM_URL = "https://live.sgpc.net:8443/"
+        private const val PRIMARY_STREAM_URL = "https://live.sgpc.net:8443/;stream.mp3"
+        private const val BACKUP_STREAM_URL = "http://live.sgpc.net:8000/live"
     }
+
+    private var isUsingBackup = false
 
     @OptIn(UnstableApi::class)
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
+        setupPlayer(PRIMARY_STREAM_URL)
+    }
+
+    @OptIn(UnstableApi::class)
+    private fun setupPlayer(url: String) {
+        player?.release()
 
         val okHttpClient = OkHttpClient.Builder().build()
         val dataSourceFactory = OkHttpDataSource.Factory(okHttpClient)
         val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
-            .createMediaSource(MediaItem.fromUri(STREAM_URL))
+            .createMediaSource(MediaItem.fromUri(url))
 
         val newPlayer = ExoPlayer.Builder(this).build()
         newPlayer.setMediaSource(mediaSource)
+        
+        newPlayer.addListener(object : androidx.media3.common.Player.Listener {
+            override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
+                if (!isUsingBackup) {
+                    isUsingBackup = true
+                    setupPlayer(BACKUP_STREAM_URL)
+                    player?.play()
+                }
+            }
+        })
+
         newPlayer.prepare()
         this.player = newPlayer
     }
@@ -107,8 +127,8 @@ class GurbaniPlayerService : Service() {
                 .addAction(android.R.drawable.ic_menu_close_clear_cancel, "Stop", stopPendingIntent)
         }
 
-        return builder.setContentTitle("Gurbani Radio")
-            .setContentText("Live from Harmandir Sahib")
+        return builder.setContentTitle("Sri Harmandir Sahib Live Kirtan")
+            .setContentText("High Quality (128 kbps) Audio")
             .setSmallIcon(R.drawable.ic_play)
             .setContentIntent(pendingIntent)
             .setOngoing(true)

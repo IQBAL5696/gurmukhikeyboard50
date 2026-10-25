@@ -36,12 +36,25 @@ class ShortcutsActivity : AppCompatActivity() {
             }
         }
 
+        lvShortcuts.setOnItemClickListener { _, _, position, _ ->
+            if (position in shortcutList.indices) {
+                val item = shortcutList[position]
+                val parts = item.split(" -> ", limit = 2)
+                if (parts.size == 2) {
+                    etKey.setText(parts[0])
+                    etValue.setText(parts[1])
+                }
+            }
+        }
+
         lvShortcuts.setOnItemLongClickListener { _, _, position, _ ->
-            val item = shortcutList[position]
-            val key = item.split(" -> ")[0]
-            ShortcutsManager.deleteShortcut(this, key)
-            refreshList()
-            Toast.makeText(this, "ਮਿਟਾ ਦਿੱਤਾ ਗਿਆ", Toast.LENGTH_SHORT).show()
+            if (position in shortcutList.indices) {
+                val item = shortcutList[position]
+                val key = item.split(" -> ", limit = 2)[0]
+                ShortcutsManager.deleteShortcut(this, key)
+                refreshList()
+                Toast.makeText(this, "ਮਿਟਾ ਦਿੱਤਾ ਗਿਆ", Toast.LENGTH_SHORT).show()
+            }
             true
         }
     }

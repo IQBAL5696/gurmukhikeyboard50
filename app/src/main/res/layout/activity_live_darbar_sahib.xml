@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF8E1"
+    tools:context=".LiveDarbarSahibActivity">
+
+    <!-- Header Toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#EF6C00"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="12dp">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_backspace"
+            app:tint="#FFFFFF"
+            android:rotation="180"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ਸ੍ਰੀ ਹਰਿਮੰਦਰ ਸਾਹਿਬ ਲਾਈਵ ਕੀਰਤਨ"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingStart="12dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="20dp">
+
+            <!-- Ik Onkar & Live Graphic Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="6dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:strokeWidth="1dp"
+                app:strokeColor="#FFE0B2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="24dp">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ik_onkar_svg"
+                        android:contentDescription="Ik Onkar" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="ਸੱਚਖੰਡ ਸ੍ਰੀ ਹਰਿਮੰਦਰ ਸਾਹਿਬ"
+                        android:textColor="#BF360C"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="ਸ੍ਰੀ ਅੰਮ੍ਰਿਤਸਰ ਸਾਹਿਬ (Live Kirtan)"
+                        android:textColor="#E65100"
+                        android:textSize="14sp"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/tv_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="ਲਾਈਵ ਪ੍ਰਸਾਰਣ ਚਲਾਉਣ ਲਈ ਪਲੇ ਬਟਨ ਦਬਾਓ"
+                        android:textColor="#2E7D32"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="8dp"
+                        android:background="@drawable/prediction_item_background" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Media Player Controls -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="28dp">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_stop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    app:fabSize="normal"
+                    app:backgroundTint="#D32F2F"
+                    app:tint="#FFFFFF"
+                    android:src="@drawable/ic_stop"
+                    android:contentDescription="Stop" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_play_pause"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fabCustomSize="76dp"
+                    app:maxImageSize="40dp"
+                    app:backgroundTint="#EF6C00"
+                    app:tint="#FFFFFF"
+                    android:src="@drawable/ic_play"
+                    android:contentDescription="Play/Pause" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="24x7 Live Gurbani Audio Stream (SGPC Official)"
+                android:textColor="#757575"
+                android:textSize="12sp" />
+
+            <!-- Add Shortcut to Home Screen Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_shortcut_page"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="28dp"
+                android:text="ਹੋਮ ਸਕ੍ਰੀਨ 'ਤੇ ਆਈਕਨ ਜੋੜੋ (Add Home Shortcut)"
+                app:icon="@drawable/ik_onkar_svg"
+                app:iconTint="#EF6C00"
+                app:strokeColor="#EF6C00"
+                android:textColor="#EF6C00" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

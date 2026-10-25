@@ -18,6 +18,7 @@
 
         <!-- Header -->
         <LinearLayout
+            android:id="@+id/header_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -83,9 +84,21 @@
                         android:layout_width="100dp"
                         android:layout_height="20dp"
                         android:background="@android:color/transparent"
+                        android:popupBackground="#FFF3E0"
                         android:padding="0dp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/theme_toggle_button"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="6dp"
+                android:padding="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="#BF360C"
+                android:src="@android:drawable/ic_menu_manage"
+                android:contentDescription="Theme Selection" />
 
             <ImageButton
                 android:id="@+id/close_calendar_button"
@@ -99,6 +112,7 @@
 
         <!-- Information Card (Highlights) -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_highlights"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
@@ -136,26 +150,38 @@
 
         <!-- Navigation Strip -->
         <LinearLayout
+            android:id="@+id/nav_strip_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="1dp"
-            android:background="@drawable/bg_calendar_nav_strip"
+            android:padding="2dp"
+            android:background="#FFF3E0"
             android:elevation="1dp"
             android:orientation="horizontal">
             <ImageButton
                 android:id="@+id/prev_month_button"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_media_previous"
                 app:tint="#E65100" />
-            <Spinner android:id="@+id/month_spinner_top" android:layout_width="wrap_content" android:layout_height="28dp" android:layout_marginHorizontal="2dp" />
-            <Spinner android:id="@+id/year_spinner" android:layout_width="wrap_content" android:layout_height="28dp" />
+            <Spinner
+                android:id="@+id/month_spinner_top"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginHorizontal="4dp"
+                android:background="@drawable/bg_calendar_nav_strip"
+                android:popupBackground="#FFF3E0" />
+            <Spinner
+                android:id="@+id/year_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_calendar_nav_strip"
+                android:popupBackground="#FFF3E0" />
             <ImageButton
                 android:id="@+id/next_month_button"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_media_next"
                 app:tint="#E65100" />
@@ -163,6 +189,7 @@
 
         <!-- Weekday Header Strip -->
         <LinearLayout
+            android:id="@+id/weekday_header_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFE0B2"
@@ -273,7 +300,10 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:elevation="8dp"
-        android:padding="0.5dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         android:background="@drawable/bg_calendar_bottom_bar">
 
         <HorizontalScrollView
@@ -284,12 +314,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="0.5dp">
-                <Button android:id="@+id/btn_today" android:layout_width="wrap_content" android:layout_height="42dp" android:backgroundTint="#EF6C00" android:text="ਅੱਜ" android:textSize="14sp" android:paddingHorizontal="16dp" android:insetTop="0dp" android:insetBottom="0dp" />
-                <Button android:id="@+id/btn_hukamnama" android:layout_width="wrap_content" android:layout_height="42dp" android:layout_marginStart="4dp" android:backgroundTint="#EF6C00" android:text="ਹੁਕਮਨਾਮਾ" android:textSize="14sp" android:paddingHorizontal="16dp" android:insetTop="0dp" android:insetBottom="0dp" />
-                <Button android:id="@+id/btn_events" android:layout_width="wrap_content" android:layout_height="42dp" android:layout_marginStart="4dp" android:backgroundTint="#EF6C00" android:text="ਗੁਰਪੁਰਬ" android:textSize="14sp" android:paddingHorizontal="16dp" android:insetTop="0dp" android:insetBottom="0dp" />
-                <Button android:id="@+id/findDateButton" android:layout_width="wrap_content" android:layout_height="42dp" android:layout_marginStart="4dp" android:backgroundTint="#EF6C00" android:text="ਖੋਜ" android:textSize="14sp" android:paddingHorizontal="16dp" android:insetTop="0dp" android:insetBottom="0dp" />
-                <Button android:id="@+id/calculateDateButton" android:layout_width="wrap_content" android:layout_height="42dp" android:layout_marginStart="4dp" android:backgroundTint="#EF6C00" android:text="ਅੰਤਰ" android:textSize="14sp" android:paddingHorizontal="16dp" android:insetTop="0dp" android:insetBottom="0dp" />
+                android:padding="0dp">
+                <Button android:id="@+id/btn_today" android:layout_width="wrap_content" android:layout_height="28dp" android:minHeight="0dp" android:minWidth="0dp" android:backgroundTint="#EF6C00" android:text="ਅੱਜ" android:textSize="12sp" android:paddingHorizontal="18dp" android:insetTop="0dp" android:insetBottom="0dp" />
+                <Button android:id="@+id/btn_hukamnama" android:layout_width="wrap_content" android:layout_height="28dp" android:minHeight="0dp" android:minWidth="0dp" android:layout_marginStart="4dp" android:backgroundTint="#EF6C00" android:text="ਹੁਕਮਨਾਮਾ" android:textSize="12sp" android:paddingHorizontal="18dp" android:insetTop="0dp" android:insetBottom="0dp" />
+                <Button android:id="@+id/btn_events" android:layout_width="wrap_content" android:layout_height="28dp" android:minHeight="0dp" android:minWidth="0dp" android:layout_marginStart="4dp" android:backgroundTint="#EF6C00" android:text="ਗੁਰਪੁਰਬ" android:textSize="12sp" android:paddingHorizontal="18dp" android:insetTop="0dp" android:insetBottom="0dp" />
+                <Button android:id="@+id/findDateButton" android:layout_width="wrap_content" android:layout_height="28dp" android:minHeight="0dp" android:minWidth="0dp" android:layout_marginStart="4dp" android:backgroundTint="#EF6C00" android:text="ਖੋਜ" android:textSize="12sp" android:paddingHorizontal="18dp" android:insetTop="0dp" android:insetBottom="0dp" />
+                <Button android:id="@+id/calculateDateButton" android:layout_width="wrap_content" android:layout_height="28dp" android:minHeight="0dp" android:minWidth="0dp" android:layout_marginStart="4dp" android:backgroundTint="#EF6C00" android:text="ਅੰਤਰ" android:textSize="12sp" android:paddingHorizontal="18dp" android:insetTop="0dp" android:insetBottom="0dp" />
             </LinearLayout>
         </HorizontalScrollView>
 

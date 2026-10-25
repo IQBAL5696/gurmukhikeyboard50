@@ -1,0 +1,3 @@
+- `[x]` Implement `PhrasesPanel` in `PhrasesPanel.kt`
+- `[x]` Verify build success
+- `[ ]` Verify functionality manually (if possible/requested)

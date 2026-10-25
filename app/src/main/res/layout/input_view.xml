@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/keyboard_input_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/keyboardViewBackground">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,23 +30,23 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:visibility="gone">
-                    <ImageButton
+                    <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/btn_move_to_left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="12dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="@android:color/transparent"
                         android:src="@drawable/outline_arrows_output_24"
-                        app:tint="?attr/iconColor" />
-                    <ImageButton
+                        app:tint="#000000" />
+                    <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/btn_expand_left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="12dp"
                         android:layout_marginTop="8dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="@android:color/transparent"
                         android:src="@drawable/ic_keyboard"
-                        app:tint="?attr/iconColor" />
+                        app:tint="#000000" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -145,34 +144,27 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:visibility="gone">
-                    <ImageButton
+                    <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/btn_move_to_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="12dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="@android:color/transparent"
                         android:src="@drawable/outline_arrows_output_24"
                         android:rotation="180"
-                        app:tint="?attr/iconColor" />
-                    <ImageButton
+                        app:tint="#000000" />
+                    <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/btn_expand_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="12dp"
                         android:layout_marginTop="8dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:background="@android:color/transparent"
                         android:src="@drawable/ic_keyboard"
-                        app:tint="?attr/iconColor" />
+                        app:tint="#000000" />
                 </LinearLayout>
             </LinearLayout>
 
-            <include
-                android:id="@+id/suggestion_panel"
-                layout="@layout/suggestion_panel"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="10dp"
-                android:visibility="gone" />
             <FrameLayout
                 android:id="@+id/nanakshahi_calendar_panel_container"
                 android:layout_width="match_parent"
@@ -184,7 +176,7 @@
                 layout="@layout/nitnem_panel_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="10dp"
+                android:paddingBottom="40dp"
                 android:visibility="gone" />
             <FrameLayout
                 android:id="@+id/calculator_panel_container"
@@ -202,6 +194,13 @@
             <include
                 android:id="@+id/clipboard_panel_layout"
                 layout="@layout/clipboard_panel_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:id="@+id/phrases_panel_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="10dp"

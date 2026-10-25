@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">GURMUKHI KEYBOARD-NITNEM &amp; NANAKSHAHI CALENDER</string>
+    <string name="app_name" translatable="false">Gurmukhi App</string>
     <string name="title_activity_keyboard_settings" translatable="false">Keyboard Settings</string>
 
     <string name="settings_voice_input_summary" translatable="false">Set voice recognition options</string>
@@ -13,6 +13,16 @@
     <string name="shortcut_nitnem_long" translatable="false">ਨਿਤਨੇਮ ਪਾਠ</string>
     <string name="shortcut_calendar_short" translatable="false">ਜੰਤਰੀ</string>
     <string name="shortcut_calendar_long" translatable="false">ਨਾਨਕਸ਼ਾਹੀ ਜੰਤਰੀ</string>
+    <string name="shortcut_calculator_short" translatable="false">ਕੈਲਕੁਲੇਟਰ</string>
+    <string name="shortcut_calculator_long" translatable="false">ਪੰਜਾਬੀ ਕੈਲਕੁਲੇਟਰ</string>
+    <string name="shortcut_image_to_text_short" translatable="false">ਇਮੇਜ ਤੋਂ ਟੈਕਸਟ</string>
+    <string name="shortcut_image_to_text_long" translatable="false">ਇਮੇਜ ਤੋਂ ਟੈਕਸਟ (Image to Text)</string>
+    <string name="shortcut_translator_manager_short" translatable="false">ਅਨੁਵਾਦਕ</string>
+    <string name="shortcut_translator_manager_long" translatable="false">ਅਨੁਵਾਦਕ ਮੈਨੇਜਰ (All Languages)</string>
+    <string name="shortcut_live_darbar_sahib_short" translatable="false">ਲਾਈਵ ਦਰਬਾਰ ਸਾਹਿਬ</string>
+    <string name="shortcut_live_darbar_sahib_long" translatable="false">ਸ੍ਰੀ ਹਰਿਮੰਦਰ ਸਾਹਿਬ ਲਾਈਵ ਕੀਰਤਨ</string>
+    <string name="shortcut_pdf_reader_short" translatable="false">ਪੀ.ਡੀ.ਐੱਫ. ਰੀਡਰ</string>
+    <string name="shortcut_pdf_reader_long" translatable="false">ਪੀ.ਡੀ.ਐੱਫ. ਰੀਡਰ ਅਤੇ ਪੁਸਤਕਾਂ</string>
     <string name="shortcut_disabled_msg" translatable="false">ਸ਼ਾਰਟਕੱਟ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
 
     <!-- Content Descriptions for Accessibility -->

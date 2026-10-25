@@ -38,27 +38,35 @@
             android:textColor="#FFFFFF" />
 
         <RadioButton
-            android:id="@+id/radio_theme_saffron"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="#FF9933"
-            android:text="Saffron Kesari"
-            android:textColor="#FFFFFF" />
-
-        <RadioButton
-            android:id="@+id/radio_theme_white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="#FFFFFF"
-            android:text="Classic White"
-            android:textColor="#FFFFFF" />
-
-        <RadioButton
             android:id="@+id/radio_theme_blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:buttonTint="#0074D9"
             android:text="Royal Blue"
+            android:textColor="#FFFFFF" />
+
+        <RadioButton
+            android:id="@+id/radio_theme_green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#2E7D32"
+            android:text="Nature Green"
+            android:textColor="#FFFFFF" />
+
+        <RadioButton
+            android:id="@+id/radio_theme_purple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#7B1FA2"
+            android:text="Elegant Purple"
+            android:textColor="#FFFFFF" />
+
+        <RadioButton
+            android:id="@+id/radio_theme_orange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:buttonTint="#E65100"
+            android:text="Sunset Orange"
             android:textColor="#FFFFFF" />
     </RadioGroup>
 
@@ -104,9 +112,9 @@
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_done"
-        style="@style/Widget.Material3.Button.TextButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

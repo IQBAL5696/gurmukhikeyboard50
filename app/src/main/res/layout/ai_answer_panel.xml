@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/aiAnswerPanel"
+    android:id="@+id/ai_panel_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?attr/keyboardViewBackground"
     android:padding="8dp">
 
     <LinearLayout
@@ -14,14 +12,13 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ai_answer_back_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_close"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Close"
-            app:tint="?attr/iconColor" />
+            android:background="@android:color/transparent"
+            android:contentDescription="Close" />
 
         <TextView
             android:id="@+id/ai_answer_title"
@@ -29,19 +26,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="AI Assistant"
-            android:textColor="?attr/keyboardKeyTextColor"
+            android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center" />
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ai_answer_search_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_search"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Search AI"
-            app:tint="?attr/iconColor" />
+            android:background="@android:color/transparent"
+            android:contentDescription="Search AI" />
 
     </LinearLayout>
 
@@ -50,9 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Ask AI..."
-        android:textColor="?attr/keyboardKeyTextColor"
-        android:textColorHint="?attr/keyboardKeyTextColor"
-        android:backgroundTint="?attr/iconColor"
+        android:textColor="#000000"
+        android:textColorHint="#757575"
         android:layout_marginTop="8dp"/>
 
     <LinearLayout
@@ -61,45 +56,41 @@
         android:orientation="horizontal"
         android:layout_marginTop="8dp">
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ai_correct_word_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="48dp"
             android:src="@drawable/ic_check"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Correct Word"
-            app:tint="?attr/iconColor" />
+            android:background="@android:color/transparent"
+            android:contentDescription="Correct Word" />
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ai_continue_writing_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="48dp"
             android:src="@drawable/ic_continue_writing"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Continue Writing"
-            app:tint="?attr/iconColor" />
+            android:background="@android:color/transparent"
+            android:contentDescription="Continue Writing" />
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ai_answer_copy_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="48dp"
             android:src="@drawable/ic_clipboard"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Copy"
-            app:tint="?attr/iconColor" />
+            android:background="@android:color/transparent"
+            android:contentDescription="Copy" />
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ai_answer_insert_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="48dp"
             android:src="@drawable/ic_return_arrow"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Insert"
-            app:tint="?attr/iconColor" />
+            android:background="@android:color/transparent"
+            android:contentDescription="Insert" />
     </LinearLayout>
 
     <ScrollView
@@ -113,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:textColor="?attr/keyboardKeyTextColor"
+            android:textColor="#000000"
             android:textSize="16sp"
             android:textIsSelectable="true" />
 

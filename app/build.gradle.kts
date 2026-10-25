@@ -32,8 +32,8 @@ android {
         applicationId = "com.iqbal.gurmukhikeyboard50"
         minSdk = 24
         targetSdk = 36
-        versionCode = 78
-        versionName = "1.1.7"
+        versionCode = 85
+        versionName = "1.2.4"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
     }
@@ -50,8 +50,8 @@ android {
         create("nitnem") {
             dimension = "appType"
             applicationId = "com.iqbal.nitnem.punjabi"
-            versionCode = 78
-            versionName = "1.1.7"
+            versionCode = 85
+            versionName = "1.2.4"
             versionNameSuffix = "-nitnem"
             manifestPlaceholders["appLabel"] = "Nitnem Gutka"
             manifestPlaceholders["launcherActivity"] = ".NitnemActivity"
@@ -59,8 +59,8 @@ android {
         create("calendar") {
             dimension = "appType"
             applicationId = "com.iqbal.nanakshahi.calendar"
-            versionCode = 78
-            versionName = "1.1.7"
+            versionCode = 85
+            versionName = "1.2.4"
             versionNameSuffix = "-calendar"
             manifestPlaceholders["appLabel"] = "Nanakshahi Jantri"
             manifestPlaceholders["launcherActivity"] = ".CalendarActivity"
@@ -68,8 +68,8 @@ android {
         create("calculator") {
             dimension = "appType"
             applicationId = "com.iqbal.punjabi.calculator"
-            versionCode = 78
-            versionName = "1.1.7"
+            versionCode = 84
+            versionName = "1.2.3"
             versionNameSuffix = "-calculator"
             manifestPlaceholders["appLabel"] = "Punjabi Calculator"
             manifestPlaceholders["launcherActivity"] = ".CalculatorActivity"
@@ -139,7 +139,7 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.preference:preference-ktx:1.2.1")
     implementation("com.android.volley:volley:1.2.1")
-    
+
     implementation("androidx.media3:media3-exoplayer:1.4.1")
     implementation("androidx.media3:media3-ui:1.4.1")
     implementation("androidx.media3:media3-datasource-okhttp:1.4.1")
@@ -163,6 +163,8 @@ dependencies {
     implementation("com.google.android.play:review-ktx:2.0.2")
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.tom-roush:pdfbox-android:2.0.27.0")
+    implementation("com.github.SUPERCILEX.poi-android:poi:3.17")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")

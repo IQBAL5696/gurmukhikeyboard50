@@ -14,7 +14,7 @@
         android:id="@+id/calculator_display_area"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:background="#B2D3C2"
         android:orientation="vertical"
         android:padding="8dp">
@@ -35,6 +35,16 @@
                 android:textColor="#333333"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/graph_calculator_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toStartOf="@id/settings_calculator_button"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="6dp"
+                android:src="@drawable/ic_play"
+                app:tint="#333333" />
 
             <ImageButton
                 android:id="@+id/settings_calculator_button"
@@ -103,27 +113,25 @@
                 android:fontFamily="monospace" />
         </RelativeLayout>
 
-        <HorizontalScrollView
-            android:id="@+id/display_scroll_view"
+        <EditText
+            android:id="@+id/calculator_display"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:scrollbars="none">
-            <TextView
-                android:id="@+id/calculator_display"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|center_vertical"
-                android:gravity="end"
-                android:text="0"
-                android:textColor="#222222"
-                android:textSize="50sp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="4dp"
-                android:singleLine="true"
-                android:ellipsize="none" />
-        </HorizontalScrollView>
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="end"
+            android:inputType="textNoSuggestions|textVisiblePassword"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:singleLine="true"
+            android:text="0"
+            android:textColor="#222222"
+            android:textCursorDrawable="@drawable/cursor_green"
+            android:textSize="50sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/history_recycler_view_main"
@@ -134,33 +142,72 @@
             android:scrollbars="none" />
     </LinearLayout>
 
-    <!-- Scientific Buttons Row (Hidden by default) -->
     <GridLayout
         android:id="@+id/scientific_row_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="5"
+        android:columnCount="10"
         android:padding="1dp"
         android:visibility="gone">
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_sqrt" style="@style/CalculatorButtonNumber" android:text="√" android:textSize="14sp" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_square" style="@style/CalculatorButtonNumber" android:text="x²" android:textSize="14sp" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_pi" style="@style/CalculatorButtonNumber" android:text="π" android:textSize="14sp" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_e" style="@style/CalculatorButtonNumber" android:text="e" android:textSize="14sp" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_power" style="@style/CalculatorButtonNumber" android:text="^" android:textSize="14sp" />
+        <Button android:id="@+id/button_parenthesis_open" style="@style/CalculatorButtonScientific" android:text="(" />
+        <Button android:id="@+id/button_parenthesis_close" style="@style/CalculatorButtonScientific" android:text=")" />
+        <Button android:id="@+id/button_pi" style="@style/CalculatorButtonScientific" android:text="π" />
+        <Button android:id="@+id/button_e" style="@style/CalculatorButtonScientific" android:text="e" />
+        <Button android:id="@+id/button_square" style="@style/CalculatorButtonScientific" android:text="x²" />
+        <Button android:id="@+id/button_sqrt" style="@style/CalculatorButtonScientific" android:text="√" />
+        <Button android:id="@+id/button_power" style="@style/CalculatorButtonScientific" android:text="^" />
+        <Button android:id="@+id/button_pentagon" style="@style/CalculatorButtonScientific" android:text="Pnt" />
+        <Button android:id="@+id/button_hexagon" style="@style/CalculatorButtonScientific" android:text="Hex" />
+        <Button android:id="@+id/button_factorial" style="@style/CalculatorButtonScientific" android:text="x!" />
     </GridLayout>
 
     <GridLayout
         android:id="@+id/scientific_row_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="5"
+        android:columnCount="10"
         android:padding="1dp"
         android:visibility="gone">
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_sin" style="@style/CalculatorButtonNumber" android:text="sin" android:textSize="12sp" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_cos" style="@style/CalculatorButtonNumber" android:text="cos" android:textSize="12sp" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_tan" style="@style/CalculatorButtonNumber" android:text="tan" android:textSize="12sp" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_log" style="@style/CalculatorButtonNumber" android:text="log" android:textSize="12sp" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_ln" style="@style/CalculatorButtonNumber" android:text="ln" android:textSize="12sp" />
+        <Button android:id="@+id/button_2nd" style="@style/CalculatorButtonScientific" android:text="2nd" />
+        <Button android:id="@+id/button_deg_rad" style="@style/CalculatorButtonScientific" android:text="DEG" />
+        <Button android:id="@+id/button_sin" style="@style/CalculatorButtonScientific" android:text="sin" />
+        <Button android:id="@+id/button_cos" style="@style/CalculatorButtonScientific" android:text="cos" />
+        <Button android:id="@+id/button_tan" style="@style/CalculatorButtonScientific" android:text="tan" />
+        <Button android:id="@+id/button_log" style="@style/CalculatorButtonScientific" android:text="log" />
+        <Button android:id="@+id/button_ln" style="@style/CalculatorButtonScientific" android:text="ln" />
+        <Button android:id="@+id/button_sinh" style="@style/CalculatorButtonScientific" android:text="sinh" />
+        <Button android:id="@+id/button_cosh" style="@style/CalculatorButtonScientific" android:text="cosh" />
+        <Button android:id="@+id/button_tanh" style="@style/CalculatorButtonScientific" android:text="tanh" />
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/scientific_row_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:padding="1dp"
+        android:visibility="gone">
+        <Button android:id="@+id/button_layout" style="@style/CalculatorButtonScientific" android:text="Layout" />
+        <Button android:id="@+id/button_geometry" style="@style/CalculatorButtonScientific" android:text="GEO" />
+        <Button android:id="@+id/button_comma" style="@style/CalculatorButtonScientific" android:text="," />
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/scientific_row_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="9"
+        android:padding="1dp"
+        android:visibility="gone">
+        <Button android:id="@+id/button_x_var" style="@style/CalculatorButtonScientific" android:text="X" />
+        <Button android:id="@+id/button_y_var" style="@style/CalculatorButtonScientific" android:text="Y" />
+        <Button android:id="@+id/button_polynomial" style="@style/CalculatorButtonScientific" android:text="Poly" />
+        <Button android:id="@+id/button_solve" style="@style/CalculatorButtonScientific" android:text="Slv" />
+        <Button android:id="@+id/button_3d_mode" style="@style/CalculatorButtonScientific" android:text="3D" />
+        <Button android:id="@+id/button_spiral" style="@style/CalculatorButtonScientific" android:text="Spr" />
+        <Button android:id="@+id/button_nested" style="@style/CalculatorButtonScientific" android:text="Nst" />
+        <Button android:id="@+id/button_animation" style="@style/CalculatorButtonScientific" android:text="Anim" />
+        <Button android:id="@+id/button_ans" style="@style/CalculatorButtonScientific" android:text="Ans" />
     </GridLayout>
 
     <!-- Buttons Grid -->
@@ -171,73 +218,142 @@
         android:padding="1dp"
         android:rowCount="6">
 
-        <!-- Row 1 -->
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_gst_minus" style="@style/CalculatorButtonBlue" android:text="GST-" />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_gst_18"
-            style="@style/CalculatorButtonBlue"
-            android:textSize="12sp"
-            android:text="18%\nGST" />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_gst_5"
-            style="@style/CalculatorButtonBlue"
-            android:textSize="12sp"
-            android:text="5%\nGST" />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_gst_12"
-            style="@style/CalculatorButtonBlue"
-            android:textSize="12sp"
-            android:text="12%\nGST" />
-        <com.google.android.material.button.MaterialButton
+        <!-- Row 1: GT, +/-, Check, Correct, AC -->
+        <Button
+            android:id="@+id/button_gt"
+            style="@style/CalculatorButtonNumber"
+            android:text="GT" />
+        <Button
+            android:id="@+id/button_plus_minus"
+            style="@style/CalculatorButtonNumber"
+            android:text="+/-" />
+        <Button
+            android:id="@+id/button_check"
+            style="@style/CalculatorButtonNumber"
+            android:textSize="10sp"
+            android:text="CHECK\n▷" />
+        <Button
+            android:id="@+id/button_correct"
+            style="@style/CalculatorButtonNumber"
+            android:textSize="10sp"
+            android:text="CORRECT\n⌫ 0-0" />
+        <Button
             android:id="@+id/button_clear"
             style="@style/CalculatorButtonGreen"
             android:text="AC" />
 
-        <!-- Row 2 -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_check"
+        <!-- Row 2: GST-, 7, 8, 9, ÷ -->
+        <Button
+            android:id="@+id/button_gst_minus"
+            style="@style/CalculatorButtonBlue"
+            android:text="GST-" />
+        <Button
+            android:id="@+id/button_7"
+            style="@style/CalculatorButtonDigit"
+            android:text="7" />
+        <Button
+            android:id="@+id/button_8"
+            style="@style/CalculatorButtonDigit"
+            android:text="8" />
+        <Button
+            android:id="@+id/button_9"
+            style="@style/CalculatorButtonDigit"
+            android:text="9" />
+        <Button
+            android:id="@+id/button_divide"
             style="@style/CalculatorButtonNumber"
-            android:textSize="11sp"
-            android:text="CHECK\n▷" />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_correct"
+            android:text="÷" />
+
+        <!-- Row 3: 18%, 4, 5, 6, X -->
+        <Button
+            android:id="@+id/button_gst_18"
+            style="@style/CalculatorButtonBlue"
+            android:textSize="10sp"
+            android:text="18%\nGST" />
+        <Button
+            android:id="@+id/button_4"
+            style="@style/CalculatorButtonDigit"
+            android:text="4" />
+        <Button
+            android:id="@+id/button_5"
+            style="@style/CalculatorButtonDigit"
+            android:text="5" />
+        <Button
+            android:id="@+id/button_6"
+            style="@style/CalculatorButtonDigit"
+            android:text="6" />
+        <Button
+            android:id="@+id/button_multiply"
             style="@style/CalculatorButtonNumber"
-            android:textSize="11sp"
-            android:text="CORRECT\n⌫ 0-0" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_m_plus" style="@style/CalculatorButtonNumber" android:text="M+" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_m_minus" style="@style/CalculatorButtonNumber" android:text="M-" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_mrc" style="@style/CalculatorButtonNumber" android:text="MRC" />
+            android:text="X" />
 
-        <!-- Row 3 -->
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_7" style="@style/CalculatorButtonDigit" android:text="7" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_8" style="@style/CalculatorButtonDigit" android:text="8" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_9" style="@style/CalculatorButtonDigit" android:text="9" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_divide" style="@style/CalculatorButtonNumber" android:text="÷" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_gt" style="@style/CalculatorButtonNumber" android:text="GT" />
+        <!-- Row 4: 5%, 1, 2, 3, - -->
+        <Button
+            android:id="@+id/button_gst_5"
+            style="@style/CalculatorButtonBlue"
+            android:textSize="10sp"
+            android:text="5%\nGST" />
+        <Button
+            android:id="@+id/button_1"
+            style="@style/CalculatorButtonDigit"
+            android:text="1" />
+        <Button
+            android:id="@+id/button_2"
+            style="@style/CalculatorButtonDigit"
+            android:text="2" />
+        <Button
+            android:id="@+id/button_3"
+            style="@style/CalculatorButtonDigit"
+            android:text="3" />
+        <Button
+            android:id="@+id/button_subtract"
+            style="@style/CalculatorButtonNumber"
+            android:text="-" />
 
-        <!-- Row 4 -->
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_4" style="@style/CalculatorButtonDigit" android:text="4" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_5" style="@style/CalculatorButtonDigit" android:text="5" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_6" style="@style/CalculatorButtonDigit" android:text="6" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_multiply" style="@style/CalculatorButtonNumber" android:text="X" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_plus_minus" style="@style/CalculatorButtonNumber" android:text="+/-" />
-
-        <!-- Row 5 -->
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_1" style="@style/CalculatorButtonDigit" android:text="1" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_2" style="@style/CalculatorButtonDigit" android:text="2" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_3" style="@style/CalculatorButtonDigit" android:text="3" />
-        <com.google.android.material.button.MaterialButton
+        <!-- Row 5: 12%, 0, 00, ., + -->
+        <Button
+            android:id="@+id/button_gst_12"
+            style="@style/CalculatorButtonBlue"
+            android:textSize="10sp"
+            android:text="12%\nGST" />
+        <Button
+            android:id="@+id/button_0"
+            style="@style/CalculatorButtonDigit"
+            android:text="0" />
+        <Button
+            android:id="@+id/button_00"
+            style="@style/CalculatorButtonDigit"
+            android:text="00" />
+        <Button
+            android:id="@+id/button_dot"
+            style="@style/CalculatorButtonDigit"
+            android:text="." />
+        <Button
             android:id="@+id/button_add"
             style="@style/CalculatorButtonNumber"
             android:text="+" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_percent" style="@style/CalculatorButtonNumber" android:text="%" />
 
-        <!-- Row 6 -->
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_0" style="@style/CalculatorButtonDigit" android:text="0" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_00" style="@style/CalculatorButtonDigit" android:text="00" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_dot" style="@style/CalculatorButtonDigit" android:text="." />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_subtract" style="@style/CalculatorButtonNumber" android:text="-" />
-        <com.google.android.material.button.MaterialButton android:id="@+id/button_equals" style="@style/CalculatorButtonNumber" android:text="=" />
+        <!-- Row 6: M+, M-, MRC, %, = -->
+        <Button
+            android:id="@+id/button_m_plus"
+            style="@style/CalculatorButtonNumber"
+            android:text="M+" />
+        <Button
+            android:id="@+id/button_m_minus"
+            style="@style/CalculatorButtonNumber"
+            android:text="M-" />
+        <Button
+            android:id="@+id/button_mrc"
+            style="@style/CalculatorButtonNumber"
+            android:text="MRC" />
+        <Button
+            android:id="@+id/button_percent"
+            style="@style/CalculatorButtonNumber"
+            android:text="%" />
+        <Button
+            android:id="@+id/button_equals"
+            style="@style/CalculatorButtonNumber"
+            android:text="=" />
 
     </GridLayout>
 

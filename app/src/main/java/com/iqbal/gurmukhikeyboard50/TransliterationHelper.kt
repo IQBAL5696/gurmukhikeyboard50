@@ -53,6 +53,12 @@ object TransliterationHelper {
         }
     }
 
+    fun getMatchingKeys(prefix: String): List<String> {
+        if (prefix.isBlank()) return emptyList()
+        val lower = prefix.lowercase()
+        return overrideDictionary.keys.filter { it.startsWith(lower) }.take(10)
+    }
+
     fun learnWord(roman: String, gurmukhi: String) { learnedMap[roman.lowercase()] = gurmukhi }
 
     fun transliterate(input: String): String {

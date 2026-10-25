@@ -41,24 +41,34 @@ object PdfManager {
         }
     }
 
-    fun openPdf(context: Context, fileName: String) {
-        val file = when {
-            fileName.startsWith("/") -> File(fileName)
-            File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName).exists() -> 
-                File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
-            else -> File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName)
-        }
+    fun openPdf(context: Context, pathOrName: String) {
+        val isUri = pathOrName.startsWith("content://") || pathOrName.startsWith("file://")
         
-        if (!file.exists()) {
+        val file = if (!isUri) {
+            when {
+                pathOrName.startsWith("/") -> File(pathOrName)
+                File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), pathOrName).exists() -> 
+                    File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), pathOrName)
+                else -> File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), pathOrName)
+            }
+        } else null
+
+        if (file != null && !file.exists()) {
             Toast.makeText(context, "ਫਾਈਲ ਨਹੀਂ ਲੱਭੀ", Toast.LENGTH_SHORT).show()
             return
         }
 
         try {
             val intent = Intent(context, PdfViewerActivity::class.java).apply {
-                putExtra("pdf_path", file.absolutePath)
-                putExtra("pdf_name", file.name.replace(".pdf", "").replace("_", " ")
-                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
+                if (file != null) {
+                    putExtra("pdf_path", file.absolutePath)
+                    putExtra("pdf_name", file.name.replace(".pdf", "").replace("_", " ")
+                        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() })
+                } else {
+                    data = Uri.parse(pathOrName)
+                    putExtra("pdf_path", pathOrName)
+                    putExtra("pdf_name", "PDF Document")
+                }
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             context.startActivity(intent)

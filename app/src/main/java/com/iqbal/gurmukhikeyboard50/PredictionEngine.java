@@ -67,6 +67,15 @@ public class PredictionEngine {
         normalizedList.add(0, normalizeGurmukhi(word));
     }
 
+    public synchronized void removeWord(String word) {
+        if (word == null || word.isEmpty()) return;
+        int idx = dictionaryList.indexOf(word);
+        if (idx != -1) {
+            dictionaryList.remove(idx);
+            normalizedList.remove(idx);
+        }
+    }
+
     public synchronized boolean isWordInDictionary(String word) {
         if (word == null) return false;
         return dictionaryList.contains(word);
@@ -77,10 +86,8 @@ public class PredictionEngine {
         if (typed == null || typed.isEmpty()) return results;
 
         synchronized (this) {
-            // 1. Single Character Triggers
-            if (typed.length() == 1) {
-                handleSingleCharTriggers(typed, results);
-            } else if (typed.endsWith(HALANT)) {
+            // 1. Matra/Halant logic (Stays as it handles active typing structure)
+            if (typed.endsWith(HALANT)) {
                 results.add(typed + HAHA);
                 results.add(typed + HALANT + KANNA);
                 results.add(typed + HAHA + BIHARI);
@@ -90,9 +97,9 @@ public class PredictionEngine {
                 results.add(typed + BIHARI);
             }
 
-            // 2. Exact Prefix Matches (Priority)
+            // 2. Exact Prefix Matches (Priority) - These come from dictionaryList (paragraphs)
             for (String w : dictionaryList) {
-                if (w.startsWith(typed)) {
+                if (w.length() >= 2 && w.startsWith(typed)) {
                     if (!results.contains(w)) {
                         results.add(w);
                     }
@@ -118,224 +125,6 @@ public class PredictionEngine {
             }
         }
         return results;
-    }
-
-    private void handleSingleCharTriggers(String typed, List<String> results) {
-        switch (typed) {
-            case "ਮ":
-                results.add("ਮੈਂ");
-                results.add("ਮੈਨੂੰ");
-                results.add("ਮੇਰਾ");
-                results.add("ਮੇਰੇ");
-                results.add("ਮੇਰੀ");
-                break;
-            case "ੳ":
-                results.add("ਉਹ");
-                results.add("ਉਸ");
-                results.add("ਉੱਤੇ");
-                results.add("ਉਦਾਹਰਨ");
-                results.add("ਉਸਾਰੀ");
-                results.add("ਉਡੀਕ");
-                results.add("ਉਤਸ਼ਾਹ");
-                break;
-            case "ੲ":
-                results.add("ਇਹ");
-                results.add("ਇਸ");
-                results.add("ਇੱਕ");
-                results.add("ਇੱਥੇ");
-                results.add("ਇਵੇਂ");
-                results.add("ਇਮਾਨਦਾਰੀ");
-                break;
-            case "ਸ":
-                results.add("ਸ੍ਰੀ");
-                results.add("ਸਤਿ");
-                results.add("ਸਾਡਾ");
-                results.add("ਸਭ");
-                results.add("ਸਕੂਲ");
-                break;
-            case "ਹ":
-                results.add("ਹੋਰ");
-                results.add("ਹਾਲ");
-                results.add("ਹਾਲੇ");
-                results.add("ਹਮੇਸ਼ਾ");
-                break;
-            case "ਗ":
-                results.add("ਗੁਰੂ");
-                results.add("ਗਏ");
-                results.add("ਗੱਲ");
-                results.add("ਗੱਡੀ");
-                results.add("ਗੁਰਦੁਆਰੇ");
-                break;
-            case "ਚ":
-                results.add("ਚਾਹ");
-                results.add("ਚੱਲੋ");
-                results.add("ਚੰਗਾ");
-                results.add("ਚਾਹੀਦਾ");
-                results.add("ਚਿੱਠੀ");
-                break;
-            case "ਦ":
-                results.add("ਦੱਸੋ");
-                results.add("ਦੇਸ਼");
-                results.add("ਦੋਸਤ");
-                results.add("ਦੁਕਾਨ");
-                results.add("ਦਵਾਈ");
-                break;
-            case "ਨ":
-                results.add("ਨਹੀਂ");
-                results.add("ਨਾਮ");
-                results.add("ਨਾਲ");
-                results.add("ਨਵਾਂ");
-                results.add("ਨੌਕਰੀ");
-                break;
-            case "ਬ":
-                results.add("ਬਹੁਤ");
-                results.add("ਬੱਚੇ");
-                results.add("ਬੱਸ");
-                results.add("ਬੋਲੋ");
-                results.add("ਬਾਜ਼ਾਰ");
-                break;
-            case "ਲ":
-                results.add("ਲਓ");
-                results.add("ਲਿਆਓ");
-                results.add("ਲਾਲ");
-                results.add("ਲੰਮੀ");
-                results.add("ਲੜਕੀ");
-                break;
-            case "ਵ":
-                results.add("ਵਾਹਿਗੁਰੂ");
-                results.add("ਵਧੀਆ");
-                results.add("ਵਾਲਾ");
-                results.add("ਵਿੱਚ");
-                results.add("ਵਿਆਹ");
-                break;
-            case "ਰ":
-                results.add("ਰੋਟੀ");
-                results.add("ਰਸਤਾ");
-                results.add("ਰੱਖੋ");
-                results.add("ਰੰਗ");
-                results.add("ਰਿਸ਼ਤਾ");
-                break;
-            case "ਖ":
-                results.add("ਖਾਣਾ");
-                results.add("ਖੁਸ਼");
-                results.add("ਖੇਡ");
-                results.add("ਖਤਮ");
-                results.add("ਖੂਹ");
-                break;
-            case "ਫ":
-                results.add("ਫਲ");
-                results.add("ਫੁੱਲ");
-                results.add("ਫੋਨ");
-                results.add("ਫੜੋ");
-                results.add("ਫਰਕ");
-                break;
-            case "ਭ":
-                results.add("ਭਰਾ");
-                results.add("ਭੈਣ");
-                results.add("ਭਾਰਤ");
-                results.add("ਭੁੱਲ");
-                results.add("ਭੇਜੋ");
-                break;
-            case "ਧ":
-                results.add("ਧੰਨਵਾਦ");
-                results.add("ਧਿਆਨ");
-                results.add("ਧੀ");
-                results.add("ਧਰਮ");
-                results.add("ਧੁੱਪ");
-                break;
-            case "ਟ":
-                results.add("ਟਾਇਮ");
-                results.add("ਟਿਕਟ");
-                results.add("ਟੁੱਟ");
-                break;
-            case "ਯ":
-                results.add("ਯਾਦ");
-                results.add("ਯਕੀਨ");
-                results.add("ਯੋਜਨਾ");
-                break;
-            case "ਥ":
-                results.add("ਥਾਂ");
-                results.add("ਥੋੜਾ");
-                results.add("ਥੱਲੇ");
-                break;
-            case "ਅ":
-                results.add("ਅੱਜ");
-                results.add("ਅਸੀਂ");
-                results.add("ਆਪਣਾ");
-                break;
-            case "ਉ":
-                results.add("ਉਹ");
-                results.add("ਉਸ");
-                results.add("ਉਪਰ");
-                break;
-            case "ਕ":
-                results.add("ਕੀ");
-                results.add("ਕਿਉਂ");
-                results.add("ਕਦੋਂ");
-                results.add("ਕਿਵੇਂ");
-                results.add("ਕੰਮ");
-                results.add("ਕੋਈ");
-                break;
-            case "ਤ":
-                results.add("ਤੁਸੀਂ");
-                results.add("ਤੂੰ");
-                results.add("ਤੁਹਾਡਾ");
-                results.add("ਤੈਨੂੰ");
-                results.add("ਤੇਰੇ");
-                break;
-            case "ਜ":
-                results.add("ਜੀ");
-                results.add("ਜਦੋਂ");
-                results.add("ਜਲਦੀ");
-                results.add("ਜਿੱਥੇ");
-                results.add("ਜਿਵੇਂ");
-                results.add("ਜੋ");
-                break;
-            case "ਘ":
-                results.add("ਘਰ");
-                results.add("ਘੜੀ");
-                results.add("ਘੱਟ");
-                results.add("ਘਰਵਾਲੇ");
-                break;
-            case "ਛ":
-                results.add("ਛੋਟਾ");
-                results.add("ਛੁੱਟੀ");
-                results.add("ਛੇਤੀ");
-                results.add("ਛੱਡੋ");
-                break;
-            case "ਝ":
-                results.add("ਝੂਠ");
-                results.add("ਝਟਕਾ");
-                results.add("ਝੰਡਾ");
-                break;
-            case "ਠ":
-                results.add("ਠੀਕ");
-                results.add("ਠੰਢ");
-                results.add("ਠਹਿਰੋ");
-                break;
-            case "ਡ":
-                results.add("ਡਾਕਟਰ");
-                results.add("ਡਰ");
-                results.add("ਡੰਡਾ");
-                results.add("ਡਿੱਗ");
-                break;
-            case "ਢ":
-                results.add("ਢਿੱਲ");
-                results.add("ਢੇਰ");
-                results.add("ਢਾਹੁਣ");
-                break;
-            case "ਸ਼":
-                results.add("ਸ਼ਹਿਰ");
-                results.add("ਸ਼ਾਮ");
-                results.add("ਸ਼ੁੱਕਰਵਾਰ");
-                results.add("ਸ਼ਾਇਦ");
-                break;
-            case "ਜ਼":
-                results.add("ਜ਼ਰੂਰ");
-                results.add("ਜ਼ਮੀਨ");
-                results.add("ਜ਼ਿੰਦਗੀ");
-                break;
-        }
     }
 
     private String normalizeGurmukhi(String word) {
@@ -369,7 +158,7 @@ public class PredictionEngine {
                 Log.w(TAG, "Dictionary is empty!");
             }
             for (String w : dictionaryList) {
-                if (w.length() < 2) continue;
+                if (w.isEmpty()) continue;
                 String lowW = w.toLowerCase();
                 
                 // Relaxed start/end check: Word starts with first character of path 

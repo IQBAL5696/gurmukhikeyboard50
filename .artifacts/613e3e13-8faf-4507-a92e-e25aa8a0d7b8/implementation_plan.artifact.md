@@ -1,48 +1,31 @@
-# Implementation Plan - Scientific Calculator Mode
+# Implementation Plan - Strictly Paragraph-Based Suggestions
 
-This plan adds a "Scientific Mode" toggle to the calculator settings. When enabled, it reveals additional scientific function buttons (sqrt, x², sin, cos, tan, π, e, etc.) for both the standalone app and the keyboard panel.
-
-## User Review Required
-
-> [!IMPORTANT]
-> The scientific mode will add an extra row of buttons. In the keyboard popup panel, this will increase the overall height of the calculator area.
+This plan ensures that all keyboard suggestions and inline "ghost text" come exclusively from the provided `paragraph.txt` and `common_paragraphs.txt` files, ignoring hardcoded lists and external learned words.
 
 ## Proposed Changes
 
-### Configuration & Settings
+### Prediction Engine
 
-#### [MODIFY] [dialog_calculator_settings.xml](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/res/layout/dialog_calculator_settings.xml)
-- Add a `SwitchMaterial` for `scientific_mode` with label "Scientific Calculator".
+#### [MODIFY] [PredictionEngine.java](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/java/com/iqbal/gurmukhikeyboard50/PredictionEngine.java)
+- Remove the hardcoded `switch-case` block that injects priority words for single characters like 'ਮ', 'ੳ', 'ੲ', etc.
+- This ensures that if a word isn't in the paragraph, it won't be suggested just because its first letter was typed.
 
-### UI Components
+### IME Logic
 
-#### [MODIFY] [activity_calculator.xml](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/res/layout/activity_calculator.xml)
-- Add a new `GridLayout` or `LinearLayout` row for scientific buttons: `√`, `x²`, `sin`, `cos`, `tan`, `log`, `π`.
-- Set `android:visibility="collapsed"` by default.
+#### [MODIFY] [MyKeyboardIME.kt](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/java/com/iqbal/gurmukhikeyboard50/MyKeyboardIME.kt)
+- In `updateSuggestions`, modify the merging logic:
+    - Prioritize `mainCompletions` (strictly from paragraphs).
+    - Remove or de-prioritize `dbSuggestions` (learned words) to ensure the paragraph content is the primary driver.
+    - Update the "Ghost Text" selection to only pick words that exist in the `MainSource` (Paragraphs).
 
-#### [MODIFY] [calculator_panel_layout.xml](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/res/layout/calculator_panel_layout.xml)
-- Add identical scientific buttons row with `android:visibility="collapsed"`.
+### Language Model
 
-### Logic Implementation
-
-#### [MODIFY] [CalculatorActivity.kt](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/java/com/iqbal/gurmukhikeyboard50/CalculatorActivity.kt)
-- Update `showQuickSettingsDialog` to handle the `scientific_mode` switch.
-- Update `applyScientificMode(isEnabled: Boolean)` to show/hide the scientific buttons.
-- Implement click listeners for scientific buttons.
-    - `√`, `x²`, `sin`, `cos`, `tan`, `log`: Apply unary operation to the current input value using `kotlin.math` and update `currentInput`.
-    - `π`, `e`: Set `currentInput` to the constant value.
-- Update `applyCalculatorTheme` to style the new buttons.
-
-#### [MODIFY] [CalculatorPanel.kt](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/java/com/iqbal/gurmukhikeyboard50/CalculatorPanel.kt)
-- Implement identical logic for settings toggle, visibility, and button functionality.
+#### [MODIFY] [PunjabiNextWordLM.kt](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/java/com/iqbal/gurmukhikeyboard50/PunjabiNextWordLM.kt)
+- Update the `defaults` map to be empty or contain only entries confirmed to be in the paragraph. (Better: remove the hardcoded triggers entirely).
 
 ## Verification Plan
 
 ### Manual Verification
-1. Open Calculator Settings and enable "Scientific Calculator".
-2. Verify that a new row of buttons appears.
-3. Test `√` with a number (e.g., `9` -> `3`).
-4. Test `sin`, `cos`, `tan` (ensure they interpret input as degrees or radians - usually degrees for simple calculators).
-5. Test `π` and `e` buttons.
-6. Verify themes apply correctly to new buttons.
-7. Verify that the keyboard popup panel also supports these functions when enabled.
+- Deploy the app.
+- Type a character that is NOT the start of any word in your paragraph. Verify no suggestions appear.
+- Type a character that IS in the paragraph. Verify only words from the paragraph appear as ghost text and in the suggestion bar.

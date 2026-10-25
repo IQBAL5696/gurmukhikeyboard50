@@ -112,6 +112,13 @@ class MyKeyboard : Keyboard {
         val attributes = parser.let { res.obtainAttributes(it, R.styleable.MyKey) }
         key.shiftedCode = attributes.getInteger(R.styleable.MyKey_shiftedCode, 0)
         key.forPackage = attributes.getString(R.styleable.MyKey_forPackage)
+        
+        // Capture original state again to be absolutely sure
+        if (key.codes.isNotEmpty()) {
+            key.originalCode = key.codes[0]
+        }
+        key.originalLabel = key.label
+        
         attributes.recycle()
         return key
     }
@@ -131,12 +138,23 @@ class MyKeyboard : Keyboard {
 
         for (key in keys) {
             val myKey = key as? MyKey ?: continue
-            if (myKey.codes.isEmpty() || myKey.originalCode == 0) continue
+            // Relaxed check: as long as it's a MyKey, we attempt to handle it if it has a shiftedCode
+            if (myKey.codes.isEmpty()) continue
+            
+            // Fix: Ensure originalCode and originalLabel are captured
+            if (myKey.originalCode == 0) {
+                myKey.originalCode = myKey.codes[0]
+            }
+            if (myKey.originalLabel == null) {
+                myKey.originalLabel = myKey.label
+            }
 
             if (isShiftedNewState) {
                 if (myKey.shiftedCode != 0) {
-                    myKey.codes[0] = myKey.shiftedCode
+                    myKey.codes = intArrayOf(myKey.shiftedCode)
+                    // Priority fix for 'ਥ' (2597) to ensure it doesn't get mislabeled
                     when (myKey.shiftedCode) {
+                        2597 -> myKey.label = "ਥ"
                         -2002 -> myKey.label = "ਾਂ"
                         -2003 -> myKey.label = "੍ਰ"
                         -2004 -> myKey.label = "੍ਹ"
@@ -148,11 +166,11 @@ class MyKeyboard : Keyboard {
                     val originalLabel = myKey.originalLabel
                     if (originalLabel != null && originalLabel.length == 1 && Character.isLetter(originalLabel[0])) {
                         myKey.label = originalLabel.toString().uppercase()
-                        myKey.codes[0] = myKey.originalCode.toChar().uppercaseChar().code
+                        myKey.codes = intArrayOf(myKey.originalCode.toChar().uppercaseChar().code)
                     }
                 }
             } else {
-                myKey.codes[0] = myKey.originalCode
+                myKey.codes = intArrayOf(myKey.originalCode)
                 myKey.label = myKey.originalLabel
             }
         }

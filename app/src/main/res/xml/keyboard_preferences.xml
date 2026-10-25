@@ -73,7 +73,7 @@
             android:summary="ਕੀਬੋਰਡ ਦਾ ਰੰਗ ਬਦਲੋ"
             android:entries="@array/theme_entries"
             android:entryValues="@array/theme_values"
-            android:defaultValue="light"
+            android:defaultValue="system"
             app:useSimpleSummaryProvider="true"/>
 
         <Preference
@@ -154,6 +154,15 @@
             android:defaultValue="4"
             app:showSeekBarValue="true"
             android:summary="ਬਟਨਾਂ ਦੇ ਆਪਸੀ ਫਾਸਲੇ ਨੂੰ ਘਟਾਓ ਜਾਂ ਵਧਾਓ" />
+
+        <SeekBarPreference
+            android:key="pref_bottom_margin"
+            android:title="Bottom Nav Space (ਹੇਠਲਾ ਫਾਸਲਾ)"
+            android:max="100"
+            app:min="0"
+            android:defaultValue="0"
+            app:showSeekBarValue="true"
+            android:summary="ਨੇਵੀਗੇਸ਼ਨ ਬਟਨਾਂ ਤੋਂ ਬਚਣ ਲਈ ਹੇਠਾਂ ਖਾਲੀ ਥਾਂ ਵਧਾਓ" />
 
     </PreferenceCategory>
 
@@ -246,6 +255,13 @@
             android:key="pref_next_word_prediction"
             android:title="Next Word Prediction (ਅਗਲਾ ਸ਼ਬਦ ਸੁਝਾਅ)"
             android:summary="ਤੁਹਾਡੇ ਲਿਖਣ ਦੇ ਅੰਦਾਜ਼ ਮੁਤਾਬਕ ਅਗਲਾ ਸ਼ਬਦ ਦਾ ਅੰਦਾਜ਼ਾ ਲਗਾਓ"
+            android:defaultValue="true"
+            android:dependency="pref_show_suggestions" />
+
+        <SwitchPreferenceCompat
+            android:key="pref_show_inline_suggestions"
+            android:title="Inline Suggestions (ਸ਼ਬਦ ਦੇ ਨਾਲ ਸਹੀ ਸ਼ਬਦ ਦਿਖਾਓ)"
+            android:summary="ਟਾਈਪ ਕਰਦੇ ਸਮੇਂ ਐਡੀਟਰ ਦੇ ਅੰਦਰ ਹੀ ਹਲਕੇ ਰੰਗ ਵਿੱਚ ਸਹੀ ਸ਼ਬਦ ਦਿਖਾਓ"
             android:defaultValue="true"
             android:dependency="pref_show_suggestions" />
 

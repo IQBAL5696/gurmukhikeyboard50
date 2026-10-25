@@ -3,6 +3,7 @@ package com.iqbal.gurmukhikeyboard50
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ class ZoomableRecyclerView @JvmOverloads constructor(
 
     private var scaleFactor = 1f
     private val scaleDetector = ScaleGestureDetector(context, ScaleListener())
+    private val gestureDetector = GestureDetector(context, GestureListener())
 
     private var translateX = 0f
     private var translateY = 0f
@@ -22,7 +24,34 @@ class ZoomableRecyclerView @JvmOverloads constructor(
     private var lastTouchY = 0f
     private var activePointerId = -1
 
+    var onSingleTapListener: (() -> Unit)? = null
+
+    fun resetZoom() {
+        scaleFactor = 1f
+        translateX = 0f
+        translateY = 0f
+        invalidate()
+    }
+
+    fun isZoomedIn(): Boolean = scaleFactor > 1.05f
+
+    fun getScaleFactor(): Float = scaleFactor
+
+    fun focusOnPoint(targetX: Float, targetY: Float, targetScale: Float = 2.0f) {
+        val viewWidth = width.toFloat()
+        val viewHeight = height.toFloat()
+        if (viewWidth <= 0f || viewHeight <= 0f) return
+
+        scaleFactor = targetScale.coerceIn(1.0f, 5.0f)
+        translateX = (viewWidth / 2f) - (targetX * scaleFactor)
+        translateY = (viewHeight / 2f) - (targetY * scaleFactor)
+
+        limitTranslation()
+        invalidate()
+    }
+
     override fun onTouchEvent(ev: MotionEvent): Boolean {
+        gestureDetector.onTouchEvent(ev)
         scaleDetector.onTouchEvent(ev)
 
         when (ev.actionMasked) {
@@ -42,13 +71,21 @@ class ZoomableRecyclerView @JvmOverloads constructor(
                         val dy = y - lastTouchY
 
                         translateX += dx
+
+                        val oldY = translateY
                         translateY += dy
-                        
-                        // Limit panning to keep image in view
+
                         limitTranslation()
+
+                        val consumedY = translateY - oldY
+                        val unconsumedY = dy - consumedY
+
+                        if (kotlin.math.abs(unconsumedY) > 0.5f) {
+                            scrollBy(0, -unconsumedY.toInt())
+                        }
+
                         invalidate()
-                        
-                        // Consume event if zoomed in to prevent swiping pages while panning
+
                         lastTouchX = x
                         lastTouchY = y
                         return true
@@ -86,10 +123,10 @@ class ZoomableRecyclerView @JvmOverloads constructor(
     private fun limitTranslation() {
         val width = width.toFloat()
         val height = height.toFloat()
-        
+
         val maxWidth = (scaleFactor - 1) * width
         val maxHeight = (scaleFactor - 1) * height
-        
+
         translateX = translateX.coerceIn(-maxWidth, 0f)
         translateY = translateY.coerceIn(-maxHeight, 0f)
     }
@@ -107,7 +144,6 @@ class ZoomableRecyclerView @JvmOverloads constructor(
             scaleFactor *= detector.scaleFactor
             scaleFactor = scaleFactor.coerceIn(1.0f, 5.0f)
 
-            // Keep the zoom centered on the focal point
             val focusX = detector.focusX
             val focusY = detector.focusY
             translateX -= focusX * (detector.scaleFactor - 1) * scaleFactor
@@ -119,8 +155,25 @@ class ZoomableRecyclerView @JvmOverloads constructor(
         }
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        // Clean up if needed
+    private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
+        override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+            onSingleTapListener?.invoke()
+            return true
+        }
+
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            if (scaleFactor > 1.2f) {
+                resetZoom()
+            } else {
+                scaleFactor = 2.5f
+                val focusX = e.x
+                val focusY = e.y
+                translateX = -focusX * (scaleFactor - 1)
+                translateY = -focusY * (scaleFactor - 1)
+                limitTranslation()
+                invalidate()
+            }
+            return true
+        }
     }
 }

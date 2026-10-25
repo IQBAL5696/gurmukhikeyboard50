@@ -89,6 +89,8 @@ class YearAdapter(
         val shape = GradientDrawable()
         shape.cornerRadius = 28f // Extra rounded for elegance
 
+        val isDark = CalendarThemeHelper.isDarkMode(holder.itemView.context)
+
         if (year == selectedYear) {
             // Selected: Premium Gold/Orange Gradient with Ring effect
             shape.colors = intArrayOf(
@@ -105,13 +107,17 @@ class YearAdapter(
             holder.yearText.scaleX = 1.1f
             holder.yearText.scaleY = 1.1f
         } else {
-            // Unselected: Soft, Graceful Palette
-            val colorIndex = position % colorPalette.size
-            shape.setColor(Color.parseColor(colorPalette[colorIndex]))
-            shape.setStroke(3, Color.parseColor(strokeColors[colorIndex]))
-            
+            if (isDark) {
+                shape.setColor(Color.parseColor("#2C2C2E"))
+                shape.setStroke(3, Color.parseColor("#3A3A3C"))
+                holder.yearText.setTextColor(Color.parseColor("#E0E0E0"))
+            } else {
+                val colorIndex = position % colorPalette.size
+                shape.setColor(Color.parseColor(colorPalette[colorIndex]))
+                shape.setStroke(3, Color.parseColor(strokeColors[colorIndex]))
+                holder.yearText.setTextColor(Color.parseColor("#5D4037")) // Professional Brown
+            }
             holder.yearText.background = shape
-            holder.yearText.setTextColor(Color.parseColor("#5D4037")) // Professional Brown
             holder.yearText.elevation = 3f
             holder.yearText.scaleX = 1.0f
             holder.yearText.scaleY = 1.0f

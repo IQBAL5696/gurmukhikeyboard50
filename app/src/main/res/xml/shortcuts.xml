@@ -13,4 +13,78 @@
             android:targetClass="com.iqbal.gurmukhikeyboard50.NitnemActivity" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
+    <shortcut
+        android:shortcutId="calendar"
+        android:enabled="true"
+        android:icon="@drawable/ic_calender"
+        android:shortcutShortLabel="@string/shortcut_calendar_short"
+        android:shortcutLongLabel="@string/shortcut_calendar_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled_msg">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.iqbal.gurmukhikeyboard50"
+            android:targetClass="com.iqbal.gurmukhikeyboard50.CalendarActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="calculator"
+        android:enabled="true"
+        android:icon="@drawable/ic_calculator"
+        android:shortcutShortLabel="@string/shortcut_calculator_short"
+        android:shortcutLongLabel="@string/shortcut_calculator_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled_msg">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.iqbal.gurmukhikeyboard50"
+            android:targetClass="com.iqbal.gurmukhikeyboard50.CalculatorActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="image_to_text"
+        android:enabled="true"
+        android:icon="@drawable/ic_camera"
+        android:shortcutShortLabel="@string/shortcut_image_to_text_short"
+        android:shortcutLongLabel="@string/shortcut_image_to_text_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled_msg">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.iqbal.gurmukhikeyboard50"
+            android:targetClass="com.iqbal.gurmukhikeyboard50.ImageToTextActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="translator_manager"
+        android:enabled="true"
+        android:icon="@drawable/ic_translate"
+        android:shortcutShortLabel="@string/shortcut_translator_manager_short"
+        android:shortcutLongLabel="@string/shortcut_translator_manager_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled_msg">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.iqbal.gurmukhikeyboard50"
+            android:targetClass="com.iqbal.gurmukhikeyboard50.TranslatorActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="live_darbar_sahib"
+        android:enabled="true"
+        android:icon="@drawable/ik_onkar_svg"
+        android:shortcutShortLabel="@string/shortcut_live_darbar_sahib_short"
+        android:shortcutLongLabel="@string/shortcut_live_darbar_sahib_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled_msg">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.iqbal.gurmukhikeyboard50"
+            android:targetClass="com.iqbal.gurmukhikeyboard50.LiveDarbarSahibActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="pdf_reader"
+        android:enabled="true"
+        android:icon="@drawable/ic_library"
+        android:shortcutShortLabel="@string/shortcut_pdf_reader_short"
+        android:shortcutLongLabel="@string/shortcut_pdf_reader_long"
+        android:shortcutDisabledMessage="@string/shortcut_disabled_msg">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.iqbal.gurmukhikeyboard50"
+            android:targetClass="com.iqbal.gurmukhikeyboard50.NitnemActivity">
+            <extra android:name="open_pdf_books" android:value="true" />
+        </intent>
+    </shortcut>
 </shortcuts>

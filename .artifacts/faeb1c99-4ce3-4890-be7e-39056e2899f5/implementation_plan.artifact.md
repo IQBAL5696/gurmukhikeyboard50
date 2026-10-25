@@ -1,23 +1,25 @@
-# Implementation Plan - New Line after ੴ in Nitnem
+# Implementation Plan - Add "Daily Life Lessons from Gurbani" Section
 
-The user wants the Gurbani text starting from "ੴ ਸਤਿਨਾਮੁ ..." to show the rest of the Bani in the next line. This will be implemented by ensuring that the "ੴ" symbol is followed by a newline, making it a standalone header, and ensuring proper separation between the initial invocation and the main text.
+Add a new section to the Nitnem panel that displays inspiring and educational verses from Gurbani with their meanings and life lessons.
 
 ## Proposed Changes
 
-### [Gurbani UI Component]
+### [Nitnem Component]
 
-#### [MODIFY] [GurbaniUIUtils.kt](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/java/com/iqbal/gurmukhikeyboard50/GurbaniUIUtils.kt)
-- Update `applyIkOnkarToSpannable` to insert a newline (`\n`) after the "ੴ" symbol instead of using a Word Joiner or Non-breaking space. This will push "ਸਤਿਨਾਮੁ" (or any following text) to the next line.
-
-#### [MODIFY] [GurbaniSearchHelper.kt](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/java/com/iqbal/gurmukhikeyboard50/GurbaniSearchHelper.kt)
-- Update `getGurbaniSpannable` to ensure that even in Larivaar mode, if a sentence starts with "ੴ", it is followed by a newline to maintain the traditional header appearance.
-- Ensure that the "॥" verse markers for headings (like `॥ ਜਪੁ ॥`) are also followed by a newline if they appear at the start of the Bani.
+#### [MODIFY] [NitnemEngine.kt](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/java/com/iqbal/gurmukhikeyboard50/NitnemEngine.kt)
+- **Add Menu Item**: Add "ਜੀਵਨ ਸਿੱਖਿਆ (Gurbani Life Lessons)" to the main Nitnem menu list.
+- **Implementation**:
+    - Create `showGurbaniLessonsDialog(anchorView: View?)`.
+    - This dialog will load data from the newly created `daily_educational_verses.json`.
+    - Use a `RecyclerView` to display the list of verses in a beautiful "framed card" format.
+    - Each card will show the Gurbani verse, its simple meaning, and the practical life lesson.
+- **Styling**: Ensure the UI matches the established "Photo Frame" theme and supports Light/Dark modes.
 
 ## Verification Plan
 
 ### Manual Verification
-- Open Nitnem (e.g., Japji Sahib).
-- Verify that "ੴ" is displayed at the top center on its own line.
-- Verify that "ਸਤਿਨਾਮੁ..." starts on the line below "ੴ".
-- Toggle between Pad-ched and Larivaar modes and verify the "ੴ" still acts as a header.
-- Check other Banis (Rehras Sahib, Anand Sahib) to ensure the opening "ੴ" or "ੴ ਸਤਿਗੁਰ ਪ੍ਰਸਾਦਿ ॥" is correctly formatted.
+1.  Open the Nitnem section.
+2.  Find and click on **"ਜੀਵਨ ਸਿੱਖਿਆ (Gurbani Life Lessons)"**.
+3.  Verify that a list of verses appears.
+4.  Check that each verse clearly shows its meaning and the lesson for daily life.
+5.  Test theme switching to ensure colors adapt correctly.

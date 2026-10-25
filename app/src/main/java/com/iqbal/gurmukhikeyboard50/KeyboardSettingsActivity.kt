@@ -6,21 +6,27 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
 
 class KeyboardSettingsActivity : AppCompatActivity() {
 
-    private lateinit var appUpdateManager: AppUpdateManager
-    private val UPDATE_REQUEST_CODE = 123
+    private lateinit var updateHelper: UpdateHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_keyboard_settings)
+
+        val rootLayout: View = findViewById(R.id.keyboard_settings_root)
+        ViewCompat.setOnApplyWindowInsetsListener(rootLayout) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         val toolbar: MaterialToolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -51,48 +57,19 @@ class KeyboardSettingsActivity : AppCompatActivity() {
         }
 
         // Check for updates
-        appUpdateManager = AppUpdateManagerFactory.create(this)
-        checkForUpdates(updateDot)
+        updateHelper = UpdateHelper(this)
+        updateHelper.checkForUpdate()
 
         updateDot.setOnClickListener {
-            startUpdate()
-        }
-    }
-
-    private fun checkForUpdates(updateDot: View) {
-        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
-            ) {
-                updateDot.visibility = View.VISIBLE
-                Toast.makeText(this, "ਨਵਾਂ ਅਪਡੇਟ ਮੌਜੂਦ ਹੈ!", Toast.LENGTH_SHORT).show()
-            } else {
-                updateDot.visibility = View.GONE
-            }
-        }
-    }
-
-    private fun startUpdate() {
-        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
-            ) {
-                appUpdateManager.startUpdateFlowForResult(
-                    appUpdateInfo,
-                    AppUpdateType.IMMEDIATE,
-                    this,
-                    UPDATE_REQUEST_CODE
-                )
-            }
+            updateHelper.checkForUpdate()
         }
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == UPDATE_REQUEST_CODE) {
+        updateHelper.handleActivityResult(requestCode, resultCode, data)
+        if (requestCode == 999) { // 999 is the request code in UpdateHelper
             if (resultCode != RESULT_OK) {
                 Toast.makeText(this, "ਅਪਡੇਟ ਰੱਦ ਕਰ ਦਿੱਤੀ ਗਈ", Toast.LENGTH_SHORT).show()
             }
@@ -101,15 +78,6 @@ class KeyboardSettingsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                appUpdateManager.startUpdateFlowForResult(
-                    appUpdateInfo,
-                    AppUpdateType.IMMEDIATE,
-                    this,
-                    UPDATE_REQUEST_CODE
-                )
-            }
-        }
+        updateHelper.handleOnResume()
     }
 }

@@ -12,6 +12,33 @@
         <item name="candidatesBackground">#FFFFFF</item>
         <item name="candidatesTextColor">#000000</item>
         <item name="iconColor">#000000</item>
+        <item name="iconBackspace">@drawable/ic_backspace</item>
+
+        <!-- Material 3 required attributes for compatibility -->
+        <item name="colorPrimary">#6750A4</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#EADDFF</item>
+        <item name="colorOnPrimaryContainer">#21005D</item>
+        <item name="colorSecondary">#625B71</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#E8DEF8</item>
+        <item name="colorOnSecondaryContainer">#1D192B</item>
+        <item name="colorTertiary">#7D5260</item>
+        <item name="colorOnTertiary">#FFFFFF</item>
+        <item name="colorTertiaryContainer">#FFD8E4</item>
+        <item name="colorOnTertiaryContainer">#31111D</item>
+        <item name="colorSurface">#FEF7FF</item>
+        <item name="colorOnSurface">#1D1B20</item>
+        <item name="colorSurfaceVariant">#E7E0EC</item>
+        <item name="colorOnSurfaceVariant">#49454F</item>
+        <item name="colorOutline">#79747E</item>
+        <item name="colorOutlineVariant">#C4C7C1</item>
+        <item name="colorError">#B3261E</item>
+        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorErrorContainer">#F9DEDC</item>
+        <item name="colorOnErrorContainer">#410E0B</item>
+        <item name="colorSurfaceInverse">#313033</item>
+        <item name="colorOnSurfaceInverse">#F4EFF4</item>
     </style>
 
     <style name="Theme.GurmukhiKeyboard50" parent="Base.Theme.GurmukhiKeyboard50" />
@@ -33,23 +60,23 @@
         <item name="candidatesBackground">@color/keyboard_background_light</item>
         <item name="candidatesTextColor">@color/key_text_light</item>
         <item name="iconColor">@color/key_text_light</item>
-        <item name="android:textColorPrimary">@color/key_text_light</item>
     </style>
 
-    <!-- 2. Dark Theme (Updated: White Text on Dark Keys) -->
+    <!-- 2. Dark Theme (Premium & High Contrast) -->
     <style name="KeyboardTheme.Dark" parent="Base.Theme.GurmukhiKeyboard50">
-        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
         <item name="keyboardViewBackground">@color/keyboard_background_dark</item>
         <item name="keyboardKeyBackground">@color/keyboard_key_background_normal_dark</item>
         <item name="functionalKeyBackground">@color/functional_key_background_dark</item>
-        <item name="keyboardKeyTextColor">@color/white</item>
-        <item name="keyPreviewBackground">@color/functional_key_background_dark</item>
-        <item name="keyPreviewTextColor">@color/white</item>
+        <item name="keyboardKeyTextColor">@color/key_text_dark</item>
+        <item name="keyPreviewBackground">@color/key_preview_background_dark</item>
+        <item name="keyPreviewTextColor">@color/key_text_dark</item>
         <item name="keyPressedBackgroundColor">@color/keyboard_key_background_pressed_dark</item>
         <item name="candidatesBackground">@color/keyboard_background_dark</item>
-        <item name="candidatesTextColor">@color/white</item>
-        <item name="iconColor">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="candidatesTextColor">@color/key_text_dark</item>
+        <item name="iconColor">@color/key_text_dark</item>
+
+        <!-- Action colors for Dark Mode -->
+        <item name="colorPrimary">@color/dark_accent_blue</item>
     </style>
 
     <!-- Kesari Theme (New) -->

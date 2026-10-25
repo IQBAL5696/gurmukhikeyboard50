@@ -10,6 +10,6 @@
     <!-- Keyboard Bottom Spacing -->
     <dimen name="bottom_spacer_height">0dp</dimen>
 
-    <!-- Calendar Bottom Spacing (Increased to avoid navigation buttons overlap) -->
-    <dimen name="calendar_bottom_spacer_height">25dp</dimen>
+    <!-- Calendar Bottom Spacing -->
+    <dimen name="calendar_bottom_spacer_height">2dp</dimen>
 </resources>

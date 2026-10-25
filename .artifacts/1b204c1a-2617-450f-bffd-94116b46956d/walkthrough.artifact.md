@@ -1,26 +1,29 @@
-# Walkthrough - Wide Top Frame with Bani Title
+# Walkthrough - Gurbani Dictionary Feature
 
-I have enhanced the Nitnem "Photo Frame" UI by making the top part of the frame wider and integrating the name of each Bani (scripture) directly into it. This creates a more immersive and professional "framed book" look for the scriptures.
+I have successfully added a **Gurbani Dictionary (ਅਰਥ ਕੋਸ਼)** to the Nitnem section. This feature helps users understand the meanings of difficult words found in the scriptures.
 
 ## Changes Made
 
 ### [Nitnem Component]
 
+#### [gurbani_meanings.json](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/assets/gurbani_meanings.json)
+- **NEW**: Created a comprehensive starter dictionary containing important Gurbani words and their simplified meanings in Punjabi (e.g., meanings for *ੴ, ਨਿਰਭਉ, ਅਕਾਲ, ਹੁਕਮਿ*, etc.).
+
 #### [NitnemEngine.kt](file:///C:/Users/iqbal/AndroidStudioProjects/gurmukhikeyboard50/app/src/main/java/com/iqbal/gurmukhikeyboard50/NitnemEngine.kt)
-- **Dynamic Titles**: Updated `showGurbaniDialog` and `showContentDialog` to accept a title parameter, ensuring every Bani displays its correct name (e.g., "ਜਪੁਜੀ ਸਾਹਿਬ", "ਰਹਿਰਾਸ ਸਾਹਿਬ") at the top.
-- **Wide Top Frame UI**:
-    - **Header Integration**: Added a centered `TextView` for the title at the top of the reading dialog.
-    - **Enhanced Split Title Design**: Improved the title splitting logic to handle phrases with more than two words (e.g., "ਆਸਾ ਦੀ ਵਾਰ"). It now splits the name as evenly as possible into left and right parts, ensuring no middle words are lost while still keeping the center clear for camera notches.
-    - **Ultra-Compact Padding**: Further reduced top padding to **18dp** as requested, making the top decorative bar sleek while ensuring the split title remains perfectly visible.
-    - **Seamless Frame Extension**: Removed all margins and root padding from the top header so that its background blends perfectly with the outer frame's edges.
-    - **Styling**: Used high-contrast colors (White/Cream on dark frame) and the custom Gurmukhi typeface for an elegant appearance.
-- **Main Menu Enhancement**: Updated `applyPanelTheme` to apply a similar "wide top frame" style to the main Nitnem menu header, providing a consistent visual experience across the entire feature.
-- **Improved Spacing**: Adjusted layout margins and paddings to ensure the new header doesn't overlap with scriptures or control buttons.
+- **Menu Integration**: Added **"ਗੁਰਬਾਣੀ ਡਿਕਸ਼ਨਰੀ (ਅਰਥ ਕੋਸ਼)"** to the main Nitnem menu list.
+- **Dictionary Dialog**:
+    - Implemented a dedicated search-enabled dialog (`showGurbaniDictionaryDialog`).
+    - **Live Search**: Users can type any word or meaning part in the search bar, and the list filters in real-time.
+    - **UI Styling**: Each word is highlighted in Yellow with its meaning in White, enclosed in the app's signature rounded-button style for better readability.
+- **Full Compatibility**:
+    - The dictionary respects both **Light** and **Dark** themes.
+    - Integrated with the **Wide Photo Frame** UI for a consistent look and feel.
+    - Handles system bar insets to ensure the search bar and list are correctly positioned on all devices.
 
 ## Verification Results
 
 ### Manual Verification
-- Verified that **Japji Sahib** shows its title in a wide frame at the top.
-- Verified that **Rehras Sahib** and other Banis also show their respective titles correctly.
-- Confirmed that the "Wide Top" header adapts beautifully to both **Light** and **Dark** themes.
-- Checked that the main Nitnem menu ("ਨਿਤਨੇਮ ਅਤੇ ਬਾਣੀਆਂ") now also has the enhanced framed look.
+- Verified that **"ਗੁਰਬਾਣੀ ਡਿਕਸ਼ਨਰੀ (ਅਰਥ ਕੋਸ਼)"** appears at the top of the Nitnem menu.
+- Verified that clicking it opens a beautifully framed dialog.
+- Confirmed that searching for words like **"ਨਿਰਭਉ"** or **"Gian"** correctly filters the results.
+- Verified that the UI remains legible and elegant in both Light and Dark modes.

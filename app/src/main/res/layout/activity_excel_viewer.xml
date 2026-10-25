@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/excel_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:orientation="vertical">
+
+    <!-- Top Bars Wrapper Container (Auto-Hides on Scroll for Full-Screen Immersion) -->
+    <LinearLayout
+        android:id="@+id/excel_top_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/excel_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#1E1E1E"
+            android:elevation="4dp"
+            app:title="ਐਕਸਲ ਫਾਈਲ ਓਪਨਰ (Excel Viewer)"
+            app:titleTextColor="@android:color/white">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_open_excel"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Open File"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_library"
+                    app:tint="@android:color/white" />
+
+                <ImageButton
+                    android:id="@+id/btn_undo_toolbar"
+                    android:layout_width="40dp"
+                    android:layout_height="44dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Undo"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_return_arrow"
+                    app:tint="@android:color/white" />
+
+                <ImageButton
+                    android:id="@+id/btn_redo_toolbar"
+                    android:layout_width="40dp"
+                    android:layout_height="44dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Redo"
+                    android:padding="8dp"
+                    android:rotationY="180"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_return_arrow"
+                    app:tint="@android:color/white" />
+
+                <ImageButton
+                    android:id="@+id/btn_save_excel"
+                    android:layout_width="40dp"
+                    android:layout_height="44dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Save File"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_check"
+                    app:tint="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/btn_toggle_theme"
+                    android:layout_width="40dp"
+                    android:layout_height="44dp"
+                    android:gravity="center"
+                    android:text="🌙"
+                    android:textSize="20sp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Toggle Light/Dark Theme" />
+
+                <ImageButton
+                    android:id="@+id/btn_toolbar_more_menu"
+                    android:layout_width="43dp"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="More Options"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_shortcut"
+                    app:tint="@android:color/white" />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <!-- Top Live Statistics Chips Scroll Bar -->
+        <HorizontalScrollView
+            android:id="@+id/excel_top_stats_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#181818"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="6dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/chip_sum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_chip_stat"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:text="Sum : 0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chip_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_chip_stat"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:text="Minimum : 0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chip_max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_chip_stat"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:text="Maximum : 0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chip_avg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_chip_stat"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:text="Average : 0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chip_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/bg_chip_stat"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:text="Count : 0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chip_count_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_chip_stat"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:text="Count Numbers : 0"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- Formula Input Bar (fx Bar) -->
+        <LinearLayout
+            android:id="@+id/excel_formula_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#202020"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp">
+
+            <TextView
+                android:layout_width="28dp"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:text="fx"
+                android:textColor="#81C784"
+                android:textSize="15sp"
+                android:textStyle="bold|italic" />
+
+            <EditText
+                android:id="@+id/et_excel_formula"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_chip_stat"
+                android:hint="ਫਾਰਮੂਲਾ ਲਿਖੋ (ਜਿਵੇਂ: =SUM(A1:A10), =A1+B1)..."
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:paddingHorizontal="10dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#888888"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_apply_formula"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="6dp"
+                android:backgroundTint="#2E7D32"
+                android:paddingHorizontal="10dp"
+                android:text="ਲਾਗੂ ਕਰੋ"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <ImageButton
+                android:id="@+id/btn_formula_picker"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Formula List"
+                android:padding="6dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_check"
+                app:tint="#81C784" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Live Calculation & Row Operation Bar -->
+    <LinearLayout
+        android:id="@+id/excel_calc_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1B5E20"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="6dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_calc_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_share_selected_rows"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="4dp"
+            android:backgroundTint="#2E7D32"
+            android:paddingHorizontal="8dp"
+            android:text="ਕਸਟਮਰ ਨੂੰ ਭੇਜੋ 📲"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_delete_selected_rows"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="4dp"
+            android:backgroundTint="#D32F2F"
+            android:paddingHorizontal="8dp"
+            android:text="ਡਿਲੀਟ ਲਾਈਨ"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_delete_selected_cols"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="4dp"
+            android:backgroundTint="#C62828"
+            android:paddingHorizontal="8dp"
+            android:text="ਡਿਲੀਟ ਕੋਲਮ"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_undo_rows"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="4dp"
+            android:backgroundTint="#F57C00"
+            android:paddingHorizontal="8dp"
+            android:text="ਵਾਪਸ ਲਿਆਓ (Undo)"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_reset_rows"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="4dp"
+            android:backgroundTint="#1976D2"
+            android:paddingHorizontal="8dp"
+            android:text="ਮੂਲ ਸ਼ੀਟ (Reset)"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btn_clear_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="4dp"
+            android:backgroundTint="#7B1FA2"
+            android:paddingHorizontal="8dp"
+            android:text="ਫਿਲਟਰ ਹਟਾਓ (Clear Filter)"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <!-- Find & Replace Bar (Positioned Directly Above Keyboard) -->
+    <LinearLayout
+        android:id="@+id/excel_find_replace_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2C2C2C"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_find_text"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button_bg"
+                android:backgroundTint="#383838"
+                android:hint="ਲੱਭੋ (Find text/number)..."
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:paddingHorizontal="10dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:textSize="13sp" />
+
+            <ImageButton
+                android:id="@+id/btn_find_prev"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Previous Match"
+                android:src="@android:drawable/arrow_up_float"
+                app:tint="#FFFFFF" />
+
+            <ImageButton
+                android:id="@+id/btn_find_next"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Next Match"
+                android:src="@android:drawable/arrow_down_float"
+                app:tint="#FFFFFF" />
+
+            <ImageButton
+                android:id="@+id/btn_close_find_replace"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Close Find Replace"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:tint="#FF5252" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_replace_text"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button_bg"
+                android:backgroundTint="#383838"
+                android:hint="ਨਵੇਂ ਸ਼ਬਦ ਨਾਲ ਬਦਲੋ (Replace with)..."
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:paddingHorizontal="10dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#AAAAAA"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btn_replace_one"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:layout_marginStart="6dp"
+                android:backgroundTint="#2E7D32"
+                android:paddingHorizontal="8dp"
+                android:text="ਬਦਲੋ"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btn_replace_all"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:layout_marginStart="4dp"
+                android:backgroundTint="#1565C0"
+                android:paddingHorizontal="8dp"
+                android:text="ਸਾਰੇ ਬਦਲੋ"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/sheets_tab_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1E1E1E"
+        android:scrollbars="none"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/sheets_tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="4dp" />
+
+    </HorizontalScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <WebView
+            android:id="@+id/excel_web_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/excel_progress_bar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/empty_excel_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_empty_excel_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="ਕੋਈ ਐਕਸਲ (.xlsx, .xls, .csv) ਫਾਈਲ ਚੁਣੋ"
+                android:textColor="#AAAAAA"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_empty_pick_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#2E7D32"
+                android:text="Excel / CSV ਫਾਈਲ ਖੋਲ੍ਹੋ"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btn_grant_storage_permission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#1565C0"
+                android:text="📁 ਸਾਰੇ ਫੋਲਡਰਾਂ ਤੋਂ ਫਾਈਲਾਂ ਖੋਲ੍ਹਣ ਦੀ ਪਰਮਿਸ਼ਨ ਦਿਓ"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>
